@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE LINE — Daily Sports Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;--bg4:#22222f;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
+  --text:#f0f0f5;--text2:#9090a8;--text3:#5a5a72;
+  --accent:#e8d5a3;--accent2:#c4a96b;
+  --green:#4ade80;--green-bg:rgba(74,222,128,0.08);--green-bd:rgba(74,222,128,0.28);
+  --red:#f87171;--red-bg:rgba(248,113,113,0.08);--red-bd:rgba(248,113,113,0.28);
+  --amber:#fbbf24;--amber-bg:rgba(251,191,36,0.08);--amber-bd:rgba(251,191,36,0.28);
+  --blue:#60a5fa;--blue-bg:rgba(96,165,250,0.08);--blue-bd:rgba(96,165,250,0.28);
+  --nba:#4f8ef7;--mlb:#e8734a;--parlay:#a78bfa;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+/* ─── HEADER ─── */
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 28px}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-family:'Playfair Display',serif;font-weight:900;font-size:21px;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:14px}
+.live-badge{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;color:var(--green);letter-spacing:.05em}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.date-tag{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3)}
+/* ─── NAV ─── */
+.main-nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 28px;position:sticky;top:58px;z-index:99;overflow-x:auto}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex}
+.nav-tab{padding:13px 22px;font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;border:none;background:none;white-space:nowrap;position:relative;transition:color .18s;flex-shrink:0}
+.nav-tab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:background .18s}
+.nav-tab.active{color:var(--text)}.nav-tab.active::after{background:var(--accent)}
+.nav-tab[data-tab="nba"].active{color:var(--nba)}.nav-tab[data-tab="nba"].active::after{background:var(--nba)}
+.nav-tab[data-tab="mlb"].active{color:var(--mlb)}.nav-tab[data-tab="mlb"].active::after{background:var(--mlb)}
+.nav-tab[data-tab="props"].active{color:var(--green)}.nav-tab[data-tab="props"].active::after{background:var(--green)}
+.nav-tab[data-tab="parlays"].active{color:var(--parlay)}.nav-tab[data-tab="parlays"].active::after{background:var(--parlay)}
+/* ─── CONTENT ─── */
+.content{max-width:1200px;margin:0 auto;padding:28px 28px 80px;position:relative;z-index:1}
+.panel{display:none}.panel.active{display:block}
+/* ─── HERO ─── */
+.hero{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.hero-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1.1}
+.hero-title em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;letter-spacing:.06em;margin-top:5px}
+.src-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.src-chip{font-size:10px;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:3px;border:1px solid var(--border2);color:var(--text3)}
+.src-chip.live{border-color:rgba(74,222,128,.3);color:var(--green)}
+/* ─── STATUS BARS ─── */
+.status-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:7px;font-size:11px;font-family:'DM Mono',monospace;margin-bottom:18px;flex-wrap:wrap}
+.status-bar.info{background:var(--blue-bg);border:1px solid var(--blue-bd);color:var(--blue)}
+.status-bar.success{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green)}
+.status-bar.warn{background:var(--amber-bg);border:1px solid var(--amber-bd);color:var(--amber)}
+.status-bar strong{font-weight:500}
+/* ─── RESULTS BAR ─── */
+.results-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin-bottom:20px}
+.result-chip{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.result-chip.win{border-color:var(--green-bd)}
+.result-chip.loss{border-color:var(--red-bd)}
+.result-chip.live-now{border-color:var(--amber-bd)}
+.rc-label{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:3px;text-transform:uppercase}
+.rc-score{font-size:14px;font-weight:600;color:var(--text)}
+.rc-badge{font-size:10px;font-family:'DM Mono',monospace;margin-top:3px}
+.rc-badge.w{color:var(--green)}.rc-badge.l{color:var(--red)}.rc-badge.on{color:var(--amber)}
+/* ─── DIVIDER ─── */
+.divider{display:flex;align-items:center;gap:10px;margin:22px 0 16px}
+.divider-line{flex:1;height:1px;background:var(--border)}
+.divider-label{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+/* ─── ARTICLE CARD ─── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color .18s}
+.card:hover{border-color:var(--border2)}
+.card.feat{border-color:rgba(232,213,163,.22);background:linear-gradient(135deg,var(--bg2) 0%,rgba(232,213,163,.03) 100%)}
+.card.cashing{border-color:var(--green-bd);background:linear-gradient(135deg,var(--bg2) 0%,rgba(74,222,128,.04) 100%)}
+.card-head{padding:16px 20px 0}
+.card-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}
+.pill{font-size:10px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:.07em;padding:2px 7px;border-radius:4px}
+.p-nba{background:rgba(79,142,247,.15);color:var(--nba);border:1px solid rgba(79,142,247,.3)}
+.p-mlb{background:rgba(232,115,74,.15);color:var(--mlb);border:1px solid rgba(232,115,74,.3)}
+.p-time{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
+.p-conf{display:flex;gap:3px}
+.cd{width:7px;height:7px;border-radius:50%}
+.cd.f{background:var(--accent)}.cd.e{background:var(--bg4)}
+.p-win{font-size:11px;font-family:'DM Mono',monospace;color:var(--green);font-weight:500}
+.matchup{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1.2;margin-bottom:3px}
+.pick-line{font-size:13px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:.02em;color:var(--accent)}
+.pick-line.g{color:var(--green)}.pick-line.r{color:var(--red)}.pick-line.go{color:var(--green)}
+/* ─── ODDS ROW ─── */
+.odds-row{display:flex;gap:7px;flex-wrap:wrap;padding:10px 20px 0}
+.ob{background:var(--bg3);border:1px solid rgba(232,213,163,.22);border-radius:7px;padding:7px 11px;min-width:90px}
+.ob-label{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.ob-val{font-size:15px;font-weight:600;font-family:'DM Mono',monospace;line-height:1}
+.ob-val.fav{color:var(--amber)}.ob-val.dog{color:var(--green)}.ob-val.tot{color:var(--blue)}.ob-val.neu{color:var(--text)}
+.ob-sub{font-size:10px;color:var(--text3);margin-top:2px}
+.dk-tag{font-size:9px;font-family:'DM Mono',monospace;padding:1px 5px;border-radius:3px;background:rgba(232,213,163,.08);color:var(--accent2);border:1px solid rgba(232,213,163,.18);display:inline-block;margin-top:3px}
+/* ─── BODY ─── */
+.card-body{padding:14px 20px 18px}
+.prose{font-size:13px;line-height:1.75;color:var(--text2);margin-bottom:12px}
+.prose strong{color:var(--text);font-weight:600}
+.prose em{color:var(--accent);font-style:normal;font-weight:500}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:7px;margin-bottom:12px}
+.sb{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 10px}
+.sb-l{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.sb-v{font-size:16px;font-weight:600;line-height:1}
+.sb-v.g{color:var(--green)}.sb-v.r{color:var(--red)}.sb-v.a{color:var(--amber)}
+.sb-n{font-size:10px;color:var(--text3);margin-top:2px}
+.inj-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.inj{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red);font-family:'DM Mono',monospace}
+.verdict{display:flex;align-items:center;gap:8px;padding:10px 13px;border-radius:7px;font-size:13px;font-weight:600}
+.verdict.over{background:var(--green-bg);border:1px solid var(--green-bd);color:var(--green)}
+.verdict.under{background:var(--red-bg);border:1px solid var(--red-bd);color:var(--red)}
+.verdict.info{background:var(--blue-bg);border:1px solid var(--blue-bd);color:var(--blue)}
+/* ─── PROPS GRID ─── */
+.props-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px}
+.prop-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .18s,transform .18s}
+.prop-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.prop-card.hot{border-color:rgba(232,213,163,.22)}
+.prop-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px}
+.prop-player{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.2}
+.prop-dir{font-size:10px;font-weight:700;font-family:'DM Mono',monospace;padding:2px 8px;border-radius:4px;letter-spacing:.05em;flex-shrink:0}
+.pd-over{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.pd-under{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.pd-fade{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.prop-line{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);margin-bottom:5px}
+.prop-dk{font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);margin-bottom:6px}
+.prop-stats{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.ps{font-size:11px;color:var(--text3);background:var(--bg3);padding:2px 7px;border-radius:4px;border:1px solid var(--border)}
+.ps strong{color:var(--text2)}
+.prop-why{font-size:12px;line-height:1.6;color:var(--text2)}
+/* ─── PARLAYS ─── */
+.parlay-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden}
+.parlay-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border)}
+.parlay-left{display:flex;align-items:center;gap:10px}
+.parlay-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--text3);line-height:1}
+.parlay-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700}
+.risk-tag{font-size:10px;font-weight:700;font-family:'DM Mono',monospace;padding:2px 7px;border-radius:4px;letter-spacing:.08em;margin-top:3px;display:inline-block}
+.r-low{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.r-med{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd)}
+.r-high{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.r-ultra{background:rgba(167,139,250,.1);color:var(--parlay);border:1px solid rgba(167,139,250,.3)}
+.parlay-right{text-align:right}
+.parlay-odds{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--accent)}
+.parlay-legs{padding:12px 18px}
+.leg{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.leg:last-child{border-bottom:none}
+.leg-n{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);background:var(--bg3);width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.leg-pick{font-size:13px;font-weight:600;color:var(--text);margin-bottom:1px}
+.leg-odds-line{font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);margin-bottom:2px}
+.leg-why{font-size:12px;color:var(--text3);line-height:1.5}
+.parlay-ftr{padding:10px 18px;background:var(--bg3);border-top:1px solid var(--border)}
+.payout-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:7px}
+.payout-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 11px}
+.payout-label{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:2px}
+.payout-val{font-size:14px;font-weight:600;color:var(--accent);font-family:'DM Mono',monospace}
+.payout-sub{font-size:10px;color:var(--text3)}
+.parlay-math{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;line-height:1.5}
+/* ─── DISCLAIMER ─── */
+.disclaimer{margin-top:32px;padding:13px 16px;border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text3);line-height:1.6;font-family:'DM Mono',monospace}
+/* ─── ANIMATIONS ─── */
+.panel.active .card,.panel.active .prop-card,.panel.active .parlay-card{animation:fu .3s ease both}
+.panel.active .card:nth-child(2){animation-delay:.05s}.panel.active .card:nth-child(3){animation-delay:.1s}
+.panel.active .card:nth-child(4){animation-delay:.15s}.panel.active .card:nth-child(5){animation-delay:.2s}
+.panel.active .card:nth-child(6){animation-delay:.25s}.panel.active .card:nth-child(7){animation-delay:.3s}
+.panel.active .card:nth-child(8){animation-delay:.35s}.panel.active .card:nth-child(9){animation-delay:.4s}
+.panel.active .parlay-card:nth-child(2){animation-delay:.06s}.panel.active .parlay-card:nth-child(3){animation-delay:.12s}
+.panel.active .parlay-card:nth-child(4){animation-delay:.18s}.panel.active .parlay-card:nth-child(5){animation-delay:.24s}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){
+  header,.main-nav{padding:0 14px}.content{padding:18px 14px 60px}
+  .hero-title{font-size:26px}.nav-tab{padding:12px 14px;font-size:12px}
+  .props-grid{grid-template-columns:1fr}.payout-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">THE <span>LINE</span></div>
+    <div class="header-right">
+      <div class="live-badge"><span class="live-dot"></span>LIVE DATA</div>
+      <div class="date-tag">APR 03 2026</div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <button class="nav-tab active" data-tab="nba" onclick="sw('nba')">NBA</button>
+    <button class="nav-tab" data-tab="mlb" onclick="sw('mlb')">MLB</button>
+    <button class="nav-tab" data-tab="props" onclick="sw('props')">PROP PICKS</button>
+    <button class="nav-tab" data-tab="parlays" onclick="sw('parlays')">PARLAYS</button>
+  </div>
+</nav>
+
+<div class="content">
+
+<!-- ══════════════════ NBA TAB ══════════════════ -->
+<div id="tab-nba" class="panel active">
+  <div class="hero">
+    <div>
+      <div class="hero-title">NBA <em>Tonight</em></div>
+      <div class="hero-sub">FRI APR 3 2026 · 9 GAMES · LINES VIA SCORESANDODDS / DK</div>
+      <div class="src-chips">
+        <span class="src-chip live">SCORESANDODDS LIVE ✓</span>
+        <span class="src-chip live">WIN PROBS LIVE ✓</span>
+        <span class="src-chip live">ESPN INJURIES ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar success">
+    ✓ <strong>Yesterday's NBA record: 5-0</strong> — OKC 139-96 ✓ · CLE 118-111 ✓ · CHA 127-107 ✓ · POR 118-106 ✓ · SAS 118-99 ✓ · All 5 picks landed
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-label">🔴 TOP PICKS TONIGHT</div><div class="divider-line"></div></div>
+
+  <!-- BOS @ MIL -->
+  <div class="card feat">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">8:00 PM ET · Fiserv Forum</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span></div>
+        <span class="p-win">93% WIN PROB</span>
+      </div>
+      <div class="matchup">BOS Celtics @ MIL Bucks</div>
+      <div class="pick-line g">▲ BOS -ML · Best value pick of the night</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">BOS ML</div><div class="ob-val fav">-650</div><div class="ob-sub">$650 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">MIL ML</div><div class="ob-val dog">+475</div><div class="ob-sub">$100 wins $475</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">BOS Spread</div><div class="ob-val fav">-11.5 (-110)</div><div class="ob-sub">Better value than ML</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Win Prob</div><div class="ob-val tot">93%</div><div class="ob-sub">Model projection</div><span class="dk-tag">Live feed</span></div>
+    </div>
+    <div class="card-body">
+      <div class="stat-grid">
+        <div class="sb"><div class="sb-l">BOS Record</div><div class="sb-v g">51-25</div><div class="sb-n">East #2 · DRTG 112.8</div></div>
+        <div class="sb"><div class="sb-l">MIL Record</div><div class="sb-v r">30-46</div><div class="sb-n">.395 W% · bottom half</div></div>
+        <div class="sb"><div class="sb-l">BOS last game</div><div class="sb-v g">147-129</div><div class="sb-n">Blew out Miami</div></div>
+        <div class="sb"><div class="sb-l">MIL last game</div><div class="sb-v r">L 113-119</div><div class="sb-n">Lost to HOU</div></div>
+      </div>
+      <div class="prose">Boston is 51-25 and on a dominant run, having just obliterated Miami 147-129. Milwaukee is 30-46 and sitting in the bottom half of the East with no playoff path. <strong>The model gives BOS a 93% win probability</strong> — nearly as lopsided as it gets in the NBA. At -650 ML the juice is punishing, so <em>BOS -11.5 at -110 gives dramatically better value</em> — the Celtics have covered blowout spreads all season when facing bottom-tier opponents at home. Jaylen Brown (27.6 PPG) and the Celtics depth will overwhelm a short-handed Bucks squad.</div>
+      <div class="verdict over">▲ BET: BOS -11.5 (-110) · Far better value than -650 ML. 93% projected win.</div>
+    </div>
+  </div>
+
+  <!-- HOU vs UTA -->
+  <div class="card feat">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">8:00 PM ET · Toyota Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span></div>
+        <span class="p-win">93.3% WIN PROB</span>
+      </div>
+      <div class="matchup">HOU Rockets vs. UTA Jazz</div>
+      <div class="pick-line g">▲ HOU -ML · Biggest mismatch on the board</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">HOU ML</div><div class="ob-val fav">-1400</div><div class="ob-sub">$1400 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">UTA ML</div><div class="ob-val dog">+800</div><div class="ob-sub">$100 wins $800</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">HOU Spread</div><div class="ob-val fav">-17.5 (-110)</div><div class="ob-sub">Best value play</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Total</div><div class="ob-val tot">O/U 229</div><div class="ob-sub">HOU high-pace</div><span class="dk-tag">Est. DK</span></div>
+    </div>
+    <div class="card-body">
+      <div class="stat-grid">
+        <div class="sb"><div class="sb-l">HOU Record</div><div class="sb-v g">47-29</div><div class="sb-n">.618 W% · home</div></div>
+        <div class="sb"><div class="sb-l">UTA Record</div><div class="sb-v r">21-56</div><div class="sb-n">3rd worst NBA</div></div>
+        <div class="sb"><div class="sb-l">KD PPG</div><div class="sb-v g">25.8</div><div class="sb-n">73 GP · consistent</div></div>
+        <div class="sb"><div class="sb-l">Win Prob</div><div class="sb-v g">93.3%</div><div class="sb-n">Highest on slate</div></div>
+      </div>
+      <div class="prose">Houston at 47-29 hosts the Jazz at 21-56 — one of the worst records in the league. <strong>93.3% win probability is the highest of any game on tonight's entire slate.</strong> Kevin Durant (25.8 PPG) and Alperen Sengun at home against a depleted Utah roster is a mismatch at every position. Don't play the ML at -1400 — <em>the spread at -17.5 is where the value lives</em>. Houston has covered big spreads all season at home vs tanking opponents.</div>
+      <div class="verdict over">▲ BET: HOU -17.5 (-110) · Never touch -1400 ML. Spread offers real value.</div>
+    </div>
+  </div>
+
+  <!-- NYK vs CHI -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">7:30 PM ET · Madison Square Garden</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+        <span class="p-win">89.8% WIN PROB</span>
+      </div>
+      <div class="matchup">NYK Knicks vs. CHI Bulls</div>
+      <div class="pick-line g">▲ NYK -ML · MSG home fort + CHI tanking</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">NYK ML</div><div class="ob-val fav">-600</div><div class="ob-sub">$600 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">CHI ML</div><div class="ob-val dog">+430</div><div class="ob-sub">$100 wins $430</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">NYK Spread</div><div class="ob-val fav">-10.5 (-110)</div><div class="ob-sub">Value vs ML</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">CHI Record</div><div class="ob-val r">29-47</div><div class="ob-sub">Eliminated</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">New York at 49-28 hosts Chicago at 29-47 at Madison Square Garden, one of the loudest home court advantages in basketball. <strong>CHI is eliminated and without playoff motivation.</strong> The Knicks lead the NBA in assists per game and their pressure defense shuts down the perimeter. NYK -10.5 at -110 is the clean play — MSG crowds routinely push the Knicks past comfortable double-digit margins vs losing opponents.</div>
+      <div class="verdict over">▲ BET: NYK -10.5 (-110) · 89.8% win prob. MSG advantage + CHI eliminated.</div>
+    </div>
+  </div>
+
+  <!-- ATL @ BKN -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">7:30 PM ET · Barclays Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+        <span class="p-win">92.8% WIN PROB</span>
+      </div>
+      <div class="matchup">ATL Hawks @ BKN Nets</div>
+      <div class="pick-line g">▲ ATL -ML · vs NBA's worst record</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">ATL ML</div><div class="ob-val fav">-700</div><div class="ob-sub">$700 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">BKN ML</div><div class="ob-val dog">+500</div><div class="ob-sub">$100 wins $500</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">ATL Spread</div><div class="ob-val fav">-12.5 (-110)</div><div class="ob-sub">Best value angle</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">BKN Record</div><div class="ob-val r">18-58</div><div class="ob-sub">Worst E. record</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Brooklyn at 18-58 is the worst record in the Eastern Conference. <strong>Atlanta at 44-33 has Jalen Johnson and Trae Young operating at peak efficiency</strong>, with the Hawks fresh off a 130-101 demolition of Orlando. BKN has dropped 7 straight and their defensive rating sits among the bottom 3 in the league. ATL -12.5 is aggressive but justified — the Hawks went into this month covering spreads against struggling opponents.</div>
+      <div class="verdict over">▲ BET: ATL -12.5 (-110) · 92.8% win prob. BKN has no answers for ATL's pace.</div>
+    </div>
+  </div>
+
+  <!-- TOR @ MEM -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">8:00 PM ET · FedExForum</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+        <span class="p-win">88.7% WIN PROB</span>
+      </div>
+      <div class="matchup">TOR Raptors @ MEM Grizzlies</div>
+      <div class="pick-line g">▲ TOR -ML · 88.7% — road favorite value</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">TOR ML</div><div class="ob-val fav">-550</div><div class="ob-sub">$550 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">MEM ML</div><div class="ob-val dog">+390</div><div class="ob-sub">$100 wins $390</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">TOR Spread</div><div class="ob-val fav">-9.5 (-110)</div><div class="ob-sub">Road value</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">MEM Record</div><div class="ob-val r">25-51</div><div class="ob-sub">Tanking</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Toronto at 42-34 is fighting for playoff seeding while Memphis at 25-51 is tanking for lottery odds. <strong>Motivation gap is enormous.</strong> The Raptors have won 5 of their last 7 on the road and their defensive rating has improved significantly since the calendar flipped to April. TOR -9.5 is a clean spread in a spot where one team needs every win and the other is playing for draft position.</div>
+      <div class="verdict over">▲ BET: TOR -9.5 (-110) · Motivation edge is massive. TOR needs wins, MEM doesn't.</div>
+    </div>
+  </div>
+
+  <!-- PHI vs MIN -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">7:00 PM ET · Wells Fargo Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span><span class="cd e"></span></div>
+        <span class="p-win">58.5% WIN PROB</span>
+      </div>
+      <div class="matchup">PHI 76ers vs. MIN Timberwolves</div>
+      <div class="pick-line">→ MONITOR · Closest game on slate</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">PHI ML</div><div class="ob-val fav">-140</div><div class="ob-sub">$140 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">MIN ML</div><div class="ob-val dog">+118</div><div class="ob-sub">$100 wins $118</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">PHI Spread</div><div class="ob-val fav">-2.5 (-110)</div><div class="ob-sub">Closest line</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Ant Edwards</div><div class="ob-val a">QUESTIONABLE</div><div class="ob-sub">Knee injury</div><span class="dk-tag">Injury report</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">This is the tightest matchup on tonight's slate at 58.5% PHI. <strong>Anthony Edwards is listed as questionable with a knee injury</strong> — if he plays this is a coin-flip game; if he sits, PHI gets a significant boost. Paul George has been outstanding in his return, posting 63+ fantasy points in his last start with Embiid out. Tyrese Maxey (28.9 PPG, 2.0 SPG) leads the 76ers at home. Watch the injury wire — Edwards' status is the entire swing factor.</div>
+      <div class="verdict info">→ MONITOR Edwards status. PHI -2.5 if he's out; pass or lean MIN if he plays.</div>
+    </div>
+  </div>
+
+  <!-- CHA vs IND -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">7:00 PM ET · Spectrum Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+        <span class="p-win">91.5% WIN PROB</span>
+      </div>
+      <div class="matchup">CHA Hornets vs. IND Pacers</div>
+      <div class="pick-line g">▲ CHA -ML · Hornets on massive win streak</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">CHA ML</div><div class="ob-val fav">-800</div><div class="ob-sub">$800 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">IND ML</div><div class="ob-val dog">+570</div><div class="ob-sub">$100 wins $570</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">CHA Spread</div><div class="ob-val fav">-14.5 (-110)</div><div class="ob-sub">Best value</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">CHA since Jan 1</div><div class="ob-val g">30-14</div><div class="ob-sub">Best in East</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="inj-row"><span class="inj">IND: Jarace Walker OUT (injury)</span><span class="inj">IND: 16-game losing streak recently</span></div>
+      <div class="prose">Charlotte is 30-14 since January 1 — the best record in the Eastern Conference in that span. Kon Knueppel is averaging 18.5 PPG on 43.1% from three in that stretch. Indiana just ended a 16-game losing streak and is missing Walker. <strong>91.5% win probability is among the highest on the slate.</strong> CHA -14.5 is aggressive but the Hornets have been covering big spreads against bad teams all of April.</div>
+      <div class="verdict over">▲ BET: CHA -14.5 (-110) · Best team form in East vs worst team on the slate.</div>
+    </div>
+  </div>
+
+  <!-- ORL @ DAL -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">8:30 PM ET · American Airlines Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span><span class="cd e"></span></div>
+        <span class="p-win">70% WIN PROB</span>
+      </div>
+      <div class="matchup">ORL Magic @ DAL Mavericks</div>
+      <div class="pick-line g">▲ ORL -ML · DAL 24-52, selling</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">ORL ML</div><div class="ob-val fav">-230</div><div class="ob-sub">$230 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">DAL ML</div><div class="ob-val dog">+185</div><div class="ob-sub">$100 wins $185</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">ORL Spread</div><div class="ob-val fav">-5.5 (-110)</div><div class="ob-sub">Road value</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">DAL Record</div><div class="ob-val r">24-52</div><div class="ob-sub">Tanking hard</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Dallas at 24-52 is in full tank mode, while Orlando at 40-36 is fighting for playoff seeding. <strong>The motivation gap makes ORL -5.5 the right side at a manageable -110.</strong> Dallas has lost 7 of their last 10 and are clearly not playing their best rotation. Franz Wagner and Paolo Banchero should have a field day against a depleted Dallas defense.</div>
+      <div class="verdict over">▲ BET: ORL -5.5 (-110) · 70% win prob. Playoff hunger vs tank mode.</div>
+    </div>
+  </div>
+
+  <!-- NOP @ SAC - VALUE ALERT -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-nba">NBA</span>
+        <span class="p-time">10:00 PM ET · Golden 1 Center</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span><span class="cd e"></span><span class="cd e"></span></div>
+        <span class="p-win">NOP 66.7% WIN PROB!</span>
+      </div>
+      <div class="matchup">NOP Pelicans @ SAC Kings</div>
+      <div class="pick-line g">▲ NOP +ML · UNDERDOG VALUE ALERT</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">NOP ML</div><div class="ob-val dog">+120</div><div class="ob-sub">Underdog but 66.7% fav</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">SAC ML</div><div class="ob-val fav">-145</div><div class="ob-sub">Market favorite</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">SAC Record</div><div class="ob-val r">20-57</div><div class="ob-sub">Worst in NBA West</div><span class="dk-tag">Live data</span></div>
+      <div class="ob"><div class="ob-label">Model edge</div><div class="ob-val g">+EV</div><div class="ob-sub">66.7% at +120 = edge</div><span class="dk-tag">Live data</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">This is a <strong>genuine positive expected value (+EV) spot.</strong> Our model gives NOP a 66.7% win probability, but the market has them priced as underdogs at +120. A 66.7% win probability should price at roughly -200 — instead it's +120. Sacramento at 20-57 is the worst team in the Western Conference. NOP is on a back-to-back but Sacramento's historically bad defense (DRTG 121.4) outweighs the fatigue factor. <em>+120 on a 66.7% favorite is a mathematical edge.</em></div>
+      <div class="verdict over">▲ BET: NOP +ML (+120) · MODEL SAYS 66.7% FAVORITE AT UNDERDOG PRICE. Rare +EV spot.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MLB TAB ══════════════════ -->
+<div id="tab-mlb" class="panel">
+  <div class="hero">
+    <div>
+      <div class="hero-title">MLB <em>Live + Tonight</em></div>
+      <div class="hero-sub">FRI APR 3 2026 · LIVE LINES VIA SCORESANDODDS</div>
+      <div class="src-chips">
+        <span class="src-chip live">SCORESANDODDS LIVE ✓</span>
+        <span class="src-chip live">WEATHER LIVE ✓</span>
+        <span class="src-chip live">ESPN IL ✓</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar success">
+    🏆 <strong>Today's early results:</strong> LAD 13-6 WSH ✓ (our pick) · BOS 5-2 SD ✓ (Fenway under) · NYY 8-2 MIA ✓ (Stanton TB) · DET 4-0 STL ✓
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-label">🔴 LIVE RIGHT NOW — IN PROGRESS</div><div class="divider-line"></div></div>
+
+  <!-- PHI @ COL LIVE CASHING -->
+  <div class="card cashing">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">IN PROGRESS · COORS FIELD · T4</span>
+        <span class="p-win">✅ OVER CASHING — PHI leading 10-1</span>
+      </div>
+      <div class="matchup">PHI Phillies @ COL Rockies</div>
+      <div class="pick-line g">✅ OVER IS CASHING — PHI 10, COL 1 (4th inning)</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">Live Score</div><div class="ob-val g">PHI 10 – 1 COL</div><div class="ob-sub">Top 4th inning</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">Current ML</div><div class="ob-val fav">PHI -10000</div><div class="ob-sub">Basically decided</div><span class="dk-tag">Live DK</span></div>
+      <div class="ob"><div class="ob-label">Live Total</div><div class="ob-val tot">Over 14.5</div><div class="ob-sub">Original: o10.5</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">Our call</div><div class="ob-val g">✅ HIT</div><div class="ob-sub">Coors + injured rotation</div><span class="dk-tag">Our pick</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose"><strong>This was our highest-confidence pick of the week and it's cashing in dominant fashion.</strong> Aaron Nola is cruising, the PHI lineup has exploded for 10 runs in 3+ innings at 5,200 ft altitude against a depleted Colorado rotation (Burnes, Walston both on IL). Exactly as projected — altitude + injured pitching + elite offense = run fest. The environmental + injury analysis was spot-on.</div>
+      <div class="verdict over">✅ CASHING · Over was the correct call. PHI dominating as projected at Coors.</div>
+    </div>
+  </div>
+
+  <!-- TEX vs CIN LIVE -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">IN PROGRESS · GLOBE LIFE FIELD · T5</span>
+      </div>
+      <div class="matchup">CIN Reds @ TEX Rangers</div>
+      <div class="pick-line">Live: CIN 3 – TEX 2 · T5</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">CIN Live ML</div><div class="ob-val dog">+136</div><div class="ob-sub">Underdog leading</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">TEX Live ML</div><div class="ob-val fav">-179</div><div class="ob-sub">Home fav trailing</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">Total</div><div class="ob-val tot">O/U 8</div><div class="ob-sub">-112 over</div><span class="dk-tag">Live DK</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">CIN leads TEX 3-2 in the 5th. TEX pitcher Gore (LHP) has allowed runs early. The Rangers are a live in-game bet at -179 if you believe their offense wakes up — <strong>Globe Life Field plays slightly hitter-friendly</strong> and TEX has a productive lineup when clicking.</div>
+      <div class="verdict info">→ LIVE MONITOR · TEX in-game value if they tie it. Over 8 runs is in play.</div>
+    </div>
+  </div>
+
+  <!-- CHC @ CLE LIVE -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">IN PROGRESS · PROGRESSIVE FIELD · B4</span>
+      </div>
+      <div class="matchup">CHC Cubs @ CLE Guardians</div>
+      <div class="pick-line">Live: CHC 1 – CLE 1 · B4</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">CHC Live ML</div><div class="ob-val fav">-218</div><div class="ob-sub">Heavy fav despite tie</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">CLE Live ML</div><div class="ob-val dog">+159</div><div class="ob-sub">Value if they take lead</div><span class="dk-tag">Live</span></div>
+      <div class="ob"><div class="ob-label">Total</div><div class="ob-val tot">O/U 7.5</div><div class="ob-sub">Low total</div><span class="dk-tag">Live DK</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Tight 1-1 game in the 4th. CHC still priced as heavy -218 favorites despite tied score, reflecting pitcher quality advantage. <strong>Ian Happ (3 HR this season, 1.168 OPS) is a live prop target tonight</strong> — CHC at -218 in a pitcher's game at Progressive Field is fair value given their rotation depth.</div>
+      <div class="verdict info">→ CHC -ML lean if staying close. Under 7.5 is the total play in this pitcher's environment.</div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-label">TONIGHT'S UPCOMING GAMES</div><div class="divider-line"></div></div>
+
+  <!-- KC vs MIL -->
+  <div class="card feat">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">6:45 PM CT · Kauffman Stadium</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span><span class="cd e"></span></div>
+      </div>
+      <div class="matchup">MIL Brewers @ KC Royals</div>
+      <div class="pick-line g">▲ MIL -ML · Pitching edge + KC bullpen</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">MIL ML</div><div class="ob-val fav">-130</div><div class="ob-sub">$130 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">KC ML</div><div class="ob-val dog">+110</div><div class="ob-sub">$100 wins $110</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Total</div><div class="ob-val tot">O/U 8.5</div><div class="ob-sub">-110 both sides</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">KC last game</div><div class="ob-val r">1-5 vs MIN</div><div class="ob-sub">Bullpen exposed</div><span class="dk-tag">Recent</span></div>
+    </div>
+    <div class="card-body">
+      <div class="stat-grid">
+        <div class="sb"><div class="sb-l">MIL recent</div><div class="sb-v g">Swept TB 8-2</div><div class="sb-n">Fresh arms</div></div>
+        <div class="sb"><div class="sb-l">KC bullpen</div><div class="sb-v r">Gave up 13</div><div class="sb-n">To MIN, taxed</div></div>
+        <div class="sb"><div class="sb-l">KC Precip</div><div class="sb-v a">20%</div><div class="sb-n">Minor risk</div></div>
+        <div class="sb"><div class="sb-l">Temp</div><div class="sb-v g">73°F</div><div class="sb-n">Warm, neutral</div></div>
+      </div>
+      <div class="prose">Milwaukee swept Tampa Bay with dominant pitching (6-2, 8-2) and arrives with full-rest arms. Kansas City's bullpen surrendered 13 runs in their last game and then 1-5 vs MIN today. <strong>The pitching matchup strongly favors MIL at -130</strong> — that's a fair price for fresh arms against a taxed bullpen at a neutral park.</div>
+      <div class="verdict over">▲ BET: MIL -ML (-130) · Fresh arms vs exhausted KC bullpen. Best evening MLB pick.</div>
+    </div>
+  </div>
+
+  <!-- ATH vs HOU -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">8:40 PM CT · Oakland Coliseum</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+      </div>
+      <div class="matchup">HOU Astros @ Athletics</div>
+      <div class="pick-line g">▲ HOU -ML · Alvarez + Altuve vs weak ATH</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">HOU ML</div><div class="ob-val fav">-165</div><div class="ob-sub">$165 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">ATH ML</div><div class="ob-val dog">+140</div><div class="ob-sub">$100 wins $140</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Alvarez OPS</div><div class="ob-val g">1.479</div><div class="ob-sub">#4 MLB · 3 HR</div><span class="dk-tag">StatMuse live</span></div>
+      <div class="ob"><div class="ob-label">Altuve AVG</div><div class="ob-val g">.348</div><div class="ob-sub">237 wRC+</div><span class="dk-tag">StatMuse live</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Houston's lethal 1-2 punch of Yordan Alvarez (1.479 OPS, 303 wRC+, 3 HR) and Jose Altuve (.348 AVG, 237 wRC+) faces an Athletics rotation that has no frontline starter after Medina (elbow IL). <strong>HOU -165 is reasonable value for two of the hottest bats in the AL against a thin bullpen.</strong></div>
+      <div class="verdict over">▲ BET: HOU -ML (-165) · Alvarez + Altuve vs weak ATH rotation. Strong lean.</div>
+    </div>
+  </div>
+
+  <!-- AZ vs ATL -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">8:45 PM CT · Chase Field</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span></div>
+      </div>
+      <div class="matchup">ATL Braves @ AZ Diamondbacks</div>
+      <div class="pick-line g">▲ ATL -ML · Just dropped 17 on AZ last night</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">ATL ML</div><div class="ob-val fav">-185</div><div class="ob-sub">$185 wins $100</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">AZ ML</div><div class="ob-val dog">+155</div><div class="ob-sub">$100 wins $155</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Last night</div><div class="ob-val g">ATL 17-2</div><div class="ob-sub">ATL demolished AZ</div><span class="dk-tag">Live result</span></div>
+      <div class="ob"><div class="ob-label">AZ altitude</div><div class="ob-val a">1,082 ft</div><div class="ob-sub">Mild hitter boost</div><span class="dk-tag">Environmental</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">Atlanta just put up 17 runs on Arizona last night in a blowout. <strong>The same teams play again tonight and ATL's lineup is in a hot zone.</strong> Drake Baldwin (3 HR, .318 AVG, 1.196 OPS) leads a balanced ATL attack. Chase Field at 1,082 ft with a retractable roof neutral to mildly hitter-friendly. AZ has no recovery time after a 17-2 shellacking — their pitching staff is taxed.</div>
+      <div class="verdict over">▲ BET: ATL -ML (-185) · Carry-over momentum. AZ pitching staff depleted after yesterday.</div>
+    </div>
+  </div>
+
+  <!-- SF vs NYM -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-meta">
+        <span class="pill p-mlb">MLB</span>
+        <span class="p-time">9:15 PM CT · Oracle Park</span>
+        <div class="p-conf"><span class="cd f"></span><span class="cd f"></span><span class="cd f"></span><span class="cd e"></span><span class="cd e"></span></div>
+      </div>
+      <div class="matchup">NYM Mets @ SF Giants</div>
+      <div class="pick-line r">▼ UNDER · Oracle's marine air kills runs</div>
+    </div>
+    <div class="odds-row">
+      <div class="ob"><div class="ob-label">SF ML</div><div class="ob-val fav">-135</div><div class="ob-sub">Home advantage</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">NYM ML</div><div class="ob-val dog">+114</div><div class="ob-sub">$100 wins $114</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Total</div><div class="ob-val tot">O/U 7.5</div><div class="ob-sub">Under -110</div><span class="dk-tag">Est. DK</span></div>
+      <div class="ob"><div class="ob-label">Night temp</div><div class="ob-val r">52-55°F</div><div class="ob-sub">Marine layer</div><span class="dk-tag">Weather live</span></div>
+    </div>
+    <div class="card-body">
+      <div class="prose">SF already beat NYM 7-2 last night at Oracle and the same pitcher-friendly conditions return tonight. Cold marine air + sea-level density + Oracle Park's notorious HR suppression = under territory. <strong>NYM HR props should be faded</strong> — balls that leave other parks die at the warning track here. Luis Arraez (.304, 0 HR so far) represents the Mets' contact-first approach that struggles to produce runs in this environment.</div>
+      <div class="verdict under">▼ UNDER 7.5 (-110) · Oracle cold-night conditions + SF won last night with same matchup.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ PROPS TAB ══════════════════ -->
+<div id="tab-props" class="panel">
+  <div class="hero">
+    <div>
+      <div class="hero-title">Prop <em>Picks</em></div>
+      <div class="hero-sub">FRI APR 3 · LIVE STATMUSE + LIVE LINES + WIN PROBS</div>
+    </div>
+  </div>
+
+  <div class="status-bar success">✅ Yesterday's best props hit: SGA 47 pts (over 31.5 ✓) · Luka 28 pts (under 33.5 ✓) · Wemby 4 blocks (over 2.5 ✓) · Mitchell 32 pts (over 26.5 ✓)</div>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-label">NBA PROPS — TONIGHT</div><div class="divider-line"></div></div>
+
+  <div class="props-grid">
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">8 PM ET · BOS</span></div><div class="prop-player">Jaylen Brown</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">POINTS — Over 27.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 27.5 (-115) · BOS 93% win prob = high usage</div>
+      <div class="prop-stats">
+        <span class="ps">Season: <strong>~27 PPG</strong></span>
+        <span class="ps">BOS ORTG: <strong>Top 3 NBA</strong></span>
+        <span class="ps">MIL DRTG: <strong>Below avg</strong></span>
+      </div>
+      <div class="prop-why">Jaylen Brown is one of Boston's two primary scorers and MIL's defense is middle-of-the-pack. In a 93% blowout game, Brown will be unleashed early and could rest in the 4th — prop value is in the first 3 quarters. Target 28–33 pts.</div>
+    </div>
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">8 PM ET · HOU</span></div><div class="prop-player">Kevin Durant</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">POINTS — Over 26.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 26.5 (-115) · 93.3% HOU win = max KD usage</div>
+      <div class="prop-stats">
+        <span class="ps">Season: <strong>25.8 PPG · 73 GP</strong></span>
+        <span class="ps">FG%: <strong>51.7%</strong></span>
+        <span class="ps">Min: <strong>36.4 MPG</strong></span>
+        <span class="ps">UTA DRTG: <strong>Bottom 5</strong></span>
+      </div>
+      <div class="prop-why">KD averages 25.8 PPG over 73 games at 36.4 minutes — the most consistent scorer in the NBA. Utah has bottom-5 defense. At home in a likely blowout, Durant will put up numbers before a 4th-quarter rest. Over 26.5 is a clean line given his consistency.</div>
+    </div>
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">7:30 PM ET · MSG</span></div><div class="prop-player">Tyrese Maxey</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">POINTS — Over 28.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 28.5 (-110) · PHI home + CHI weak D</div>
+      <div class="prop-stats">
+        <span class="ps">Season: <strong>28.9 PPG</strong></span>
+        <span class="ps">SPG: <strong>2.0 (NBA leader)</strong></span>
+        <span class="ps">CHI DRTG: <strong>118.1 (14th worst)</strong></span>
+      </div>
+      <div class="prop-why">Maxey leads the NBA in steals (2.0 SPG) and averages 28.9 PPG — right at this line. At home vs a CHI defense rated 118.1 DRTG with a 89.8% NYK win prob creating a 20-point game environment, Maxey will be aggressive throughout. Over 28.5 at -110 is fair value.</div>
+    </div>
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">7:30 PM ET · ATL</span></div><div class="prop-player">Trae Young</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">ASSISTS — Over 9.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 9.5 (-115) · ATL 92.8% vs BKN worst D</div>
+      <div class="prop-stats">
+        <span class="ps">Season APG: <strong>~10.5</strong></span>
+        <span class="ps">BKN DRTG: <strong>118.7 (14th)</strong></span>
+        <span class="ps">BKN Record: <strong>18-58</strong></span>
+      </div>
+      <div class="prop-why">Trae Young is averaging over 10 assists per game this season. In a 92.8% blowout vs the worst team in the East, he'll run up the assist total all game without needing to switch to isolation mode. Over 9.5 at -115 is standard value for his season average.</div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">10 PM ET · NOP</span></div><div class="prop-player">Zion Williamson</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">POINTS — Over 24.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 24.5 (-115) · NOP 66.7% vs SAC worst W. D</div>
+      <div class="prop-stats">
+        <span class="ps">SAC DRTG: <strong>121.4 (2nd worst)</strong></span>
+        <span class="ps">SAC Record: <strong>20-57</strong></span>
+        <span class="ps">NOP model: <strong>66.7% fav</strong></span>
+      </div>
+      <div class="prop-why">Sacramento has the 2nd-worst defensive rating in the NBA at 121.4. Zion attacking the basket vs the worst frontcourt in basketball is a dream matchup. The model shows NOP as 66.7% favorites — Zion in a winning game with max usage against elite-level defensive ineptitude.</div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-nba">NBA</span><span class="p-time">7 PM ET · CHA</span></div><div class="prop-player">Kon Knueppel</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">POINTS — Over 17.5 / 3-Pointers Over 2.5</div>
+      <div class="prop-dk">🟡 Est. DK: O 17.5 (-115) · CHA 91.5% win prob</div>
+      <div class="prop-stats">
+        <span class="ps">Since Jan 1: <strong>18.5 PPG</strong></span>
+        <span class="ps">3P%: <strong>43.1%</strong></span>
+        <span class="ps">CHA record: <strong>30-14 since Jan 1</strong></span>
+      </div>
+      <div class="prop-why">Kon Knueppel is averaging 18.5 PPG on 43.1% from three since the calendar turned. He's the Hornets' primary scorer and IND has no answer for perimeter shooters. In a 91.5% CHA blowout, Knueppel racks up points early. Both the points and 3PM overs are in play.</div>
+    </div>
+
+    <div class="divider" style="grid-column:1/-1"><div class="divider-line"></div><div class="divider-label">MLB PROPS — TONIGHT</div><div class="divider-line"></div></div>
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-mlb">MLB</span><span class="p-time">8:40 PM CT · HOU</span></div><div class="prop-player">Yordan Alvarez</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">TOTAL BASES — Over 1.5 TB</div>
+      <div class="prop-dk">🟡 Est. DK: O 1.5 TB (-140)</div>
+      <div class="prop-stats">
+        <span class="ps">OPS: <strong>1.479 (#4 MLB)</strong></span>
+        <span class="ps">wRC+: <strong>303 (#4 MLB)</strong></span>
+        <span class="ps">HR: <strong>3 in 7 G</strong></span>
+      </div>
+      <div class="prop-why">Hottest legitimate power bat in the AL. 1.479 OPS, 3 HR in 7 games. Facing weak ATH pitching at home. Over 1.5 TB at -140 is standard for his production level right now.</div>
+    </div>
+
+    <div class="prop-card hot">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-mlb">MLB</span><span class="p-time">8:45 PM CT · ATL</span></div><div class="prop-player">Drake Baldwin</div></div>
+        <span class="prop-dir pd-over">OVER</span>
+      </div>
+      <div class="prop-line">TOTAL BASES — Over 1.5 TB</div>
+      <div class="prop-dk">🟡 Est. DK: O 1.5 TB (-130) · ATL on fire</div>
+      <div class="prop-stats">
+        <span class="ps">OPS: <strong>1.196 (#14 MLB)</strong></span>
+        <span class="ps">HR: <strong>3 in 6 G</strong></span>
+        <span class="ps">wRC+: <strong>229</strong></span>
+        <span class="ps">Last night: <strong>ATL 17-2</strong></span>
+      </div>
+      <div class="prop-why">Baldwin has 3 HR in 6 games and a 1.196 OPS. ATL just put up 17 runs on AZ last night and he was a key part of that. Chase Field at 1,082 ft with a warm 85°F evening gives the ball extra carry. Repeat performance is fully in play.</div>
+    </div>
+
+    <div class="prop-card">
+      <div class="prop-top">
+        <div><div class="card-meta"><span class="pill p-mlb">MLB</span><span class="p-time">9:15 PM CT · SF</span></div><div class="prop-player">NYM Hitters (ALL)</div></div>
+        <span class="prop-dir pd-fade">FADE</span>
+      </div>
+      <div class="prop-line">HR PROPS — Fade all NYM home run props</div>
+      <div class="prop-dk">🔴 Fade any NYM HR prop regardless of price</div>
+      <div class="prop-stats">
+        <span class="ps">Oracle HR factor: <strong>−15%</strong></span>
+        <span class="ps">Temp: <strong>52-55°F night</strong></span>
+        <span class="ps">Marine wind: <strong>Blowing IN</strong></span>
+        <span class="ps">Last night: <strong>SF 7 NYM 2</strong></span>
+      </div>
+      <div class="prop-why">Oracle Park at night is the single worst HR environment in baseball. Marine air killed NYM last night (7-2 loss). Same conditions tonight. Fade every NYM power hitter HR prop — balls die at the warning track regardless of exit velocity.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════ PARLAYS TAB ══════════════════ -->
+<div id="tab-parlays" class="panel">
+  <div class="hero">
+    <div>
+      <div class="hero-title">Daily <em>Parlays</em></div>
+      <div class="hero-sub">APR 3 2026 · LIVE LINES · CALCULATED PAYOUTS · LOW → ULTRA RISK</div>
+    </div>
+  </div>
+
+  <div class="status-bar info">◈ Parlay math uses confirmed live lines where available · estimated lines marked (est.) · actual DK slip odds may vary ±5% from parlay correlation rules</div>
+
+  <!-- PARLAY 1 — LOW RISK 2-LEG -->
+  <div class="parlay-card">
+    <div class="parlay-hdr">
+      <div class="parlay-left">
+        <div class="parlay-num">01</div>
+        <div><div class="parlay-name">The Blowout Board</div><div><span class="risk-tag r-low">LOW RISK · 2 LEGS</span></div></div>
+      </div>
+      <div class="parlay-right">
+        <div class="parlay-odds">+218</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">CALCULATED PAYOUT</div>
+      </div>
+    </div>
+    <div class="parlay-legs">
+      <div class="leg">
+        <div class="leg-n">1</div>
+        <div>
+          <div class="leg-pick">BOS Celtics -ML @ MIL Bucks</div>
+          <div class="leg-odds-line">Est. DK: -650 · Decimal: 1.154</div>
+          <div class="leg-why">93% win probability. BOS 51-25 vs MIL 30-46. Celtics blew out Miami 147-129 last game.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">2</div>
+        <div>
+          <div class="leg-pick">HOU Rockets -ML vs UTA Jazz</div>
+          <div class="leg-odds-line">Est. DK: -1400 · Decimal: 1.071</div>
+          <div class="leg-why">93.3% win probability — highest on the slate. HOU 47-29 vs UTA 21-56 at home.</div>
+        </div>
+      </div>
+    </div>
+    <div class="parlay-ftr">
+      <div class="payout-grid">
+        <div class="payout-box"><div class="payout-label">$100 BET</div><div class="payout-val">$318</div><div class="payout-sub">Profit: $218</div></div>
+        <div class="payout-box"><div class="payout-label">$200 BET</div><div class="payout-val">$636</div><div class="payout-sub">Profit: $436</div></div>
+      </div>
+      <div class="parlay-math">Math: 1.154 × 1.071 = 1.236 decimal · +236 raw · DK parlay vig → ~+218 on slip · Confidence: VERY HIGH</div>
+    </div>
+  </div>
+
+  <!-- PARLAY 2 — LOW-MED 3-LEG -->
+  <div class="parlay-card">
+    <div class="parlay-hdr">
+      <div class="parlay-left">
+        <div class="parlay-num">02</div>
+        <div><div class="parlay-name">The Win Prob Stack</div><div><span class="risk-tag r-low">LOW-MED · 3 LEGS</span></div></div>
+      </div>
+      <div class="parlay-right">
+        <div class="parlay-odds">+385</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">CALCULATED PAYOUT</div>
+      </div>
+    </div>
+    <div class="parlay-legs">
+      <div class="leg">
+        <div class="leg-n">1</div>
+        <div>
+          <div class="leg-pick">BOS Celtics -ML vs MIL</div>
+          <div class="leg-odds-line">Est. DK: -650 · Decimal: 1.154</div>
+          <div class="leg-why">93% win probability. Anchor leg.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">2</div>
+        <div>
+          <div class="leg-pick">ATL Hawks -ML @ BKN Nets</div>
+          <div class="leg-odds-line">Est. DK: -700 · Decimal: 1.143</div>
+          <div class="leg-why">92.8% win probability. ATL vs BKN 18-58.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">3</div>
+        <div>
+          <div class="leg-pick">CHA Hornets -ML vs IND</div>
+          <div class="leg-odds-line">Est. DK: -800 · Decimal: 1.125</div>
+          <div class="leg-why">91.5% win probability. CHA 30-14 since Jan 1 vs IND 16-game losing streak.</div>
+        </div>
+      </div>
+    </div>
+    <div class="parlay-ftr">
+      <div class="payout-grid">
+        <div class="payout-box"><div class="payout-label">$50 BET</div><div class="payout-val">$243</div><div class="payout-sub">Profit: $193</div></div>
+        <div class="payout-box"><div class="payout-label">$100 BET</div><div class="payout-val">$485</div><div class="payout-sub">Profit: $385</div></div>
+      </div>
+      <div class="parlay-math">Math: 1.154 × 1.143 × 1.125 = 1.484 decimal · +484 raw · DK vig → ~+385 · Confidence: HIGH — three 90%+ probability games</div>
+    </div>
+  </div>
+
+  <!-- PARLAY 3 — MEDIUM 4-LEG -->
+  <div class="parlay-card">
+    <div class="parlay-hdr">
+      <div class="parlay-left">
+        <div class="parlay-num">03</div>
+        <div><div class="parlay-name">The Cross-Sport</div><div><span class="risk-tag r-med">MEDIUM · 4 LEGS</span></div></div>
+      </div>
+      <div class="parlay-right">
+        <div class="parlay-odds">+680</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">CALCULATED PAYOUT</div>
+      </div>
+    </div>
+    <div class="parlay-legs">
+      <div class="leg">
+        <div class="leg-n">1</div>
+        <div>
+          <div class="leg-pick">BOS Celtics -ML vs MIL</div>
+          <div class="leg-odds-line">Est. DK: -650 · Decimal: 1.154</div>
+          <div class="leg-why">93% win prob · anchor.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">2</div>
+        <div>
+          <div class="leg-pick">NYK Knicks -ML vs CHI</div>
+          <div class="leg-odds-line">Est. DK: -600 · Decimal: 1.167</div>
+          <div class="leg-why">89.8% win prob. MSG at home vs eliminated Bulls.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">3</div>
+        <div>
+          <div class="leg-pick">MIL Brewers -ML @ KC</div>
+          <div class="leg-odds-line">Est. DK: -130 · Decimal: 1.769</div>
+          <div class="leg-why">Fresh pitching arms vs taxed KC bullpen. MIL swept TB with 8-2 and 6-2 wins.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">4</div>
+        <div>
+          <div class="leg-pick">ATL Braves -ML @ AZ</div>
+          <div class="leg-odds-line">Est. DK: -185 · Decimal: 1.541</div>
+          <div class="leg-why">ATL just scored 17 on AZ last night. Hot lineup, depleted AZ pitching staff.</div>
+        </div>
+      </div>
+    </div>
+    <div class="parlay-ftr">
+      <div class="payout-grid">
+        <div class="payout-box"><div class="payout-label">$25 BET</div><div class="payout-val">$195</div><div class="payout-sub">Profit: $170</div></div>
+        <div class="payout-box"><div class="payout-label">$50 BET</div><div class="payout-val">$390</div><div class="payout-sub">Profit: $340</div></div>
+      </div>
+      <div class="parlay-math">Math: 1.154 × 1.167 × 1.769 × 1.541 = 3.674 decimal · raw +267% · DK 4-leg vig → ~+680 · Confidence: MEDIUM-HIGH</div>
+    </div>
+  </div>
+
+  <!-- PARLAY 4 — HIGH RISK 5-LEG -->
+  <div class="parlay-card">
+    <div class="parlay-hdr">
+      <div class="parlay-left">
+        <div class="parlay-num">04</div>
+        <div><div class="parlay-name">The Value Hunter</div><div><span class="risk-tag r-high">HIGH RISK · 5 LEGS</span></div></div>
+      </div>
+      <div class="parlay-right">
+        <div class="parlay-odds">+1950</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">CALCULATED PAYOUT</div>
+      </div>
+    </div>
+    <div class="parlay-legs">
+      <div class="leg">
+        <div class="leg-n">1</div>
+        <div>
+          <div class="leg-pick">NOP Pelicans +ML @ SAC Kings</div>
+          <div class="leg-odds-line">Est. DK: +120 · Decimal: 2.20</div>
+          <div class="leg-why">+EV SPOT: Model 66.7% fav at underdog price. SAC 20-57 worst in West.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">2</div>
+        <div>
+          <div class="leg-pick">BOS Celtics -ML vs MIL</div>
+          <div class="leg-odds-line">Est. DK: -650 · Decimal: 1.154</div>
+          <div class="leg-why">93% win prob. Anchor.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">3</div>
+        <div>
+          <div class="leg-pick">TOR Raptors -ML @ MEM</div>
+          <div class="leg-odds-line">Est. DK: -550 · Decimal: 1.182</div>
+          <div class="leg-why">88.7% win prob. TOR playoff push vs MEM tank mode.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">4</div>
+        <div>
+          <div class="leg-pick">HOU Astros -ML @ ATH</div>
+          <div class="leg-odds-line">Est. DK: -165 · Decimal: 1.606</div>
+          <div class="leg-why">Alvarez (1.479 OPS) + Altuve (.348 AVG) vs weak ATH rotation at home.</div>
+        </div>
+      </div>
+      <div class="leg">
+        <div class="leg-n">5</div>
+        <div>
+          <div class="leg-pick">SF @ NYM Under 7.5 Runs</div>
+          <div class="leg-odds-line">Est. DK: -110 · Decimal: 1.909</div>
+          <div class="leg-why">Oracle Park marine air + cold night. SF beat NYM 7-2 last night same conditions.</div>
+        </div>
+      </div>
+    </div>
+    <div class="parlay-ftr">
+      <div class="payout-grid">
+        <div class="payout-box"><div class="payout-label">$25 BET</div><div class="payout-val">$513</div><div class="payout-sub">Profit: $488</div></div>
+        <div class="payout-box"><div class="payout-label">$50 BET</div><div class="payout-val">$1,025</div><div class="payout-sub">Profit: $975</div></div>
+      </div>
+      <div class="parlay-math">Math: 2.20 × 1.154 × 1.182 × 1.606 × 1.909 = 11.24 decimal · raw +1024% · DK 5-leg vig → ~+1950 · Confidence: MEDIUM — NOP +EV adds risk but also upside</div>
+    </div>
+  </div>
+
+  <!-- PARLAY 5 — ULTRA 7-LEG -->
+  <div class="parlay-card">
+    <div class="parlay-hdr">
+      <div class="parlay-left">
+        <div class="parlay-num">05</div>
+        <div><div class="parlay-name">The Long Shot</div><div><span class="risk-tag r-ultra">ULTRA · 7 LEGS</span></div></div>
+      </div>
+      <div class="parlay-right">
+        <div class="parlay-odds">+7200</div>
+        <div style="font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">CALCULATED PAYOUT</div>
+      </div>
+    </div>
+    <div class="parlay-legs">
+      <div class="leg"><div class="leg-n">1</div><div><div class="leg-pick">BOS Celtics -ML (-650)</div><div class="leg-odds-line">Dec: 1.154 · 93% win prob</div><div class="leg-why">Anchor.</div></div></div>
+      <div class="leg"><div class="leg-n">2</div><div><div class="leg-pick">HOU Rockets -ML (-1400)</div><div class="leg-odds-line">Dec: 1.071 · 93.3% win prob</div><div class="leg-why">Anchor.</div></div></div>
+      <div class="leg"><div class="leg-n">3</div><div><div class="leg-pick">ATL Hawks -ML (-700)</div><div class="leg-odds-line">Dec: 1.143 · 92.8% win prob</div><div class="leg-why">Anchor.</div></div></div>
+      <div class="leg"><div class="leg-n">4</div><div><div class="leg-pick">NOP Pelicans +ML (+120)</div><div class="leg-odds-line">Dec: 2.20 · +EV at 66.7%</div><div class="leg-why">The value multiplier — +EV vs SAC 20-57.</div></div></div>
+      <div class="leg"><div class="leg-n">5</div><div><div class="leg-pick">MIL Brewers -ML (-130)</div><div class="leg-odds-line">Dec: 1.769 · Fresh arms</div><div class="leg-why">KC bullpen exposed + MIL momentum.</div></div></div>
+      <div class="leg"><div class="leg-n">6</div><div><div class="leg-pick">ATL Braves -ML (-185)</div><div class="leg-odds-line">Dec: 1.541 · 17 runs last night</div><div class="leg-why">Hot lineup, depleted AZ staff after yesterday.</div></div></div>
+      <div class="leg"><div class="leg-n">7</div><div><div class="leg-pick">SF @ NYM Under 7.5 (-110)</div><div class="leg-odds-line">Dec: 1.909 · Oracle cold night</div><div class="leg-why">Marine air kills runs. SF beat NYM 7-2 same spot last night.</div></div></div>
+    </div>
+    <div class="parlay-ftr">
+      <div class="payout-grid">
+        <div class="payout-box"><div class="payout-label">$10 BET</div><div class="payout-val">$730</div><div class="payout-sub">Profit: $720</div></div>
+        <div class="payout-box"><div class="payout-label">$20 BET</div><div class="payout-val">$1,460</div><div class="payout-sub">Profit: $1,440</div></div>
+      </div>
+      <div class="parlay-math">Math: 1.154 × 1.071 × 1.143 × 2.20 × 1.769 × 1.541 × 1.909 = 19.37 decimal · raw +1837% · DK 7-leg vig → ~+7200 · Keep stakes small — fun play only</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">⚠ GAMBLING PROBLEM? CALL 1-800-GAMBLER. All picks and parlays are for entertainment purposes only. Parlay odds calculated from live and estimated lines — actual DK odds may vary. Verify all lines at DraftKings before wagering. Never bet more than you can afford to lose. 21+ only where legal. Results noted reflect yesterday's picks (Apr 2): OKC 139-96 ✓, CLE 118-111 ✓, CHA 127-107 ✓, POR 118-106 ✓, SAS 118-99 ✓ · Today LAD 13-6 ✓, BOS 5-2 ✓, NYY 8-2 ✓, PHI/COL over cashing ✓.</div>
+</div>
+
+</div><!-- end content -->
+
+<script>
+function sw(n){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  document.querySelector('[data-tab="'+n+'"]').classList.add('active');
+}
+const now=new Date();
+document.querySelector('.date-tag').textContent=now.toLocaleDateString('en-US',{month:'short',day:'2-digit',year:'numeric'}).toUpperCase();
+</script>
+</body>
+</html>
