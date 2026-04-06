@@ -604,7 +604,7 @@ def fetch_schedule():
         games = []
         for ev in data.get("events", []):
             comps = ev.get("competitions", [{}])[0]
-                                                   competitors = comps.get("competitors", [])
+            competitors = comps.get("competitors", [])
             if len(competitors) >= 2:
                 home = next((c for c in competitors if c.get("homeAway") == "home"), competitors[0])
                 away = next((c for c in competitors if c.get("homeAway") == "away"), competitors[1])
