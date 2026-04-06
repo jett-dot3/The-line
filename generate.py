@@ -893,12 +893,25 @@ Flag any postponed games and exclude them completely.
             "content-type": "application/json",
         },
         json={
-            "model": "claude-sonnet-4-5",
+            "model": "claude-haiku-4-5-20251001",
             "max_tokens": 8000,
             "messages": [{"role": "user", "content": prompt}]
         },
         timeout=120
     )
+
+    print(f"  [API] Anthropic status: {response.status_code}")
+
+    if response.status_code == 401:
+        print("  [ERROR] 401 Unauthorized — billing not set up or key is invalid.")
+        print("  [FIX]   Go to console.anthropic.com -> Billing -> add card + credits.")
+        print("  [FIX]   Then API Keys -> delete old key -> create new -> update GitHub secret.")
+        sys.exit(1)
+
+    if response.status_code == 429:
+        print("  [ERROR] 429 Rate limited — wait 60 seconds and try again.")
+        sys.exit(1)
+
     response.raise_for_status()
     raw = response.json()["content"][0]["text"]
 
