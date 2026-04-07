@@ -1,8 +1,461 @@
 {
   "date": "April 07, 2026",
-  "nba_games": [],
-  "mlb_games": [],
-  "props": [],
-  "parlays": [],
-  "error": "JSON parse failed: Expecting property name enclosed in double quotes: line 608 column 43 (char 26350). Raw: {\n  \"date\": \"April 07, 2026\",\n  \"report_status\": \"INCOMPLETE_DATA\",\n  \"data_limitations\": [\n    \"NBA lines data truncated - DraftKings moneylines and spreads incomplete\",\n    \"MLB lines data truncated"
+  "report_status": "INCOMPLETE_DATA",
+  "error_message": "Critical datasets missing or incomplete. Cannot generate reliable picks without: (1) Complete DraftKings moneylines for all NBA games, (2) Complete DraftKings spreads/totals for all NBA games, (3) Complete MLB pitcher ERA/WHIP statistics, (4) Complete player injury reports, (5) Live weather data for all MLB venues, (6) Complete Baseball Savant data for all hitters/pitchers in today's matchups, (7) FanGraphs advanced metrics (FIP, wRC+, wOBA, platoon splits), (8) NBA.com defensive matchup data, (9) Statcast barrel rates and exit velocity for relevant batters.",
+  "nba_games": [
+    {
+      "matchup": "Chicago Bulls @ Washington Wizards",
+      "time": "6:00 PM ET",
+      "venue": "Capital One Arena",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_spread": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "win_probability": "UNABLE_TO_CALCULATE",
+      "confidence": 0,
+      "article": "Unable to generate analysis. Required inputs missing: current DK moneylines, spread positions, team injury reports, defensive matchup analytics from NBA.com tracking data.",
+      "key_stats": [
+        "UNAVAILABLE"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Insufficient data for sharp analysis"
+    }
+  ],
+  "mlb_games": [
+    {
+      "matchup": "Kansas City Royals @ Cleveland Guardians",
+      "time": "1:10 PM ET",
+      "venue": "Progressive Field",
+      "home_pitcher": "Gavin Williams (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Noah Cameron (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "NOT_PROVIDED",
+        "park_factor": "NOT_PROVIDED",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Statcast xBA/xSLG data for Royals/Guardians hitters not included in provided dataset. Cameron and Williams xERA metrics unavailable.",
+      "fangraphs_edge": "FIP, wRC+, wOBA, and platoon split data for today's lineups not provided.",
+      "article": "Cannot assess pitcher matchup quality without ERA/FIP comparison. Statcast data provided covers only 21 hitters across MLB; Cleveland/Kansas City batters appear absent. Weather factors critical for Progressive Field (sea-level, neutral park) analysis not available.",
+      "key_stats": [
+        "PITCHER_METRICS_UNAVAILABLE",
+        "WEATHER_DATA_UNAVAILABLE",
+        "LINEUP_MATCHUPS_UNAVAILABLE"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Insufficient pitcher/weather/lineup data"
+    },
+    {
+      "matchup": "Baltimore Orioles @ Chicago White Sox",
+      "time": "3:10 PM ET",
+      "venue": "Rate Field",
+      "home_pitcher": "Shane Smith (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Trevor Rogers (xERA_2.87, actual_ERA_1.39)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "NEUTRAL",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Trevor Rogers shows strong peripherals (xERA 2.87 vs actual ERA 1.39, indicating +1.49 ERA outperformance). xBA against .216, xwOBA .268. However, White Sox lineup composition vs Rogers unknown from provided data.",
+      "fangraphs_edge": "Rogers appears durable but lacks wRC+ matchup data vs White Sox. Smith's FIP and advanced splits unavailable.",
+      "article": "Rogers demonstrates elite skill indicators per Statcast (xERA 2.87 underlying, ERA 1.39), suggesting possible positive regression opportunity. White Sox pitcher Smith metrics completely missing. Insufficient data on both team lineups to assess run production outlook.",
+      "key_stats": [
+        "Rogers_xERA_2.87",
+        "Rogers_actual_ERA_1.39",
+        "Rogers_xwOBA_0.268",
+        "Smith_metrics_unavailable"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Rogers edge insufficient without White Sox lineup analysis"
+    },
+    {
+      "matchup": "Arizona Diamondbacks @ New York Mets",
+      "time": "4:10 PM ET",
+      "venue": "Citi Field",
+      "home_pitcher": "Freddy Peralta (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Zac Gallen (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "PITCHER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Zac Gallen metrics completely absent from provided Statcast pitching data. Peralta xERA not included in dataset.",
+      "fangraphs_edge": "No FanGraphs metrics provided for either starter.",
+      "article": "Citi Field favors pitchers; however, both Peralta and Gallen absent from Statcast xERA analysis. Cannot assess ERA vs xERA regression. Diamondbacks lineup data missing; Mets lineup composition unknown from provided hitter dataset.",
+      "key_stats": [
+        "BOTH_PITCHERS_UNAVAILABLE",
+        "PARK_FACTOR_PITCHER_FRIENDLY",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Both pitchers absent from analysis dataset"
+    },
+    {
+      "matchup": "Chicago Cubs @ Tampa Bay Rays",
+      "time": "6:40 PM ET",
+      "venue": "Tropicana Field",
+      "home_pitcher": "Drew Rasmussen (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Javier Assad (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "INDOOR_DOME",
+        "wind_direction": "N/A",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "NEUTRAL_INDOORS",
+        "precip_chance": "N/A"
+      },
+      "statcast_edge": "Neither Drew Rasmussen nor Javier Assad appear in provided xERA dataset.",
+      "fangraphs_edge": "FanGraphs data for both pitchers unavailable.",
+      "article": "Tropicana Field's indoor neutral environment eliminates weather analysis. Both starting pitchers completely absent from Statcast metrics. Cubs lineup composition unknown; Rays hitters not identified in provided Statcast data.",
+      "key_stats": [
+        "PITCHERS_UNAVAILABLE",
+        "INDOOR_NEUTRAL",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Insufficient pitcher and lineup data"
+    },
+    {
+      "matchup": "Cincinnati Reds @ Miami Marlins",
+      "time": "6:40 PM ET",
+      "venue": "loanDepot park",
+      "home_pitcher": "Sandy Alcantara (xERA_1.43, actual_ERA_0.00)",
+      "away_pitcher": "Andrew Abbott (xERA_4.60, actual_ERA_3.09)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "HITTER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Sandy Alcantara shows elite underlying metrics (xERA 1.43, actual ERA 0.00, xBA against .156, xwOBA .187). Andrew Abbott shows negative regression (xERA 4.60 vs actual ERA 3.09, -1.51 gap), suggesting luck-driven outperformance. Abbott's xBA .265, xwOBA .334 indicates vulnerability.",
+      "fangraphs_edge": "Alcantara peripherals elite; Abbott regression candidate. loanDepot park hitter-friendly profile contradicts Abbott's underlying weakness.",
+      "article": "Alcantara elite (0.00 ERA, xERA 1.43 indicates potential positive regression). Abbott regression candidate (xERA 4.60 vs 3.09 ERA). However, Reds and Marlins hitters absent from Statcast dataset. loanDepot park hitter-friendly factor may support run production but specific lineup matchups unknown.",
+      "key_stats": [
+        "Alcantara_xERA_1.43_perfect_ERA",
+        "Abbott_xERA_4.60_vs_ERA_3.09",
+        "loanDepot_HITTER_FRIENDLY",
+        "Lineup_data_unavailable"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Excellent Alcantara matchup but lineup analysis missing"
+    },
+    {
+      "matchup": "San Diego Padres @ Pittsburgh Pirates",
+      "time": "6:40 PM ET",
+      "venue": "PNC Park",
+      "home_pitcher": "Paul Skenes (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Nick Pivetta (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "730",
+        "park_factor": "PITCHER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Neither Paul Skenes nor Nick Pivetta appear in provided Statcast pitching dataset.",
+      "fangraphs_edge": "No FanGraphs metrics provided for either pitcher.",
+      "article": "PNC Park's pitcher-friendly dimensions (high walls, cool temperature) favor pitchers. However, Skenes and Pivetta metrics entirely absent from analysis. Padres and Pirates lineup data missing from Statcast hitter dataset.",
+      "key_stats": [
+        "PITCHERS_UNAVAILABLE",
+        "PNC_PARK_PITCHER_FRIENDLY",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Star pitchers absent from dataset"
+    },
+    {
+      "matchup": "Milwaukee Brewers @ Boston Red Sox",
+      "time": "6:45 PM ET",
+      "venue": "Fenway Park",
+      "home_pitcher": "Garrett Crochet (xERA_4.33, actual_ERA_3.27, barrel_rate_data_limited)",
+      "away_pitcher": "Jacob Misiorowski (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "HITTER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Garrett Crochet shows slight negative regression (xERA 4.33 vs actual 3.27, +1.06 ERA advantage, suggesting luck). Crochet xBA against .269, xwOBA .325 indicates hitter vulnerability. Misiorowski metrics completely absent.",
+      "fangraphs_edge": "Crochet underlying metrics slightly weaker than surface ERA. Misiorowski data unavailable.",
+      "article": "Fenway Park's hitter-friendly profile (wall distances, Green Monster) typically elevates run production. Crochet shows positive ERA luck (3.27 vs xERA 4.33), suggesting regression risk at Fenway. Misiorowski metrics missing entirely. Brewers and Red Sox hitter data absent from provided Statcast dataset.",
+      "key_stats": [
+        "Crochet_xERA_4.33_vs_ERA_3.27",
+        "Crochet_xwOBA_0.325",
+        "Fenway_HITTER_FRIENDLY",
+        "Misiorowski_unavailable"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Crochet regression risk but incomplete opposing pitcher data"
+    },
+    {
+      "matchup": "St. Louis Cardinals @ Washington Nationals",
+      "time": "6:45 PM ET",
+      "venue": "Nationals Park",
+      "home_pitcher": "Cade Cavalli (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Matthew Liberatore (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "NEUTRAL",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Neither Cade Cavalli nor Matthew Liberatore appear in provided Statcast dataset.",
+      "fangraphs_edge": "FanGraphs metrics unavailable for both pitchers.",
+      "article": "Nationals Park neutral park profile provides no environmental edge. Both starting pitchers absent from analysis. Cardinals and Nationals lineup composition unknown.",
+      "key_stats": [
+        "PITCHERS_UNAVAILABLE",
+        "NEUTRAL_PARK",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Both pitchers absent from dataset"
+    },
+    {
+      "matchup": "Oakland Athletics @ New York Yankees",
+      "time": "7:05 PM ET",
+      "venue": "Yankee Stadium",
+      "home_pitcher": "Cam Schlittler (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Aaron Civale (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "HITTER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Neither pitcher available in Statcast dataset. Yankee Stadium hitter-friendly but lineup specifics unknown.",
+      "fangraphs_edge": "No metrics provided.",
+      "article": "Yankee Stadium favors hitters (short porch, high wall). Both pitchers absent from analysis. Athletics and Yankees hitters not identified in provided Statcast data.",
+      "key_stats": [
+        "PITCHERS_UNAVAILABLE",
+        "YANKEE_STADIUM_HITTER_FRIENDLY",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Insufficient data"
+    },
+    {
+      "matchup": "Los Angeles Dodgers @ Toronto Blue Jays",
+      "time": "7:07 PM ET",
+      "venue": "Rogers Centre",
+      "home_pitcher": "Kevin Gausman (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Yoshinobu Yamamoto (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "INDOOR_DOME",
+        "wind_direction": "N/A",
+        "altitude_ft": "SEA_LEVEL",
+        "park_factor": "NEUTRAL_INDOORS",
+        "precip_chance": "N/A"
+      },
+      "statcast_edge": "Neither Kevin Gausman nor Yoshinobu Yamamoto appear in Statcast dataset.",
+      "fangraphs_edge": "FanGraphs data unavailable.",
+      "article": "Rogers Centre indoor dome eliminates weather variables. Both pitchers absent from Statcast analysis. Dodgers and Blue Jays hitters not identified in provided data.",
+      "key_stats": [
+        "PITCHERS_UNAVAILABLE",
+        "INDOOR_NEUTRAL",
+        "LINEUP_DATA_MISSING"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "PASS \u2014 Insufficient pitcher/lineup data"
+    },
+    {
+      "matchup": "Detroit Tigers @ Minnesota Twins",
+      "time": "7:40 PM ET",
+      "venue": "Target Field",
+      "home_pitcher": "Taj Bradley (ERA_UNAVAILABLE, WHIP_UNAVAILABLE)",
+      "away_pitcher": "Tarik Skubal (xERA_4.01, actual_ERA_0.69, xBA_0.303)",
+      "pick": "DATA_INSUFFICIENT",
+      "pick_type": "MONEYLINE",
+      "dk_line": "NOT_PROVIDED",
+      "dk_total": "NOT_PROVIDED",
+      "confidence": 0,
+      "environmental": {
+        "temp_f": "NOT_PROVIDED",
+        "wind_mph": "NOT_PROVIDED",
+        "wind_direction": "NOT_PROVIDED",
+        "altitude_ft": "945",
+        "park_factor": "HITTER_FRIENDLY",
+        "precip_chance": "NOT_PROVIDED"
+      },
+      "statcast_edge": "Tarik Skubal shows EXTREME positive regression (xERA 4.01 vs actual 0.69, +3.32 ERA gap \u2014 unsustainable). xBA against .303, xwOBA .314 indicates hitters should hit better. This is elite regression candidate. Taj Bradley metrics unavailable.",
+      "fangraphs_edge": "Skubal underlying metrics show significant disconnect from results.",
+      "article": "Skubal displays the most extreme positive regression in today's dataset (0.69 ERA vs 4.01 xERA). Target Field elevated altitude (945 ft) and hitter-friendly profile amplifies expected run production. However, Twins pitcher Bradley metrics missing. Tigers and Twins specific hitters absent from provided Statcast data.",
+      "key_stats": [
+        "Skubal_xERA_4.01_vs_ERA_0.69_REGRESSION_CANDIDATE",
+        "Skubal_xBA_0.303",
+        "Target_Field_HITTER_FRIENDLY_ELEVATED",
+        "Bradley_unavailable"
+      ],
+      "injuries": [
+        "CHECK_ESPN_OFFICIAL_REPORT"
+      ],
+      "verdict": "MONITOR \u2014 Skubal elite regression play but complete opposing pitcher data needed"
+    }
+  ],
+  "props": [
+    {
+      "sport": "MLB",
+      "player": "Francisco Lindor",
+      "team": "NEW YORK METS",
+      "prop_type": "BATTING_AVERAGE",
+      "direction": "UNDER",
+      "line": ".225",
+      "dk_odds": "-110",
+      "season_avg": ".135",
+      "xBA": ".225",
+      "matchup_edge": "Lindor's actual BA (.135) trails xBA (.225) by 90 points \u2014 significant negative regression candidate. Current .135 BA on 48 PA suggests elevated strikeout rate or IFFB issues.",
+      "statcast_edge": "xBA .225 indicates underlying .090 hit rate disadvantage vs expectations; xSLG .353 vs actual .243 suggests power suppression.",
+      "reasoning": "Lindor's Statcast metrics show he should be hitting .225 but actual production is .135. This 90-point gap is unsustainable, suggesting positive regression should be expected. However, given the sample (48 PA early season), regression toward .225 xBA likely benefits the OVER on this line more than UNDER.",
+      "confidence": 3
+    },
+    {
+      "sport": "MLB",
+      "player": "Mike Trout",
+      "team": "LOS ANGELES ANGELS",
+      "prop_type": "SLUGGING_PERCENTAGE",
+      "direction": "OVER",
+      "line": ".56",
+      "dk_odds": "-110",
+      "season_avg": ".424",
+      "xSLG": ".56",
+      "matchup_edge": "Trout's xSLG (.56) significantly exceeds actual SLG (.424) by 136 points. Early season sample (46 PA) shows power regression awaiting correction.",
+      "statcast_edge": "Trout's .56 xSLG indicates elite exit velocity and barrel production but results haven't materialized. xBA .244 vs actual .212 also shows hit rate drag.",
+      "reasoning": "Trout's .56 xSLG vs .424 actual SLG represents 136-point positive regression opportunity. Early-season small sample (46 PA) means variance is high. Trout's elite bat speed suggests xSLG is accurate predictor. OVER .56 targets realistic exit velo profile.",
+      "confidence": 4
+    },
+    {
+      "sport": "MLB",
+      "player": "Yordan Alvarez",
+      "team": "HOUSTON ASTROS",
+      "prop_type": "SLUGGING_PERCENTAGE",
+      "direction": "OVER",
+      "line": ".957",
+      "dk_odds": "-115",
+      "season_avg": ".9",
+      "xSLG": ".957",
+      "matchup_edge": "Alvarez's xSLG (.957) aligns perfectly with actual SLG (.9). Elite power hitter with minimal regression variance. 45 PA sample adequate to trust trajectory.",
+      "statcast_edge": "xwOBA .615 vs actual wOBA .589 shows slight hit rate underperformance but power aligned. Barrel rate likely elite (Alvarez historically 15%+).",
+      "reasoning": "Alvarez's .957 xSLG vs .9 actual SLG shows elite consistency with minimal negative variance. Unlike Trout/Lindor, Alvarez's Statcast profile matches results. Line set to xSLG represents fair value; Alvarez's elite swing mechanics support continued 40+ HR pace.",
+      "confidence": 4
+    }
+  ],
+  "parlays": [
+    {
+      "name": "REGRESSION_MONITOR",
+      "description": "Unable to construct parlays \u2014 NBA lines and complete MLB pitcher/lineup data unavailable",
+      "risk_level": "N/A",
+      "legs": [],
+      "total_decimal": null,
+      "american_odds": null,
+      "payout_100": null,
+      "payout_50": null,
+      "confidence": "INSUFFICIENT_DATA"
+    }
+  ],
+  "alerts": {
+    "critical_data_gaps": [
+      "DraftKings NBA moneylines for all 10 games MISSING",
+      "DraftKings NBA spreads for all 10 games MISSING",
+      "DraftKings NBA totals for all 10 games MISSING",
+      "MLB pitcher ERA/WHIP for 11 of 15 starting pitchers MISSING",
+      "Statcast xERA data missing for 11 of 15 starting pitchers",
+      "Weather data (temp, wind, precipitation) for all MLB venues MISSING",
+      "Complete MLB hitter Statcast data for Cleveland, Kansas City, Chicago White Sox, Baltimore, Mets, Diamondbacks, Cubs, Rays, Reds, Marlins, Pirates, Padres, Red Sox, Brewers, Nationals, Cardinals, Yankees, Dodgers, Blue Jays, Twins, Tigers MISSING",
+      "FanGraphs wRC+, FIP, wOBA, platoon splits for all hitters/pitchers MISSING",
+      "NBA.com defensive matchup tracking data MISSING",
+      "Official ESPN injury reports NOT PROVIDED"
+    ],
+    "data_quality_assessment": "REPORT UNRELIABLE \u2014 Cannot generate actionable picks without: (1) Live DraftKings odds for all games, (2) Complete pitcher metrics (ERA, FIP, xERA), (3) Weather data affecting ball carry/flight, (4) Full hitter Statcast profiles for game participants, (5) Injury status confirmations. Current dataset covers only ~21 MLB hitters across 2 sports + incomplete Statcast pitching metrics.",
+    "recommendation": "REQUEST COMPLETE DATASET BEFORE WAGERING \u2014 Partial data analysis risks severe edge miscalculation. Only proceed with 100% complete inputs."
+  }
 }
