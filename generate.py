@@ -984,9 +984,9 @@ async function doSearch(){
   var key=window.AK||localStorage.getItem('tlk')||'';
   if(!key){el.innerHTML=kp();return;}
   try{
-    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+    var resp=await fetch('https://shiny-sound-9779.matthewpjett.workers.dev',{
       method:'POST',
-      headers:{'content-type':'application/json','anthropic-version':'2023-06-01','x-api-key':key},
+      headers:{'content-type':'application/json','anthropic-version':'2023-06-01'},
       body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2000,messages:[{role:'user',content:prompt}]})
     });
     if(resp.status===401){el.innerHTML=kp();return;}
