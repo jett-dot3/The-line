@@ -174,51 +174,82 @@ def fetch_statmuse():
 # 3. ESPN INJURIES
 # ─────────────────────────────────────────
 def fetch_espn_injuries():
-    """Use ESPN's JSON API endpoints for injuries - much more reliable than scraping."""
+    """
+    Fetch injuries using ESPN's scoreboard API which embeds injury data per game.
+    Also fetches each team's roster to give Claude current player names.
+    """
     out = {}
     headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"}
+    today = datetime.date.today().strftime("%Y%m%d")
 
-    # NBA injuries via ESPN API
-    nba_url = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries"
-    data = safe_json(nba_url, headers=headers, label="ESPN NBA injuries API")
-    if data:
-        injuries = []
-        for team in data.get("injuries", []):
-            team_name = team.get("team", {}).get("shortDisplayName", "")
-            for inj in team.get("injuries", []):
-                athlete = inj.get("athlete", {})
-                status = inj.get("status", "")
-                detail = inj.get("details", {})
-                injury_type = detail.get("type", "") if detail else ""
-                name = athlete.get("displayName", "")
-                if status in ["Out", "Questionable", "Doubtful", "Day-To-Day"]:
-                    injuries.append(f"{team_name}: {name} {status} ({injury_type})")
-        out["nba"] = "\n".join(injuries[:60])
-        print(f"  [ESPN] NBA injuries: {len(injuries)} players")
-    else:
-        out["nba"] = ""
+    # Get NBA injuries from today's scoreboard (embedded in each game)
+    nba_sb = safe_json(
+        f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates={today}",
+        headers=headers, label="ESPN NBA scoreboard for injuries"
+    )
+    nba_injuries = []
+    nba_teams_seen = set()
+    if nba_sb:
+        for event in nba_sb.get("events", []):
+            for comp in event.get("competitions", []):
+                for team in comp.get("competitors", []):
+                    team_name = team.get("team", {}).get("shortDisplayName", "")
+                    team_id = team.get("team", {}).get("id", "")
+                    if team_id and team_id not in nba_teams_seen:
+                        nba_teams_seen.add(team_id)
+                        # Fetch team injuries
+                        inj_data = safe_json(
+                            f"https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/{team_id}?enable=injuries,roster",
+                            headers=headers, label=f"ESPN {team_name} injuries"
+                        )
+                        if inj_data:
+                            team_info = inj_data.get("team", {})
+                            for inj in team_info.get("injuries", []):
+                                athlete = inj.get("athlete", {})
+                                name = athlete.get("displayName", "")
+                                status = inj.get("status", "")
+                                detail = inj.get("details", {}) or {}
+                                inj_type = detail.get("type", "")
+                                if name and status:
+                                    nba_injuries.append(f"{team_name}: {name} {status} ({inj_type})")
+                        time.sleep(0.3)
+    out["nba"] = "\n".join(nba_injuries[:80]) if nba_injuries else ""
+    print(f"  [ESPN] NBA injuries fetched: {len(nba_injuries)} players")
 
     time.sleep(0.5)
 
-    # MLB injuries via ESPN API
-    mlb_url = "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/injuries"
-    data = safe_json(mlb_url, headers=headers, label="ESPN MLB injuries API")
-    if data:
-        injuries = []
-        for team in data.get("injuries", []):
-            team_name = team.get("team", {}).get("shortDisplayName", "")
-            for inj in team.get("injuries", []):
-                athlete = inj.get("athlete", {})
-                status = inj.get("status", "")
-                detail = inj.get("details", {})
-                injury_type = detail.get("type", "") if detail else ""
-                name = athlete.get("displayName", "")
-                if status in ["Out", "Questionable", "Doubtful", "Day-To-Day", "10-Day IL", "15-Day IL", "60-Day IL"]:
-                    injuries.append(f"{team_name}: {name} {status} ({injury_type})")
-        out["mlb"] = "\n".join(injuries[:60])
-        print(f"  [ESPN] MLB injuries: {len(injuries)} players")
-    else:
-        out["mlb"] = ""
+    # Get MLB injuries from today's scoreboard
+    mlb_sb = safe_json(
+        f"https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates={today}",
+        headers=headers, label="ESPN MLB scoreboard for injuries"
+    )
+    mlb_injuries = []
+    mlb_teams_seen = set()
+    if mlb_sb:
+        for event in mlb_sb.get("events", []):
+            for comp in event.get("competitions", []):
+                for team in comp.get("competitors", []):
+                    team_name = team.get("team", {}).get("shortDisplayName", "")
+                    team_id = team.get("team", {}).get("id", "")
+                    if team_id and team_id not in mlb_teams_seen:
+                        mlb_teams_seen.add(team_id)
+                        inj_data = safe_json(
+                            f"https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams/{team_id}?enable=injuries,roster",
+                            headers=headers, label=f"ESPN {team_name} MLB injuries"
+                        )
+                        if inj_data:
+                            team_info = inj_data.get("team", {})
+                            for inj in team_info.get("injuries", []):
+                                athlete = inj.get("athlete", {})
+                                name = athlete.get("displayName", "")
+                                status = inj.get("status", "")
+                                detail = inj.get("details", {}) or {}
+                                inj_type = detail.get("type", "")
+                                if name and status:
+                                    mlb_injuries.append(f"{team_name}: {name} {status} ({inj_type})")
+                        time.sleep(0.3)
+    out["mlb"] = "\n".join(mlb_injuries[:80]) if mlb_injuries else ""
+    print(f"  [ESPN] MLB injuries fetched: {len(mlb_injuries)} players")
 
     time.sleep(0.5)
     return out
