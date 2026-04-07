@@ -1151,5 +1151,17 @@ window.THE_LINE_DATA = {
 window.THE_LINE_DATE = "April 07, 2026";
 console.log('THE LINE loaded, NBA games:', (window.THE_LINE_DATA.nba_games||[]).length);
 </script>
+<script>
+window.THE_LINE_DATA = {
+  "date": "April 07, 2026",
+  "nba_games": [],
+  "mlb_games": [],
+  "props": [],
+  "parlays": [],
+  "error": "JSON parse failed: Unterminated string starting at: line 372 column 18 (char 26740). Raw: {\n  \"date\": \"April 07, 2026\",\n  \"nba_games\": [\n    {\n      \"matchup\": \"Chicago Bulls @ Washington Wizards\",\n      \"time\": \"11:00 PM ET\",\n      \"venue\": \"Capital One Arena\",\n      \"pick\": \"Wizards -ML\""
+};
+window.THE_LINE_DATE = "April 07, 2026";
+console.log('THE LINE loaded, NBA games:', (window.THE_LINE_DATA.nba_games||[]).length);
+</script>
 </body>
 </html>
