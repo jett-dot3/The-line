@@ -1,50 +1,8 @@
 {
-  "report_status": "INCOMPLETE_DATA",
-  "error_message": "Unable to generate complete betting intelligence report",
-  "data_issues": [
-    "NBA: Live DraftKings moneylines and spreads incomplete in provided dataset",
-    "MLB: Live DraftKings moneylines and totals incomplete in provided dataset",
-    "MLB: Ballpark weather data (temperature, wind, humidity) not provided",
-    "MLB: Specific pitcher ERA/WHIP statistics incomplete",
-    "NBA: Defensive matchup data and tracking stats not accessible in provided format",
-    "MLB: FanGraphs advanced metrics (FIP, wRC+, platoon splits) incomplete",
-    "All games: Real-time injury reports not provided",
-    "Statcast data: Truncated \u2014 barrel rates and exit velocity data cuts off mid-record"
-  ],
-  "available_data_summary": {
-    "nba_games_scheduled": 10,
-    "mlb_games_scheduled": 15,
-    "teams_with_batters": 21,
-    "pitchers_with_xstats": 21,
-    "batters_with_ev_data": 25
-  },
-  "recommendation": "To generate the requested comprehensive JSON report with specific DK lines, confidence ratings, and prop bets, please provide:",
-  "required_datasets": [
-    "Complete live DraftKings API feed with moneylines, spreads, totals, and odds",
-    "NBA.com defensive matchup data and player tracking stats",
-    "Current injury reports from ESPN/team sources for all players",
-    "Complete pitcher statistics (ERA, WHIP, FIP) for all scheduled starters",
-    "Real-time ballpark weather conditions with wind direction and speed",
-    "Complete Statcast barrel rate and exit velocity data (currently truncated)",
-    "Complete FanGraphs platoon splits and wRC+ data",
-    "Park factor adjustments for all stadiums"
-  ],
-  "partial_insights_available": {
-    "mlb_statcast_observations": [
-      "Drake Baldwin (686948): Exceptional exit velo profile \u2014 max 110.2 mph, avg 91.4, with 16.2% barrel rate and 13.3 brl/PA (elite power metrics)",
-      "Freddie Freeman: 50% EV95+ rate with 19.4% barrel rate indicates premium contact quality",
-      "Michael Harris II: 55.9% EV95+ with 17.6% barrel rate shows consistent hard-hit authority",
-      "Yordan Alvarez: xBA 0.405 vs actual BA 0.40 (nearly perfect alignment), xSLG 0.957 indicates elite power projection",
-      "Francisco Lindor: xBA 0.225 vs actual 0.135 (90 pt gap) suggests positive regression opportunity",
-      "Josh Naylor: Significantly underperforming xStats (xBA 0.256 vs BA 0.125, xSLG 0.385 vs SLG 0.125) \u2014 potential buy-low candidate"
-    ],
-    "mlb_pitcher_observations": [
-      "Max Fried: ERA 1.35 vs xERA 2.57 (-1.22 luck gap) \u2014 unsustainably low, regression risk",
-      "Sandy Alcantara: ERA 0.00 vs xERA 1.43 (-1.43 gap) \u2014 perfect record unsustainable, overs likely",
-      "Tarik Skubal: xERA 4.01 vs ERA 0.69 (-3.318 gap) \u2014 massive outperformance, likely due for negative regression",
-      "Trevor Rogers: xERA 2.87 vs ERA 1.39 (-1.485 gap) \u2014 similar regression pattern to Fried",
-      "Logan Webb: xERA 4.30 vs ERA 5.00 (0.7 underperformance) \u2014 peripherals better than results"
-    ]
-  },
-  "status_code": "DATA_INSUFFICIENT_FOR_FULL_REPORT"
+  "date": "April 07, 2026",
+  "nba_games": [],
+  "mlb_games": [],
+  "props": [],
+  "parlays": [],
+  "error": "JSON parse failed: Expecting property name enclosed in double quotes: line 608 column 43 (char 26350). Raw: {\n  \"date\": \"April 07, 2026\",\n  \"report_status\": \"INCOMPLETE_DATA\",\n  \"data_limitations\": [\n    \"NBA lines data truncated - DraftKings moneylines and spreads incomplete\",\n    \"MLB lines data truncated"
 }

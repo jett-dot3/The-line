@@ -456,6 +456,19 @@ function render(){
 // Run on load
 render();
 </script>
-  <!-- INJECT:DATA -->
+  
+<script>
+window.THE_LINE_DATA = {
+  "date": "April 07, 2026",
+  "nba_games": [],
+  "mlb_games": [],
+  "props": [],
+  "parlays": [],
+  "error": "JSON parse failed: Expecting property name enclosed in double quotes: line 608 column 43 (char 26350). Raw: {\n  \"date\": \"April 07, 2026\",\n  \"report_status\": \"INCOMPLETE_DATA\",\n  \"data_limitations\": [\n    \"NBA lines data truncated - DraftKings moneylines and spreads incomplete\",\n    \"MLB lines data truncated"
+};
+window.THE_LINE_DATE = "April 07, 2026";
+window.THE_LINE_NOTES = "";
+console.log('THE LINE data loaded:', Object.keys(window.THE_LINE_DATA));
+</script>
 </body>
 </html>
