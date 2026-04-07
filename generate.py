@@ -65,16 +65,11 @@ MLB_PARKS = {
 
 STATMUSE_NBA_URLS = {
     "ppg":   "https://www.statmuse.com/nba/ask/nba-players-points-per-game-this-season",
-    "rpg":   "https://www.statmuse.com/nba/ask/nba-players-rebounds-per-game-this-season",
-    "apg":   "https://www.statmuse.com/nba/ask/nba-players-assists-per-game-this-season",
     "drtg":  "https://www.statmuse.com/nba/ask/nba-team-defensive-ratings",
 }
 STATMUSE_MLB_URLS = {
     "ops":   "https://www.statmuse.com/mlb/ask/ops-leaders-this-season",
-    "hr":    "https://www.statmuse.com/mlb/ask/home-run-leaders-2026-season",
-    "wrcplus": "https://www.statmuse.com/mlb/ask/wrc-plus-leaders-2026-season",
     "era":   "https://www.statmuse.com/mlb/ask/era-leaders-2026-season",
-    "avg":   "https://www.statmuse.com/mlb/ask/all-players-batting-averages-2026-season",
 }
 
 # ─────────────────────────────────────────
@@ -1050,14 +1045,13 @@ def main():
     print("📈 Fetching FanGraphs advanced metrics...")
     data_bundle["fangraphs"] = fetch_fangraphs()
 
-    if not args.skip_nba_api:
-        print("🏀 Fetching NBA.com official stats...")
-        data_bundle["nba_stats"] = fetch_nba_stats()
-    else:
-        data_bundle["nba_stats"] = {}
+    # NBA.com always times out on GitHub Actions IPs - skip by default
+    data_bundle["nba_stats"] = {}
+    print("  [SKIP] NBA.com API skipped (times out on CI) — using StatMuse instead")
 
-    print("📋 Fetching Covers ATS records...")
-    data_bundle["covers"] = fetch_covers()
+    # Covers ATS pages return 404 - skip
+    data_bundle["covers"] = {}
+    print("  [SKIP] Covers skipped (404s on team-trends pages)")
 
     print("📡 Fetching live lines (ScoresAndOdds)...")
     data_bundle["public_betting"] = fetch_public_betting()
