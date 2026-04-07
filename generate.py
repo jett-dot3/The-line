@@ -961,458 +961,325 @@ CRITICAL INSTRUCTIONS:
 # ─────────────────────────────────────────
 # 12. HTML INJECTION
 # ─────────────────────────────────────────
+def get_js():
+    """Returns the page JavaScript as a plain string."""
+    return r"""<script>
+function sw(n){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('.nt').forEach(function(t){t.classList.remove('on');});
+  document.getElementById(n).classList.add('on');
+  document.querySelector('[data-t='+n+']').classList.add('on');
+}
+function setQ(q){document.getElementById('si').value=q;document.getElementById('si').focus();}
+async function doSearch(){
+  var q=document.getElementById('si').value.trim();if(!q)return;
+  var el=document.getElementById('sr');
+  el.innerHTML='<div style="text-align:center;padding:40px"><div style="font-family:monospace;color:#e8d5a3;margin-bottom:12px">Analyzing with live data...</div><div style="display:inline-block;width:28px;height:28px;border:3px solid rgba(232,213,163,.2);border-top-color:#e8d5a3;border-radius:50%;animation:spin 1s linear infinite"></div></div>';
+  var picks=window.THE_LINE_DATA||{};
+  var nb=(picks.nba_games||[]).map(function(g){return g.matchup+' '+g.time+' Pick:'+g.pick+' ML:'+g.dk_line+' Spread:'+g.dk_spread;}).join('\n');
+  var mb=(picks.mlb_games||[]).map(function(g){return g.matchup+' '+g.time+' Pick:'+g.pick+' ML:'+g.dk_line+' Total:'+g.dk_total;}).join('\n');
+  var pb=(picks.props||[]).map(function(p){return p.player+'('+p.team+') '+p.prop_type+' '+p.direction+' '+p.line+' @ '+p.dk_odds;}).join('\n');
+  var ctx='Date:'+(picks.date||'')+'\nNBA:\n'+nb+'\nMLB:\n'+mb+'\nPROPS:\n'+pb;
+  var prompt='You are THE LINE sports betting analyst.\n\n'+ctx+'\n\nQuery: '+JSON.stringify(q)+'\n\nReturn ONLY valid JSON: {"results":[{"player_or_team":"","sport":"NBA or MLB","pick":"","line":"","odds":"","reasoning":"2-3 sentences","confidence":4}]} with 5-8 picks answering the query.';
+  var key=window.AK||localStorage.getItem('tlk')||'';
+  if(!key){el.innerHTML=kp();return;}
+  try{
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'content-type':'application/json','anthropic-version':'2023-06-01','x-api-key':key},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+    });
+    if(resp.status===401){el.innerHTML=kp();return;}
+    var d=await resp.json();
+    var raw=d.content[0].text.trim().replace(/```json|```/g,'').trim();
+    var parsed;
+    try{parsed=JSON.parse(raw);}
+    catch(e){var s=raw.indexOf('{'),en=raw.lastIndexOf('}')+1;parsed=JSON.parse(raw.slice(s,en));}
+    var res=parsed.results||parsed.query_results||[];
+    if(!res.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#5a5a72;font-family:monospace">No results. Try a different query.</div>';return;}
+    var html='<div style="font-size:11px;color:#5a5a72;font-family:monospace;margin-bottom:16px">RESULTS FOR: '+q.toUpperCase()+'</div>';
+    res.forEach(function(r){
+      var c=parseInt(r.confidence)||3;
+      var sc=r.sport==='NBA'?'#4f8ef7':'#e8734a';
+      var sbg=r.sport==='NBA'?'rgba(79,142,247,.15)':'rgba(232,115,74,.15)';
+      var sbd=r.sport==='NBA'?'rgba(79,142,247,.3)':'rgba(232,115,74,.3)';
+      var dots='';for(var i=1;i<=5;i++)dots+='<span style="width:8px;height:8px;border-radius:50%;background:'+(i<=c?'#e8d5a3':'#22222f')+';display:inline-block;margin-left:2px"></span>';
+      html+='<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:18px 20px;margin-bottom:12px">';
+      html+='<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px">';
+      html+='<div><div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:'+sbg+';color:'+sc+';border:1px solid '+sbd+';font-family:monospace">'+(r.sport||'NBA')+'</span></div>';
+      html+='<div style="font-family:Georgia,serif;font-size:18px;font-weight:700">'+(r.player_or_team||'')+'</div>';
+      html+='<div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-top:4px">'+(r.pick||'')+'</div></div>';
+      html+='<div style="text-align:right;flex-shrink:0"><div style="font-family:monospace;font-size:18px;font-weight:600;color:#fbbf24">'+(r.odds||'')+'</div>';
+      html+='<div style="font-family:monospace;font-size:12px;color:#5a5a72">'+(r.line||'')+'</div><div style="margin-top:6px">'+dots+'</div></div></div>';
+      html+='<div style="font-size:13px;line-height:1.7;color:#9090a8">'+(r.reasoning||'')+'</div></div>';
+    });
+    el.innerHTML=html;
+  }catch(err){
+    el.innerHTML='<div style="text-align:center;padding:40px;color:#f87171;font-family:monospace">Error: '+err.message+'</div>';
+  }
+}
+function kp(){
+  return '<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:24px;text-align:center">'
+    +'<div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:8px">API Key Required</div>'
+    +'<div style="font-size:13px;color:#9090a8;margin-bottom:16px">Enter your Anthropic API key. Stored only in your browser.</div>'
+    +'<input id="ki" type="password" placeholder="sk-ant-api03-..." style="width:100%;max-width:500px;background:#0a0a0f;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:12px 16px;font-size:13px;color:#f0f0f5;font-family:monospace;outline:none;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto"/>'
+    +'<button onclick="sk()" style="background:#e8d5a3;color:#0a0a0f;border:none;border-radius:8px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">SAVE &amp; SEARCH</button>'
+    +'<div style="font-size:11px;color:#5a5a72;font-family:monospace;margin-top:10px">Key stored in your browser only</div></div>';
+}
+function sk(){var k=document.getElementById('ki').value.trim();if(k){window.AK=k;localStorage.setItem('tlk',k);doSearch();}}
+window.AK=localStorage.getItem('tlk')||'';
+</script>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+</body>
+</html>"""
+
+
 def build_html(picks, today_str, notes="", query=""):
-    """
-    Builds complete HTML from scratch - no template needed.
-    Picks are rendered as real HTML elements, not JavaScript.
-    """
+    """Builds complete HTML page from picks data. No template needed."""
     nba = picks.get("nba_games", [])
     mlb = picks.get("mlb_games", [])
     props = picks.get("props", [])
     parlays = picks.get("parlays", [])
+    query_results = picks.get("query_results", [])
     print(f"  [HTML] Rendering: {len(nba)} NBA, {len(mlb)} MLB, {len(props)} props, {len(parlays)} parlays")
 
     def dots(n):
         try: n = int(n)
         except: n = 3
-        return "".join(
-            f'<span style="width:8px;height:8px;border-radius:50%;background:{"#e8d5a3" if i<=n else "#22222f"};display:inline-block;margin-right:3px"></span>'
-            for i in range(1, 6)
-        )
+        out = ""
+        for i in range(1, 6):
+            col = "#e8d5a3" if i <= n else "#22222f"
+            out += f'<span style="width:8px;height:8px;border-radius:50%;background:{col};display:inline-block;margin-right:3px"></span>'
+        return out
 
     def badge(txt, color, bg, border):
-        return f'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:{bg};color:{color};border:1px solid {border};font-family:monospace;letter-spacing:.05em">{txt}</span>'
+        return (f'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;'
+                f'background:{bg};color:{color};border:1px solid {border};font-family:monospace">{txt}</span>')
 
     def inj_chips(lst):
-        return "".join(
-            f'<span style="font-size:11px;padding:2px 8px;border-radius:4px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);color:#f87171;font-family:monospace;margin:0 4px 4px 0;display:inline-block">{i}</span>'
-            for i in lst
-        )
+        out = ""
+        for i in lst:
+            out += (f'<span style="font-size:11px;padding:2px 8px;border-radius:4px;'
+                    f'background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.3);'
+                    f'color:#f87171;font-family:monospace;margin:0 4px 4px 0;display:inline-block">{i}</span>')
+        return out
 
-    def card(content, border="rgba(255,255,255,0.08)"):
-        return f'<div style="background:#111118;border:1px solid {border};border-radius:12px;margin-bottom:12px;overflow:hidden">{content}</div>'
+    def obox(label, val, col="#fbbf24"):
+        if not val or str(val) in ["NOT_PROVIDED", "N/A", "", "None"]:
+            return ""
+        return (f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);'
+                f'border-radius:7px;padding:7px 11px;min-width:80px">'
+                f'<div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">{label}</div>'
+                f'<div style="font-size:15px;font-weight:600;color:{col};font-family:monospace">{val}</div></div>')
 
     def nba_card(g, first=False):
-        border = "rgba(232,213,163,.3)" if first else "rgba(255,255,255,0.08)"
-        ml = g.get("dk_line","")
-        sp = g.get("dk_spread","")
-        tot = g.get("dk_total","")
-        wp = g.get("win_probability","")
-        inj = inj_chips(g.get("injuries",[]))
-        odds_boxes = ""
-        if ml and ml not in ["NOT_PROVIDED","N/A",""]:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">ML</div><div style="font-size:15px;font-weight:600;color:#fbbf24;font-family:monospace">{ml}</div></div>'
-        if sp and sp not in ["NOT_PROVIDED","N/A",""]:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">SPREAD</div><div style="font-size:15px;font-weight:600;color:#f0f0f5;font-family:monospace">{sp}</div></div>'
-        if tot and tot not in ["NOT_PROVIDED","N/A",""]:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">TOTAL</div><div style="font-size:15px;font-weight:600;color:#60a5fa;font-family:monospace">{tot}</div></div>'
-        inner = f"""
-        <div style="padding:16px 20px 0">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-            {badge("NBA","#4f8ef7","rgba(79,142,247,.15)","rgba(79,142,247,.3)")}
-            <span style="font-size:11px;color:#5a5a72;font-family:monospace">{g.get("time","")} · {g.get("venue","")}</span>
-            <span>{dots(g.get("confidence",3))}</span>
-            {f'<span style="font-size:11px;color:#4ade80;font-family:monospace;font-weight:600">{wp}</span>' if wp else ""}
-          </div>
-          <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px">{g.get("matchup","TBD")}</div>
-          <div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-bottom:6px">{g.get("pick","")}</div>
-        </div>
-        {f'<div style="display:flex;gap:8px;flex-wrap:wrap;padding:8px 20px">{odds_boxes}</div>' if odds_boxes else ""}
-        <div style="padding:12px 20px 16px">
-          {f'<div style="margin-bottom:10px">{inj}</div>' if inj else ""}
-          <div style="font-size:13px;line-height:1.75;color:#9090a8;margin-bottom:12px">{g.get("article","")}</div>
-          <div style="padding:10px 13px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.28);color:#4ade80">{g.get("verdict","")}</div>
-        </div>"""
-        return card(inner, border)
+        bdr = "rgba(232,213,163,.3)" if first else "rgba(255,255,255,0.08)"
+        inj = inj_chips(g.get("injuries", []))
+        boxes = obox("ML", g.get("dk_line","")) + obox("SPREAD", g.get("dk_spread",""), "#f0f0f5") + obox("TOTAL", g.get("dk_total",""), "#60a5fa")
+        wp = g.get("win_probability", "")
+        h = f'<div style="background:#111118;border:1px solid {bdr};border-radius:12px;margin-bottom:12px;overflow:hidden">'
+        h += f'<div style="padding:16px 20px 0">'
+        h += f'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">'
+        h += badge("NBA","#4f8ef7","rgba(79,142,247,.15)","rgba(79,142,247,.3)")
+        h += f'<span style="font-size:11px;color:#5a5a72;font-family:monospace">{g.get("time","")} · {g.get("venue","")}</span>'
+        h += f'<span>{dots(g.get("confidence",3))}</span>'
+        if wp: h += f'<span style="font-size:11px;color:#4ade80;font-family:monospace;font-weight:600">{wp}</span>'
+        h += f'</div>'
+        h += f'<div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px">{g.get("matchup","TBD")}</div>'
+        h += f'<div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-bottom:6px">{g.get("pick","")}</div>'
+        h += f'</div>'
+        if boxes: h += f'<div style="display:flex;gap:8px;flex-wrap:wrap;padding:8px 20px">{boxes}</div>'
+        h += f'<div style="padding:12px 20px 16px">'
+        if inj: h += f'<div style="margin-bottom:10px">{inj}</div>'
+        h += f'<div style="font-size:13px;line-height:1.75;color:#9090a8;margin-bottom:12px">{g.get("article","")}</div>'
+        h += f'<div style="padding:10px 13px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.28);color:#4ade80">{g.get("verdict","")}</div>'
+        h += f'</div></div>'
+        return h
 
     def mlb_card(g, first=False):
-        border = "rgba(232,115,74,.3)" if first else "rgba(255,255,255,0.08)"
-        ml = g.get("dk_line","")
-        tot = g.get("dk_total","")
-        env = g.get("environmental",{}) or {}
-        inj = inj_chips(g.get("injuries",[]))
-        odds_boxes = ""
-        if ml and ml not in ["NOT_PROVIDED","N/A",""]:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">ML</div><div style="font-size:15px;font-weight:600;color:#fbbf24;font-family:monospace">{ml}</div></div>'
-        if tot and tot not in ["NOT_PROVIDED","N/A",""]:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">TOTAL</div><div style="font-size:15px;font-weight:600;color:#60a5fa;font-family:monospace">{tot}</div></div>'
-        tf = env.get("temp_f","")
-        if tf:
-            odds_boxes += f'<div style="background:#1a1a24;border:1px solid rgba(232,213,163,.2);border-radius:7px;padding:7px 11px;min-width:80px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">TEMP</div><div style="font-size:15px;font-weight:600;color:#f0f0f5;font-family:monospace">{tf}F</div></div>'
-        inner = f"""
-        <div style="padding:16px 20px 0">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
-            {badge("MLB","#e8734a","rgba(232,115,74,.15)","rgba(232,115,74,.3)")}
-            <span style="font-size:11px;color:#5a5a72;font-family:monospace">{g.get("time","")} · {g.get("venue","")}</span>
-            <span>{dots(g.get("confidence",3))}</span>
-          </div>
-          <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px">{g.get("matchup","TBD")}</div>
-          <div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-bottom:6px">{g.get("pick","")}</div>
-        </div>
-        {f'<div style="display:flex;gap:8px;flex-wrap:wrap;padding:8px 20px">{odds_boxes}</div>' if odds_boxes else ""}
-        <div style="padding:12px 20px 16px">
-          {f'<div style="font-size:12px;color:#9090a8;margin-bottom:8px"><strong style="color:#f0f0f5">Pitchers:</strong> {g.get("away_pitcher","")} vs {g.get("home_pitcher","")}</div>' if g.get("home_pitcher") or g.get("away_pitcher") else ""}
-          {f'<div style="margin-bottom:10px">{inj}</div>' if inj else ""}
-          <div style="font-size:13px;line-height:1.75;color:#9090a8;margin-bottom:12px">{g.get("article","")}</div>
-          <div style="padding:10px 13px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.28);color:#4ade80">{g.get("verdict","")}</div>
-        </div>"""
-        return card(inner, border)
+        bdr = "rgba(232,115,74,.3)" if first else "rgba(255,255,255,0.08)"
+        inj = inj_chips(g.get("injuries", []))
+        env = g.get("environmental", {}) or {}
+        tf = str(env.get("temp_f","")) + "F" if env.get("temp_f") else ""
+        boxes = obox("ML", g.get("dk_line","")) + obox("TOTAL", g.get("dk_total",""), "#60a5fa") + obox("TEMP", tf, "#f0f0f5")
+        hp = g.get("home_pitcher",""); ap = g.get("away_pitcher","")
+        h = f'<div style="background:#111118;border:1px solid {bdr};border-radius:12px;margin-bottom:12px;overflow:hidden">'
+        h += f'<div style="padding:16px 20px 0">'
+        h += f'<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">'
+        h += badge("MLB","#e8734a","rgba(232,115,74,.15)","rgba(232,115,74,.3)")
+        h += f'<span style="font-size:11px;color:#5a5a72;font-family:monospace">{g.get("time","")} · {g.get("venue","")}</span>'
+        h += f'<span>{dots(g.get("confidence",3))}</span>'
+        h += f'</div>'
+        h += f'<div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:4px">{g.get("matchup","TBD")}</div>'
+        h += f'<div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-bottom:6px">{g.get("pick","")}</div>'
+        h += f'</div>'
+        if boxes: h += f'<div style="display:flex;gap:8px;flex-wrap:wrap;padding:8px 20px">{boxes}</div>'
+        h += f'<div style="padding:12px 20px 16px">'
+        if hp or ap: h += f'<div style="font-size:12px;color:#9090a8;margin-bottom:8px"><strong style="color:#f0f0f5">Pitchers:</strong> {ap} vs {hp}</div>'
+        if inj: h += f'<div style="margin-bottom:10px">{inj}</div>'
+        h += f'<div style="font-size:13px;line-height:1.75;color:#9090a8;margin-bottom:12px">{g.get("article","")}</div>'
+        h += f'<div style="padding:10px 13px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.28);color:#4ade80">{g.get("verdict","")}</div>'
+        h += f'</div></div>'
+        return h
 
     def prop_card(p):
         d = (p.get("direction") or "OVER").upper()
-        c = "#4ade80" if d=="OVER" else "#f87171"
-        bg = "rgba(74,222,128,.08)" if d=="OVER" else "rgba(248,113,113,.08)"
-        bd = "rgba(74,222,128,.28)" if d=="OVER" else "rgba(248,113,113,.28)"
-        sp = p.get("sport","NBA")
-        sc = "#4f8ef7" if sp=="NBA" else "#e8734a"
-        sbg = "rgba(79,142,247,.15)" if sp=="NBA" else "rgba(232,115,74,.15)"
-        sbd = "rgba(79,142,247,.3)" if sp=="NBA" else "rgba(232,115,74,.3)"
-        return f"""<div style="background:#111118;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
-            <div>
-              <div style="margin-bottom:5px">{badge(sp,sc,sbg,sbd)}</div>
-              <div style="font-family:Georgia,serif;font-size:15px;font-weight:700">{p.get("player","")} <span style="font-size:12px;color:#5a5a72;font-weight:400">({p.get("team","")})</span></div>
-            </div>
-            <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:{bg};color:{c};border:1px solid {bd};font-family:monospace;flex-shrink:0">{d}</span>
-          </div>
-          <div style="font-family:monospace;font-size:12px;color:#e8d5a3;margin-bottom:5px">{p.get("prop_type","")} — {d} {p.get("line","")}</div>
-          {f'<div style="font-family:monospace;font-size:11px;color:#fbbf24;margin-bottom:6px">DK: {p.get("dk_odds","")} · Avg: {p.get("season_avg","")}</div>' if p.get("dk_odds") else ""}
-          <div style="font-size:12px;line-height:1.6;color:#9090a8">{p.get("reasoning","")}</div>
-        </div>"""
+        c = "#4ade80" if d == "OVER" else "#f87171"
+        bg = "rgba(74,222,128,.08)" if d == "OVER" else "rgba(248,113,113,.08)"
+        bd = "rgba(74,222,128,.28)" if d == "OVER" else "rgba(248,113,113,.28)"
+        sp = p.get("sport", "NBA")
+        sc = "#4f8ef7" if sp == "NBA" else "#e8734a"
+        sbg = "rgba(79,142,247,.15)" if sp == "NBA" else "rgba(232,115,74,.15)"
+        sbd = "rgba(79,142,247,.3)" if sp == "NBA" else "rgba(232,115,74,.3)"
+        h = f'<div style="background:#111118;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px 16px">'
+        h += f'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">'
+        h += f'<div><div style="margin-bottom:5px">{badge(sp,sc,sbg,sbd)}</div>'
+        h += f'<div style="font-family:Georgia,serif;font-size:15px;font-weight:700">{p.get("player","")}'
+        h += f' <span style="font-size:12px;color:#5a5a72;font-weight:400">({p.get("team","")})</span></div></div>'
+        h += f'<span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:{bg};color:{c};border:1px solid {bd};font-family:monospace;flex-shrink:0">{d}</span></div>'
+        h += f'<div style="font-family:monospace;font-size:12px;color:#e8d5a3;margin-bottom:5px">{p.get("prop_type","")} — {d} {p.get("line","")}</div>'
+        if p.get("dk_odds"): h += f'<div style="font-family:monospace;font-size:11px;color:#fbbf24;margin-bottom:6px">DK: {p.get("dk_odds","")} · Avg: {p.get("season_avg","")}</div>'
+        h += f'<div style="font-size:12px;line-height:1.6;color:#9090a8">{p.get("reasoning","")}</div></div>'
+        return h
 
     def parlay_card(p, idx):
         risk = (p.get("risk_level") or "MED").upper()
-        if "LOW" in risk:   rc,rbg,rbd = "#4ade80","rgba(74,222,128,.08)","rgba(74,222,128,.28)"
+        if "LOW" in risk:    rc,rbg,rbd = "#4ade80","rgba(74,222,128,.08)","rgba(74,222,128,.28)"
         elif "ULTRA" in risk: rc,rbg,rbd = "#a78bfa","rgba(167,139,250,.1)","rgba(167,139,250,.3)"
         elif "HIGH" in risk:  rc,rbg,rbd = "#f87171","rgba(248,113,113,.08)","rgba(248,113,113,.28)"
         else:                 rc,rbg,rbd = "#fbbf24","rgba(251,191,36,.08)","rgba(251,191,36,.28)"
         legs_html = ""
-        for i, leg in enumerate(p.get("legs",[])):
-            legs_html += f"""<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)">
-              <div style="font-family:monospace;font-size:10px;color:#5a5a72;background:#1a1a24;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">{i+1}</div>
-              <div>
-                <div style="font-size:13px;font-weight:600;margin-bottom:2px">{leg.get("pick","")}</div>
-                <div style="font-family:monospace;font-size:11px;color:#fbbf24;margin-bottom:2px">DK: {leg.get("dk_odds","")} · Dec: {leg.get("decimal","")}</div>
-                <div style="font-size:12px;color:#5a5a72">{leg.get("reasoning","")}</div>
-              </div>
-            </div>"""
-        n_legs = len(p.get("legs",[]))
-        return f"""<div style="background:#111118;border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:12px;overflow:hidden">
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06)">
-            <div style="display:flex;align-items:center;gap:10px">
-              <div style="font-family:Georgia,serif;font-size:22px;font-weight:900;color:#5a5a72;line-height:1">0{idx+1}</div>
-              <div>
-                <div style="font-family:Georgia,serif;font-size:16px;font-weight:700">{p.get("name","Parlay "+str(idx+1))}</div>
-                <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:{rbg};color:{rc};border:1px solid {rbd};font-family:monospace;display:inline-block;margin-top:3px">{risk} · {n_legs} LEGS</span>
-              </div>
-            </div>
-            <div style="text-align:right">
-              <div style="font-family:monospace;font-size:20px;font-weight:500;color:#e8d5a3">{p.get("american_odds","")}</div>
-              <div style="font-size:10px;color:#5a5a72;font-family:monospace">PAYOUT ODDS</div>
-            </div>
-          </div>
-          <div style="padding:4px 18px 4px">{legs_html}</div>
-          <div style="padding:10px 18px;background:#1a1a24;border-top:1px solid rgba(255,255,255,.06)">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <div style="background:#111118;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px 11px">
-                <div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">$50 BET</div>
-                <div style="font-size:14px;font-weight:600;color:#e8d5a3;font-family:monospace">{p.get("payout_50","—")}</div>
-              </div>
-              <div style="background:#111118;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px 11px">
-                <div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">$100 BET</div>
-                <div style="font-size:14px;font-weight:600;color:#e8d5a3;font-family:monospace">{p.get("payout_100","—")}</div>
-              </div>
-            </div>
-          </div>
-        </div>"""
+        for i, leg in enumerate(p.get("legs", [])):
+            legs_html += (f'<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)">'
+                         f'<div style="font-family:monospace;font-size:10px;color:#5a5a72;background:#1a1a24;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">{i+1}</div>'
+                         f'<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">{leg.get("pick","")}</div>'
+                         f'<div style="font-family:monospace;font-size:11px;color:#fbbf24;margin-bottom:2px">DK: {leg.get("dk_odds","")} · Dec: {leg.get("decimal","")}</div>'
+                         f'<div style="font-size:12px;color:#5a5a72">{leg.get("reasoning","")}</div></div></div>')
+        n = len(p.get("legs", []))
+        h = f'<div style="background:#111118;border:1px solid rgba(255,255,255,0.08);border-radius:12px;margin-bottom:12px;overflow:hidden">'
+        h += f'<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06)">'
+        h += f'<div style="display:flex;align-items:center;gap:10px">'
+        h += f'<div style="font-family:Georgia,serif;font-size:22px;font-weight:900;color:#5a5a72;line-height:1">0{idx+1}</div>'
+        h += f'<div><div style="font-family:Georgia,serif;font-size:16px;font-weight:700">{p.get("name","Parlay "+str(idx+1))}</div>'
+        h += f'<span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:{rbg};color:{rc};border:1px solid {rbd};font-family:monospace;display:inline-block;margin-top:3px">{risk} · {n} LEGS</span></div></div>'
+        h += f'<div style="text-align:right"><div style="font-family:monospace;font-size:20px;font-weight:500;color:#e8d5a3">{p.get("american_odds","")}</div>'
+        h += f'<div style="font-size:10px;color:#5a5a72;font-family:monospace">PAYOUT ODDS</div></div></div>'
+        h += f'<div style="padding:4px 18px">{legs_html}</div>'
+        h += f'<div style="padding:10px 18px;background:#1a1a24;border-top:1px solid rgba(255,255,255,.06)">'
+        h += f'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+        h += f'<div style="background:#111118;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px 11px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">$50 BET</div><div style="font-size:14px;font-weight:600;color:#e8d5a3;font-family:monospace">{p.get("payout_50","—")}</div></div>'
+        h += f'<div style="background:#111118;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px 11px"><div style="font-size:10px;color:#5a5a72;font-family:monospace;margin-bottom:2px">$100 BET</div><div style="font-size:14px;font-weight:600;color:#e8d5a3;font-family:monospace">{p.get("payout_100","—")}</div></div>'
+        h += f'</div></div></div>'
+        return h
 
-    empty = '<div style="text-align:center;padding:60px 20px;color:#5a5a72;font-family:monospace;font-size:13px">No data for today. Run the workflow again.</div>'
-    nba_html  = "".join(nba_card(g, i==0) for i,g in enumerate(nba)) if nba else empty
-    mlb_html  = "".join(mlb_card(g, i==0) for i,g in enumerate(mlb)) if mlb else empty
+    def qcard(r):
+        c = int(r.get("confidence", 3))
+        sp = r.get("sport", "NBA")
+        sc = "#4f8ef7" if sp == "NBA" else "#e8734a"
+        sbg = "rgba(79,142,247,.15)" if sp == "NBA" else "rgba(232,115,74,.15)"
+        sbd = "rgba(79,142,247,.3)" if sp == "NBA" else "rgba(232,115,74,.3)"
+        h = f'<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:18px 20px;margin-bottom:12px">'
+        h += f'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px">'
+        h += f'<div><div style="margin-bottom:6px">{badge(sp,sc,sbg,sbd)}</div>'
+        h += f'<div style="font-family:Georgia,serif;font-size:18px;font-weight:700">{r.get("player_or_team","")}</div>'
+        h += f'<div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-top:4px">{r.get("pick","")}</div></div>'
+        h += f'<div style="text-align:right;flex-shrink:0"><div style="font-family:monospace;font-size:18px;font-weight:600;color:#fbbf24">{r.get("odds","")}</div>'
+        h += f'<div style="font-family:monospace;font-size:12px;color:#5a5a72">{r.get("line","")}</div>'
+        h += f'<div style="margin-top:6px">{dots(c)}</div></div></div>'
+        h += f'<div style="font-size:13px;line-height:1.7;color:#9090a8">{r.get("reasoning","")}</div></div>'
+        return h
+
+    empty = '<div style="text-align:center;padding:60px 20px;color:#5a5a72;font-family:monospace;font-size:13px">No data. Run the workflow to generate picks.</div>'
+    nba_html   = "".join(nba_card(g, i==0) for i,g in enumerate(nba)) if nba else empty
+    mlb_html   = "".join(mlb_card(g, i==0) for i,g in enumerate(mlb)) if mlb else empty
     props_html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px">' + ("".join(prop_card(p) for p in props) if props else empty) + "</div>"
     parl_html  = "".join(parlay_card(p,i) for i,p in enumerate(parlays)) if parlays else empty
 
-    # Build query results tab
-    query_results = picks.get("query_results", [])
-    query_display = query or "Search"
-    def query_card(r):
-        conf = int(r.get("confidence", 3))
-        sport = r.get("sport", "NBA")
-        sc = "#4f8ef7" if sport == "NBA" else "#e8734a"
-        sbg = "rgba(79,142,247,.15)" if sport == "NBA" else "rgba(232,115,74,.15)"
-        sbd = "rgba(79,142,247,.3)" if sport == "NBA" else "rgba(232,115,74,.3)"
-        return f"""<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:18px 20px;margin-bottom:12px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px">
-            <div>
-              <div style="margin-bottom:6px">
-                <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:{sbg};color:{sc};border:1px solid {sbd};font-family:monospace">{sport}</span>
-              </div>
-              <div style="font-family:Georgia,serif;font-size:18px;font-weight:700">{r.get("player_or_team","")}</div>
-              <div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-top:4px">{r.get("pick","")}</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0">
-              <div style="font-family:monospace;font-size:18px;font-weight:600;color:#fbbf24">{r.get("odds","")}</div>
-              <div style="font-family:monospace;font-size:12px;color:#5a5a72">{r.get("line","")}</div>
-              <div style="margin-top:6px">{"".join(f'<span style="width:8px;height:8px;border-radius:50%;background:{"#e8d5a3" if i<=conf else "#22222f"};display:inline-block;margin-left:2px"></span>' for i in range(1,6))}</div>
-            </div>
-          </div>
-          <div style="font-size:13px;line-height:1.7;color:#9090a8">{r.get("reasoning","")}</div>
-        </div>"""
-
+    query_display = query or ""
     if query_results:
-        query_html = "".join(query_card(r) for r in query_results)
+        qr_html = (f'<div style="font-size:11px;color:#5a5a72;font-family:monospace;margin-bottom:16px">RESULTS FOR: {query_display.upper()}</div>' +
+                   "".join(qcard(r) for r in query_results))
     elif query:
-        query_html = f'<div style="text-align:center;padding:60px 20px;color:#5a5a72;font-family:monospace">No results generated for this query. Try running again.</div>'
+        qr_html = '<div style="text-align:center;padding:40px;color:#5a5a72;font-family:monospace">No results. Try running again.</div>'
     else:
-        query_html = '<div style="text-align:center;padding:60px 20px;color:#5a5a72;font-family:monospace;font-size:13px">Use the search box above or enter a query when running the workflow.</div>'
+        qr_html = '<div style="text-align:center;padding:40px;color:#5a5a72;font-family:monospace">Type a question above and click SEARCH</div>'
 
-    show_search_tab = True  # always show search tab
+    suggestions = ["Best HR picks today","Best unders tonight","Top strikeout props","Best value spreads","Same game parlay","Best player props"]
+    chips = "".join(
+        f'<button onclick="setQ(\'{s}\')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">{s}</button>'
+        for s in suggestions
+    )
 
-    return f"""<!DOCTYPE html>
+    css = """<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",sans-serif;background:#0a0a0f;color:#f0f0f5;min-height:100vh}
+header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 28px}
+.hi{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{font-family:"Playfair Display",serif;font-weight:900;font-size:21px}.logo span{color:#e8d5a3}
+nav{background:#111118;border-bottom:1px solid rgba(255,255,255,.08);padding:0 28px;position:sticky;top:58px;z-index:99;overflow-x:auto}
+.ni{max-width:1200px;margin:0 auto;display:flex}
+.nt{padding:13px 22px;font-size:13px;font-weight:500;color:#5a5a72;cursor:pointer;border:none;background:none;white-space:nowrap;position:relative;transition:color .2s}
+.nt::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:background .2s}
+.nt.on{color:#f0f0f5}.nt.on::after{background:#e8d5a3}
+.nt[data-t=nba].on{color:#4f8ef7}.nt[data-t=nba].on::after{background:#4f8ef7}
+.nt[data-t=mlb].on{color:#e8734a}.nt[data-t=mlb].on::after{background:#e8734a}
+.nt[data-t=props].on{color:#4ade80}.nt[data-t=props].on::after{background:#4ade80}
+.nt[data-t=parlays].on{color:#a78bfa}.nt[data-t=parlays].on::after{background:#a78bfa}
+.nt[data-t=search].on{color:#e8d5a3}.nt[data-t=search].on::after{background:#e8d5a3}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 28px 80px}
+.tab{display:none}.tab.on{display:block}
+.ht{font-family:"Playfair Display",serif;font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:5px}
+.ht em{font-style:italic;color:#e8d5a3}
+.hs{font-size:11px;color:#5a5a72;font-family:monospace;margin-bottom:20px}
+.disc{margin-top:32px;padding:13px 16px;border:1px solid rgba(255,255,255,.08);border-radius:8px;font-size:11px;color:#5a5a72;line-height:1.6;font-family:monospace}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){header,nav{padding:0 14px}.wrap{padding:18px 14px 60px}.ht{font-size:24px}}
+</style>"""
+
+    html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>THE LINE — {today_str}</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
-body{{font-family:"DM Sans",sans-serif;background:#0a0a0f;color:#f0f0f5;min-height:100vh}}
-header{{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08);padding:0 28px}}
-.hi{{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:58px}}
-.logo{{font-family:"Playfair Display",serif;font-weight:900;font-size:21px}}
-.logo span{{color:#e8d5a3}}
-nav{{background:#111118;border-bottom:1px solid rgba(255,255,255,.08);padding:0 28px;position:sticky;top:58px;z-index:99;overflow-x:auto}}
-.ni{{max-width:1200px;margin:0 auto;display:flex}}
-.nt{{padding:13px 22px;font-size:13px;font-weight:500;color:#5a5a72;cursor:pointer;border:none;background:none;white-space:nowrap;position:relative;transition:color .2s}}
-.nt::after{{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:background .2s}}
-.nt.on{{color:#f0f0f5}}.nt.on::after{{background:#e8d5a3}}
-.nt[data-t=nba].on{{color:#4f8ef7}}.nt[data-t=nba].on::after{{background:#4f8ef7}}
-.nt[data-t=mlb].on{{color:#e8734a}}.nt[data-t=mlb].on::after{{background:#e8734a}}
-.nt[data-t=props].on{{color:#4ade80}}.nt[data-t=props].on::after{{background:#4ade80}}
-.nt[data-t=parlays].on{{color:#a78bfa}}.nt[data-t=parlays].on::after{{background:#a78bfa}}
-.nt[data-t=search].on{{color:#e8d5a3}}.nt[data-t=search].on::after{{background:#e8d5a3}}
-.wrap{{max-width:1200px;margin:0 auto;padding:28px 28px 80px}}
-.tab{{display:none}}.tab.on{{display:block}}
-.ht{{font-family:"Playfair Display",serif;font-size:32px;font-weight:900;letter-spacing:-1px;margin-bottom:5px}}
-.ht em{{font-style:italic;color:#e8d5a3}}
-.hs{{font-size:11px;color:#5a5a72;font-family:monospace;margin-bottom:20px}}
-.disc{{margin-top:32px;padding:13px 16px;border:1px solid rgba(255,255,255,.08);border-radius:8px;font-size:11px;color:#5a5a72;line-height:1.6;font-family:monospace}}
-@keyframes pulse{{0%,100%{{opacity:1}}50%{{opacity:.3}}}}
-@media(max-width:600px){{header,nav{{padding:0 14px}}.wrap{{padding:18px 14px 60px}}.ht{{font-size:24px}}}}
-</style>
+{css}
 </head>
 <body>
-<header>
-  <div class="hi">
-    <div class="logo">THE <span>LINE</span></div>
-    <div style="display:flex;align-items:center;gap:14px">
-      <div style="display:flex;align-items:center;gap:6px;font-family:monospace;font-size:11px;color:#4ade80">
-        <span style="width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 2s infinite"></span>LIVE DATA
-      </div>
-      <div style="font-family:monospace;font-size:11px;color:#5a5a72">{today_str.upper()}</div>
-    </div>
+<header><div class="hi">
+  <div class="logo">THE <span>LINE</span></div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="display:flex;align-items:center;gap:6px;font-family:monospace;font-size:11px;color:#4ade80"><span style="width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 2s infinite"></span>LIVE DATA</div>
+    <div style="font-family:monospace;font-size:11px;color:#5a5a72">{today_str.upper()}</div>
   </div>
-</header>
-<nav>
-  <div class="ni">
-    <button class="nt on" data-t="nba" onclick="sw('nba')">NBA</button>
-    <button class="nt" data-t="mlb" onclick="sw('mlb')">MLB</button>
-    <button class="nt" data-t="props" onclick="sw('props')">PROP PICKS</button>
-    <button class="nt" data-t="parlays" onclick="sw('parlays')">PARLAYS</button>
-    <button class="nt" data-t="search" onclick="sw('search')">🔍 SEARCH</button>
-  </div>
-</nav>
+</div></header>
+<nav><div class="ni">
+  <button class="nt on" data-t="nba" onclick="sw('nba')">NBA</button>
+  <button class="nt" data-t="mlb" onclick="sw('mlb')">MLB</button>
+  <button class="nt" data-t="props" onclick="sw('props')">PROP PICKS</button>
+  <button class="nt" data-t="parlays" onclick="sw('parlays')">PARLAYS</button>
+  <button class="nt" data-t="search" onclick="sw('search')">&#128269; SEARCH</button>
+</div></nav>
 <div class="wrap">
-  <div id="nba" class="tab on">
-    <div class="ht">NBA <em>Picks</em></div>
-    <div class="hs">{today_str.upper()} · {len(nba)} GAMES · LIVE DRAFTKINGS LINES</div>
-    {nba_html}
-  </div>
-  <div id="mlb" class="tab">
-    <div class="ht">MLB <em>Picks</em></div>
-    <div class="hs">{today_str.upper()} · {len(mlb)} GAMES · STATCAST + WEATHER</div>
-    {mlb_html}
-  </div>
-  <div id="props" class="tab">
-    <div class="ht">Prop <em>Picks</em></div>
-    <div class="hs">{today_str.upper()} · {len(props)} PROPS · LIVE DK LINES</div>
-    {props_html}
-  </div>
-  <div id="parlays" class="tab">
-    <div class="ht">Daily <em>Parlays</em></div>
-    <div class="hs">{today_str.upper()} · {len(parlays)} PARLAYS · LOW TO ULTRA RISK</div>
-    {parl_html}
-    <div class="disc">GAMBLING PROBLEM? CALL 1-800-GAMBLER. For entertainment only. Verify lines at DraftKings. 21+ only.</div>
-  </div>
+  <div id="nba" class="tab on"><div class="ht">NBA <em>Picks</em></div><div class="hs">{today_str.upper()} · {len(nba)} GAMES · LIVE DRAFTKINGS LINES</div>{nba_html}</div>
+  <div id="mlb" class="tab"><div class="ht">MLB <em>Picks</em></div><div class="hs">{today_str.upper()} · {len(mlb)} GAMES · STATCAST + WEATHER</div>{mlb_html}</div>
+  <div id="props" class="tab"><div class="ht">Prop <em>Picks</em></div><div class="hs">{today_str.upper()} · {len(props)} PROPS · LIVE DK LINES</div>{props_html}</div>
+  <div id="parlays" class="tab"><div class="ht">Daily <em>Parlays</em></div><div class="hs">{today_str.upper()} · {len(parlays)} PARLAYS · LOW TO ULTRA RISK</div>{parl_html}<div class="disc">GAMBLING PROBLEM? CALL 1-800-GAMBLER. For entertainment only. Verify lines at DraftKings. 21+ only.</div></div>
   <div id="search" class="tab">
-    <div class="ht">🔍 <em>Search</em></div>
-    <div class="hs">ASK ANYTHING — LIVE AI-POWERED PICKS SEARCH</div>
-
+    <div class="ht">Search <em>Picks</em></div><div class="hs">ASK ANYTHING — AI-POWERED LIVE ANALYSIS</div>
     <div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:20px;margin-bottom:20px">
       <div style="display:flex;gap:10px;margin-bottom:14px">
-        <input id="searchInput" type="text" placeholder="e.g. Best home run picks today..."
-          style="flex:1;background:#0a0a0f;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:12px 16px;font-size:14px;color:#f0f0f5;font-family:monospace;outline:none"
-          onkeydown="if(event.key==='Enter')runSearch()"
-        />
-        <button onclick="runSearch()"
-          style="background:#e8d5a3;color:#0a0a0f;border:none;border-radius:8px;padding:12px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace;white-space:nowrap">
-          SEARCH
-        </button>
+        <input id="si" type="text" placeholder="e.g. Best home run picks today..." onkeydown="if(event.key==='Enter')doSearch()" style="flex:1;background:#0a0a0f;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:12px 16px;font-size:14px;color:#f0f0f5;font-family:monospace;outline:none"/>
+        <button onclick="doSearch()" style="background:#e8d5a3;color:#0a0a0f;border:none;border-radius:8px;padding:12px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace;white-space:nowrap">SEARCH</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
-        <span style="font-size:11px;color:#5a5a72;font-family:monospace;align-self:center;margin-right:4px">Try:</span>
-        <button onclick="setQ('Best home run picks today')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Best HR picks today</button>
-        <button onclick="setQ('Best unders on the board tonight')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Best unders tonight</button>
-        <button onclick="setQ('Top strikeout props today')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Top strikeout props</button>
-        <button onclick="setQ('Best value spreads tonight')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Best value spreads</button>
-        <button onclick="setQ('Best same game parlay tonight')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Same game parlay</button>
-        <button onclick="setQ('Which player props have the most edge tonight')" style="font-size:11px;padding:4px 10px;border-radius:16px;background:#1a1a24;border:1px solid rgba(255,255,255,.1);color:#e8d5a3;font-family:monospace;cursor:pointer">Best player props</button>
-      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px"><span style="font-size:11px;color:#5a5a72;font-family:monospace;align-self:center;margin-right:4px">Try:</span>{chips}</div>
     </div>
-
-    <div id="searchResults">
-      {query_html if (query_results or query) else '<div style="text-align:center;padding:40px 20px;color:#5a5a72;font-family:monospace">Type a question above to get AI-powered picks analysis</div>'}
-    </div>
+    <div id="sr">{qr_html}</div>
   </div>
 </div>
-<script>
-function sw(n){{
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
-  document.querySelectorAll(".nt").forEach(t=>t.classList.remove("on"));
-  document.getElementById(n).classList.add("on");
-  document.querySelector("[data-t="+n+"]").classList.add("on");
-}}
-
-function setQ(q){{
-  document.getElementById("searchInput").value = q;
-  document.getElementById("searchInput").focus();
-}}
-
-async function runSearch(){{
-  const q = document.getElementById("searchInput").value.trim();
-  if(!q) return;
-
-  const resultsEl = document.getElementById("searchResults");
-  resultsEl.innerHTML = `
-    <div style="text-align:center;padding:40px 20px">
-      <div style="font-family:monospace;font-size:13px;color:#e8d5a3;margin-bottom:12px">Analyzing with live data...</div>
-      <div style="display:inline-block;width:32px;height:32px;border:3px solid rgba(232,213,163,.2);border-top-color:#e8d5a3;border-radius:50%;animation:spin 1s linear infinite"></div>
-    </div>`;
-
-  // Build context from picks data already on the page
-  const picks = window.THE_LINE_DATA || {{}};
-  const nbaGames = (picks.nba_games||[]).map(g=>
-    `${{g.matchup}} - ${{g.time}} - Pick: ${{g.pick}} - ML: ${{g.dk_line}} - Spread: ${{g.dk_spread}} - Total: ${{g.dk_total}}`
-  ).join("\n");
-  const mlbGames = (picks.mlb_games||[]).map(g=>
-    `${{g.matchup}} - ${{g.time}} - Pick: ${{g.pick}} - ML: ${{g.dk_line}} - Total: ${{g.dk_total}} - Pitchers: ${{g.away_pitcher}} vs ${{g.home_pitcher}}`
-  ).join("\n");
-  const propsList = (picks.props||[]).map(p=>
-    `${{p.player}} (${{p.team}}) - ${{p.prop_type}} ${{p.direction}} ${{p.line}} @ ${{p.dk_odds}} - ${{p.reasoning}}`
-  ).join("\n");
-
-  const context = `Today is {today_str}. Here is today's live picks data:\n\nNBA GAMES:\n${{nbaGames}}\n\nMLB GAMES:\n${{mlbGames}}\n\nPROP PICKS:\n${{propsList}}`;
-
-  const prompt = `You are THE LINE, an expert sports betting analyst.\n\n${{context}}\n\nUser query: "${{q}}"\n\nAnswer this query using the live data above. Return a JSON array called "results" with 5-8 picks. Each pick must have:\n- player_or_team (string)\n- sport (NBA or MLB)\n- pick (exact bet)\n- line (the line/number)\n- odds (American odds like -110)\n- reasoning (2-3 sentences using specific data)\n- confidence (1-5)\n\nReturn ONLY valid JSON like: {{"results": [...]}}`;
-
-  try {{
-    const resp = await fetch("https://api.anthropic.com/v1/messages", {{
-      method: "POST",
-      headers: {{
-        "content-type": "application/json",
-        "anthropic-version": "2023-06-01",
-        "x-api-key": window.ANTHROPIC_KEY || ""
-      }},
-      body: JSON.stringify({{
-        model: "claude-haiku-4-5-20251001",
-        max_tokens: 2000,
-        messages: [{{role:"user", content: prompt}}]
-      }})
-    }});
-
-    if(resp.status === 401){{
-      resultsEl.innerHTML = renderKeyPrompt();
-      return;
-    }}
-
-    const data = await resp.json();
-    const raw = data.content[0].text.trim();
-    let parsed;
-    try{{
-      const clean = raw.replace(/```json|```/g,"").trim();
-      parsed = JSON.parse(clean);
-    }} catch(e){{
-      const start = raw.indexOf("{{");
-      const end = raw.lastIndexOf("}}") + 1;
-      parsed = JSON.parse(raw.slice(start, end));
-    }}
-
-    const results = parsed.results || parsed.query_results || [];
-    if(!results.length){{
-      resultsEl.innerHTML = '<div style="text-align:center;padding:40px;color:#5a5a72;font-family:monospace">No results found. Try a different query.</div>';
-      return;
-    }}
-
-    resultsEl.innerHTML = `
-      <div style="font-size:11px;color:#5a5a72;font-family:monospace;margin-bottom:16px;letter-spacing:.05em">RESULTS FOR: ${{q.toUpperCase()}}</div>
-      ${{results.map(r => {{
-        const conf = parseInt(r.confidence)||3;
-        const sc = r.sport==="NBA" ? "#4f8ef7" : "#e8734a";
-        const sbg = r.sport==="NBA" ? "rgba(79,142,247,.15)" : "rgba(232,115,74,.15)";
-        const sbd = r.sport==="NBA" ? "rgba(79,142,247,.3)" : "rgba(232,115,74,.3)";
-        const dots = Array.from({{length:5}},(_,i)=>`<span style="width:8px;height:8px;border-radius:50%;background:${{i<conf?"#e8d5a3":"#22222f"}};display:inline-block;margin-left:2px"></span>`).join("");
-        return `<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:18px 20px;margin-bottom:12px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px">
-            <div>
-              <div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;background:${{sbg}};color:${{sc}};border:1px solid ${{sbd}};font-family:monospace">${{r.sport||"NBA"}}</span></div>
-              <div style="font-family:Georgia,serif;font-size:18px;font-weight:700">${{r.player_or_team||""}}</div>
-              <div style="font-size:13px;font-weight:600;color:#4ade80;font-family:monospace;margin-top:4px">${{r.pick||""}}</div>
-            </div>
-            <div style="text-align:right;flex-shrink:0">
-              <div style="font-family:monospace;font-size:18px;font-weight:600;color:#fbbf24">${{r.odds||""}}</div>
-              <div style="font-family:monospace;font-size:12px;color:#5a5a72">${{r.line||""}}</div>
-              <div style="margin-top:6px">${{dots}}</div>
-            </div>
-          </div>
-          <div style="font-size:13px;line-height:1.7;color:#9090a8">${{r.reasoning||""}}</div>
-        </div>`;
-      }}).join("")}}`;
-
-  }} catch(err) {{
-    resultsEl.innerHTML = `<div style="text-align:center;padding:40px;color:#f87171;font-family:monospace">Error: ${{err.message}}</div>`;
-  }}
-}}
-
-function renderKeyPrompt(){{
-  return `<div style="background:#111118;border:1px solid rgba(232,213,163,.22);border-radius:12px;padding:24px;text-align:center">
-    <div style="font-family:Georgia,serif;font-size:20px;font-weight:700;margin-bottom:8px">API Key Required</div>
-    <div style="font-size:13px;color:#9090a8;margin-bottom:16px">To use live search, enter your Anthropic API key. It stays in your browser only and is never stored anywhere.</div>
-    <input id="keyInput" type="password" placeholder="sk-ant-api03-..."
-      style="width:100%;max-width:500px;background:#0a0a0f;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:12px 16px;font-size:13px;color:#f0f0f5;font-family:monospace;outline:none;margin-bottom:12px;display:block;margin-left:auto;margin-right:auto"/>
-    <button onclick="saveKey()"
-      style="background:#e8d5a3;color:#0a0a0f;border:none;border-radius:8px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:monospace">
-      SAVE KEY &amp; SEARCH
-    </button>
-    <div style="font-size:11px;color:#5a5a72;font-family:monospace;margin-top:10px">Key is saved to localStorage — only accessible in your browser</div>
-  </div>`;
-}}
-
-function saveKey(){{
-  const k = document.getElementById("keyInput").value.trim();
-  if(k){{
-    window.ANTHROPIC_KEY = k;
-    localStorage.setItem("the_line_key", k);
-    runSearch();
-  }}
-}}
-
-// Load saved key on page load
-window.ANTHROPIC_KEY = localStorage.getItem("the_line_key") || "";
-</script>
-<style>@keyframes spin{{to{{transform:rotate(360deg)}}}}</style>
-</body>
-</html>"""
+"""
+    return html + get_js()
 
 
 # ─────────────────────────────────────────
