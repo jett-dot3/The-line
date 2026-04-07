@@ -62,7 +62,7 @@ jobs:
             $SKIP_FLAGS \
             --output index.html
         env:
-          ANTHROPIC_API_KEY: "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"
+          ANTHROPIC_API_KEY: "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"
           ODDS_API_KEY:      ${{ secrets.ODDS_API_KEY }}
           WEATHER_API_KEY:   ${{ secrets.WEATHER_API_KEY }}
 
