@@ -19,7 +19,7 @@ Usage:
   python generate.py --date 2026-04-10
 """
 
-import os, sys, json, requests, datetime, argparse, time
+import os, sys, json, re, requests, datetime, argparse, time
 from pathlib import Path
 
 # ─────────────────────────────────────────
