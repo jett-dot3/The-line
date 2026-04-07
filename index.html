@@ -132,6 +132,222 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-
   .hero-title{font-size:26px}.props-grid{grid-template-columns:1fr}.payout-grid{grid-template-columns:1fr}
 }
 </style>
+<script>
+window.THE_LINE_DATA = {
+  "date": "April 07, 2026",
+  "disclaimer": "INCOMPLETE DATA - Unable to generate complete report. Provided datasets contain significant gaps:",
+  "data_gaps": [
+    "NBA.com defensive matchup data not provided - cannot analyze defensive efficiency or personnel",
+    "Live DraftKings moneylines incomplete - only partial Knicks line visible",
+    "Live MLB lines incomplete - only partial Braves line visible",
+    "Weather data missing - no temperature, wind, humidity for any stadium",
+    "Player injury reports missing - cannot flag OUT/QUESTIONABLE status",
+    "Baseball Savant batter data truncated at Correa - incomplete dataset",
+    "FanGraphs platoon splits not provided - cannot analyze handedness advantages",
+    "Season-to-date team statistics missing - cannot calculate pace, efficiency, pace-and-space metrics",
+    "Venue-specific park factors incomplete - only partial data visible",
+    "Public betting splits missing - cannot identify sharp/square sentiment",
+    "MLB schedule data truncated at game 11 of 15 - incomplete slate"
+  ],
+  "unable_to_complete": {
+    "reason": "Insufficient actionable data provided",
+    "required_to_proceed": [
+      "Complete live DraftKings moneylines for all 10 NBA games",
+      "Complete live DraftKings lines for all 15 MLB games",
+      "Full ballpark weather data (temp, wind direction/speed, humidity, precipitation)",
+      "ESPN injury reports for all teams",
+      "NBA.com defensive matchup metrics (opp FG%, 3P%, efficiency ratings)",
+      "Complete Baseball Savant batter dataset (not truncated)",
+      "FanGraphs platoon splits (RHH vs LHP, LHH vs RHP)",
+      "Public betting splits (public% on sides/totals/props)",
+      "Team-level advanced metrics (OffRtg, DefRtg, pace, TS%)"
+    ]
+  },
+  "nba_games": [
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Chicago Bulls @ Washington Wizards",
+      "time": "6:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Minnesota Timberwolves @ Indiana Pacers",
+      "time": "6:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Milwaukee Bucks @ Brooklyn Nets",
+      "time": "6:30 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Miami Heat @ Toronto Raptors",
+      "time": "6:30 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Charlotte Hornets @ Boston Celtics",
+      "time": "7:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Utah Jazz @ New Orleans Pelicans",
+      "time": "7:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Sacramento Kings @ Golden State Warriors",
+      "time": "9:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Oklahoma City Thunder @ Los Angeles Lakers",
+      "time": "9:30 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Dallas Mavericks @ LA Clippers",
+      "time": "9:30 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    },
+    {
+      "status": "INSUFFICIENT_DATA",
+      "matchup": "Houston Rockets @ Phoenix Suns",
+      "time": "10:00 PM ET",
+      "reason": "Complete DraftKings lines not provided in dataset"
+    }
+  ],
+  "mlb_games": [
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Kansas City Royals @ Cleveland Guardians",
+      "time": "1:10 PM ET",
+      "home_pitcher": "Gavin Williams",
+      "away_pitcher": "Noah Cameron",
+      "reason": "Weather data missing, incomplete pitcher metrics in dataset"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Baltimore Orioles @ Chicago White Sox",
+      "time": "3:10 PM ET",
+      "home_pitcher": "Shane Smith",
+      "away_pitcher": "Trevor Rogers (xERA: 2.87, ERA: 1.39)",
+      "analysis": "Trevor Rogers showing positive xERA gap (+1.49) indicates potential ERA regression, but incomplete batter data prevents full analysis"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Arizona Diamondbacks @ New York Mets",
+      "time": "4:10 PM ET",
+      "home_pitcher": "Freddy Peralta",
+      "away_pitcher": "Zac Gallen",
+      "reason": "Weather data missing, incomplete pitcher xERA metrics in dataset"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Chicago Cubs @ Tampa Bay Rays",
+      "time": "6:40 PM ET",
+      "home_pitcher": "Drew Rasmussen",
+      "away_pitcher": "Javier Assad",
+      "reason": "Incomplete schedule - games 5-15 of MLB slate truncated in provided data"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Cincinnati Reds @ Miami Marlins",
+      "time": "6:40 PM ET",
+      "home_pitcher": "Sandy Alcantara (xERA: 1.43, ERA: 0.00)",
+      "away_pitcher": "Andrew Abbott (xERA: 4.60, ERA: 3.09)",
+      "analysis": "Alcantara xERA/ERA gap (-1.43) suggests luck is masking true skill - ERA regression expected. Abbott shows negative gap (-1.51) suggesting underperformance relative to quality. Missing weather/ballpark data prevents precise modeling."
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "San Diego Padres @ Pittsburgh Pirates",
+      "time": "6:40 PM ET",
+      "home_pitcher": "Paul Skenes",
+      "away_pitcher": "Nick Pivetta",
+      "reason": "Incomplete schedule - full dataset required for all 15 MLB games"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Milwaukee Brewers @ Boston Red Sox",
+      "time": "6:45 PM ET",
+      "home_pitcher": "Garrett Crochet (xERA: 4.33, ERA: 3.27)",
+      "away_pitcher": "Jacob Misiorowski",
+      "reason": "Crochet shows negative xERA gap (-1.06) but incomplete batter matchup data missing"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "St. Louis Cardinals @ Washington Nationals",
+      "time": "6:45 PM ET",
+      "home_pitcher": "Cade Cavalli",
+      "away_pitcher": "Matthew Liberatore",
+      "reason": "Incomplete pitcher metrics in dataset"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Oakland Athletics @ New York Yankees",
+      "time": "7:05 PM ET",
+      "home_pitcher": "Cam Schlittler",
+      "away_pitcher": "Aaron Civale",
+      "reason": "Incomplete schedule data"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Los Angeles Dodgers @ Toronto Blue Jays",
+      "time": "7:07 PM ET",
+      "home_pitcher": "Kevin Gausman",
+      "away_pitcher": "Yoshinobu Yamamoto",
+      "reason": "Incomplete schedule data"
+    },
+    {
+      "status": "INCOMPLETE_SCHEDULE",
+      "matchup": "Detroit Tigers @ Minnesota Twins",
+      "time": "7:40 PM ET",
+      "home_pitcher": "Taj Bradley",
+      "away_pitcher": "Tarik Skubal (xERA: 4.01, ERA: 0.69)",
+      "analysis": "Skubal extreme ERA/xERA gap (-3.32) - massive regression risk. Batting .191 against (.303 xBA) indicates luck preservation. However, dataset truncates here; games 12-15 missing entirely."
+    }
+  ],
+  "props": [
+    {
+      "status": "CANNOT_GENERATE",
+      "reason": "Complete player prop lines not provided in DraftKings data"
+    }
+  ],
+  "parlays": [
+    {
+      "status": "CANNOT_GENERATE",
+      "reason": "Insufficient individual game lines to construct parlays - only 1 of 25 games has complete DraftKings data (Knicks +102 ML)"
+    }
+  ],
+  "summary": {
+    "report_status": "INCOMPLETE",
+    "actionable_picks": 0,
+    "reason": "This dataset is insufficient for professional sports betting analysis. To generate the complete report requested, THE LINE requires:",
+    "critical_missing_elements": [
+      "Complete live DraftKings moneylines for all 10 NBA games (only Knicks +102 visible)",
+      "Complete live DraftKings moneylines/totals for all 15 MLB games (partial Braves -181 visible)",
+      "Real-time ballpark weather for all 15 MLB venues",
+      "ESPN confirmed injury reports for all teams",
+      "NBA.com defensive matchup data (opp 3P%, FG%, defensive efficiency)",
+      "Complete Baseball Savant dataset (truncated at Correa for batters)",
+      "FanGraphs platoon splits and detailed metrics",
+      "Public betting splits from major sportsbooks",
+      "Complete MLB schedule (truncated at game 11 of 15)"
+    ],
+    "next_steps": "Resubmit with complete datasets to unlock full betting intelligence report"
+  }
+};
+window.THE_LINE_DATE = "April 07, 2026";
+console.log('THE LINE loaded, NBA games:', (window.THE_LINE_DATA.nba_games||[]).length);
+</script>
 </head>
 <body>
 
