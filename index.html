@@ -175,7 +175,43 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-
   .props-grid{grid-template-columns:1fr}.payout-grid{grid-template-columns:1fr}
 }
 </style>
-</head>
+
+<script>
+window.THE_LINE_DATA = {
+  "date": "April 07, 2026",
+  "report_status": "INCOMPLETE_DATA_ERROR",
+  "data_quality_issues": [
+    "NBA lines data corrupted - only partial HTML fragments provided, no actual DraftKings moneylines or spreads accessible",
+    "MLB lines data corrupted - only partial HTML fragments provided, no actual DraftKings moneylines, spreads, or totals accessible",
+    "Baseball Savant data incomplete - batter/pitcher xStats tables truncated mid-row, missing critical advanced metrics",
+    "FanGraphs platoon splits data not provided",
+    "Weather data not provided - no temperature, wind, humidity, or precipitation data available",
+    "Injury reports not provided - cannot assess roster status",
+    "NBA.com defensive matchup data not provided - cannot assess positional advantages",
+    "StatMuse season leaders not provided",
+    "Action Network public betting splits not accessible from provided HTML fragments"
+  ],
+  "error_explanation": "THE LINE cannot generate sharp, citation-backed picks without complete datasets. The provided data contains scheduling information only, with corrupted/incomplete advanced metrics and inaccessible live betting lines. Generating picks without precise DK lines, weather conditions, injury statuses, and complete Statcast/FanGraphs data would violate analytical integrity standards.",
+  "recommendation": "Please provide:",
+  "required_data": [
+    "Complete DraftKings live moneylines, spreads, and totals (JSON or clean table format)",
+    "Complete Baseball Savant xBA, xSLG, xERA, barrel% data (full tables, not truncated)",
+    "Complete FanGraphs advanced metrics with platoon splits",
+    "Current injury reports from ESPN (OUT, QUESTIONABLE, GTD status)",
+    "Live weather data: temp, wind speed/direction, humidity, precipitation chance",
+    "NBA.com defensive matchup data for relevant position groups",
+    "Public betting action/splits from consensus sportsbooks"
+  ],
+  "nba_games": [],
+  "mlb_games": [],
+  "props": [],
+  "parlays": [],
+  "note": "Once complete datasets are provided in clean format, THE LINE will deliver 100+ picks across full card with minimum 3-4 data citations per selection, precise parlay math, and confidence ratings tied to statistical edges."
+};
+window.THE_LINE_DATE = "April 07, 2026";
+window.THE_LINE_NOTES = "";
+console.log('THE LINE data loaded:', Object.keys(window.THE_LINE_DATA));
+</script></head>
 <body>
 
 <header>
