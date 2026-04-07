@@ -988,7 +988,7 @@ def build_html(picks, today_str, notes=""):
         output = template.replace("<!-- INJECT:DATA -->", injection)
     elif "</body>" in template:
         print("  [HTML] Injecting before </body>")
-        output = template.replace("</body>", injection + "\n</body>")
+        output = template.replace("</head>", injection + "\n</head>")
     else:
         print("  [HTML] Appending to end")
         output = template + "\n" + injection
