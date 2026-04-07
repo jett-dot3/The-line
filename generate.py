@@ -660,6 +660,12 @@ def generate_picks(data_bundle, notes="", target_date=""):
 
     # Build the data context — summarize each source
     context_parts = [f"DATE: {today_str}"]
+context_parts = [f"""DATE: {today_str}
+CRITICAL: You must ONLY use data provided below. Do NOT use your training knowledge for:
+- Player rosters (players may have been traded — only use injury report data provided)
+- Odds and lines (only use lines from the data — never estimate from memory)
+- Team records (only use what is provided)
+If data is missing for a field, write "N/A" — never substitute your training knowledge."""]
 
     if data_bundle.get("schedule", {}).get("nba"):
         context_parts.append(f"\nNBA SCHEDULE TODAY ({len(data_bundle['schedule']['nba'])} games):\n" +
