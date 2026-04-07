@@ -213,7 +213,7 @@ def fetch_statcast():
     )
     r = safe_get(batter_url, headers=headers, label="Savant xStats batters")
     if r and "," in r.text[:100]:  # verify it's CSV
-        results["xstats_batters"] = r.text[:5000]
+        results["xstats_batters"] = r.text[:1500]
 
     # Expected statistics — pitchers
     pitcher_url = (
@@ -222,7 +222,7 @@ def fetch_statcast():
     )
     r = safe_get(pitcher_url, headers=headers, label="Savant xStats pitchers")
     if r and "," in r.text[:100]:
-        results["xstats_pitchers"] = r.text[:5000]
+        results["xstats_pitchers"] = r.text[:1500]
 
     # Barrel rate leaderboard — batters (power indicator)
     barrel_url = (
@@ -231,7 +231,7 @@ def fetch_statcast():
     )
     r = safe_get(barrel_url, headers=headers, label="Savant barrel rates")
     if r and "," in r.text[:100]:
-        results["barrels"] = r.text[:5000]
+        results["barrels"] = r.text[:1500]
 
     # Sprint speed (running game, basestealing)
     sprint_url = (
@@ -240,7 +240,7 @@ def fetch_statcast():
     )
     r = safe_get(sprint_url, headers=headers, label="Savant sprint speed")
     if r and "," in r.text[:100]:
-        results["sprint_speed"] = r.text[:3000]
+        results["sprint_speed"] = r.text[:1500]
 
     # Park factors — important for environmental adjustments
     park_url = (
@@ -249,7 +249,7 @@ def fetch_statcast():
     )
     r = safe_get(park_url, headers=headers, label="Savant park factors")
     if r and "," in r.text[:100]:
-        results["park_factors"] = r.text[:3000]
+        results["park_factors"] = r.text[:1500]
 
     time.sleep(0.5)
     return results
@@ -293,7 +293,7 @@ def fetch_fangraphs():
     if r:
         try:
             data = r.json()
-            results["splits"] = json.dumps(data)[:5000]
+            results["splits"] = json.dumps(data)[:1500]
         except:
             results["splits"] = truncate(r.text)
 
@@ -326,7 +326,7 @@ def fetch_fangraphs():
     if r:
         try:
             data = r.json()
-            results["batting_leaders"] = json.dumps(data)[:5000]
+            results["batting_leaders"] = json.dumps(data)[:1500]
         except:
             results["batting_leaders"] = truncate(r.text)
 
@@ -337,7 +337,7 @@ def fetch_fangraphs():
     if r:
         try:
             data = r.json()
-            results["pitching_leaders"] = json.dumps(data)[:5000]
+            results["pitching_leaders"] = json.dumps(data)[:1500]
         except:
             results["pitching_leaders"] = truncate(r.text)
 
@@ -668,23 +668,23 @@ def generate_picks(data_bundle, notes="", target_date=""):
 
     if data_bundle.get("schedule", {}).get("nba"):
         context_parts.append(f"\nNBA SCHEDULE TODAY ({len(data_bundle['schedule']['nba'])} games):\n" +
-            json.dumps(data_bundle["schedule"]["nba"], indent=2)[:3000])
+            json.dumps(data_bundle["schedule"]["nba"], indent=2)[:1500])
 
     if data_bundle.get("schedule", {}).get("mlb"):
         context_parts.append(f"\nMLB SCHEDULE TODAY ({len(data_bundle['schedule']['mlb'])} games):\n" +
-            json.dumps(data_bundle["schedule"]["mlb"], indent=2)[:3000])
+            json.dumps(data_bundle["schedule"]["mlb"], indent=2)[:1500])
 
     if data_bundle.get("odds", {}).get("nba"):
         context_parts.append(f"\nDRAFTKINGS NBA ODDS (live):\n" +
-            json.dumps(data_bundle["odds"]["nba"][:8], indent=2)[:4000])
+            json.dumps(data_bundle["odds"]["nba"][:8], indent=2)[:1500])
 
     if data_bundle.get("odds", {}).get("mlb"):
         context_parts.append(f"\nDRAFTKINGS MLB ODDS (live):\n" +
-            json.dumps(data_bundle["odds"]["mlb"][:8], indent=2)[:4000])
+            json.dumps(data_bundle["odds"]["mlb"][:8], indent=2)[:1500])
 
     if data_bundle.get("odds", {}).get("nba_props"):
         context_parts.append(f"\nDRAFTKINGS NBA PLAYER PROPS (live):\n" +
-            json.dumps(data_bundle["odds"]["nba_props"][:4], indent=2)[:4000])
+            json.dumps(data_bundle["odds"]["nba_props"][:4], indent=2)[:1500])
 
     if data_bundle.get("nba_stats", {}).get("team_defense", {}).get("rows"):
         td = data_bundle["nba_stats"]["team_defense"]
@@ -707,46 +707,46 @@ def generate_picks(data_bundle, notes="", target_date=""):
     for key, label in [("ppg","PPG"), ("rpg","RPG"), ("apg","APG"), ("drtg","DRTG")]:
         val = data_bundle.get("statmuse_nba", {}).get(key, "")
         if val:
-            context_parts.append(f"\nSTATMUSE NBA {label}:\n{val[:2000]}")
+            context_parts.append(f"\nSTATMUSE NBA {label}:\n{val[:1500]}")
 
     for key, label in [("ops","OPS"), ("hr","HR"), ("wrcplus","wRC+"), ("era","ERA"), ("avg","AVG")]:
         val = data_bundle.get("statmuse_mlb", {}).get(key, "")
         if val:
-            context_parts.append(f"\nSTATMUSE MLB {label}:\n{val[:2000]}")
+            context_parts.append(f"\nSTATMUSE MLB {label}:\n{val[:1500]}")
 
     if data_bundle.get("statcast", {}).get("xstats_batters"):
         context_parts.append(f"\nBASEBALL SAVANT — xSTATS BATTERS (xBA, xSLG, xwOBA, barrel%):\n" +
-            data_bundle["statcast"]["xstats_batters"][:3000])
+            data_bundle["statcast"]["xstats_batters"][:1500])
 
     if data_bundle.get("statcast", {}).get("xstats_pitchers"):
         context_parts.append(f"\nBASEBALL SAVANT — xSTATS PITCHERS (xERA, xBA against):\n" +
-            data_bundle["statcast"]["xstats_pitchers"][:3000])
+            data_bundle["statcast"]["xstats_pitchers"][:1500])
 
     if data_bundle.get("statcast", {}).get("barrels"):
         context_parts.append(f"\nBASEBALL SAVANT — BARREL RATES & EXIT VELOCITY:\n" +
-            data_bundle["statcast"]["barrels"][:2000])
+            data_bundle["statcast"]["barrels"][:1500])
 
     if data_bundle.get("statcast", {}).get("park_factors"):
         context_parts.append(f"\nBASEBALL SAVANT — PARK FACTORS (2026):\n" +
-            data_bundle["statcast"]["park_factors"][:2000])
+            data_bundle["statcast"]["park_factors"][:1500])
 
     if data_bundle.get("fangraphs", {}).get("batting_leaders"):
         context_parts.append(f"\nFANGRAPHS BATTING LEADERS (WAR, wRC+, wOBA, OPS):\n" +
-            data_bundle["fangraphs"]["batting_leaders"][:3000])
+            data_bundle["fangraphs"]["batting_leaders"][:1500])
 
     if data_bundle.get("fangraphs", {}).get("pitching_leaders"):
         context_parts.append(f"\nFANGRAPHS PITCHING LEADERS (ERA, FIP, xFIP, K%):\n" +
-            data_bundle["fangraphs"]["pitching_leaders"][:3000])
+            data_bundle["fangraphs"]["pitching_leaders"][:1500])
 
     if data_bundle.get("fangraphs", {}).get("splits"):
         context_parts.append(f"\nFANGRAPHS SPLITS (LHP vs RHP, Home/Away):\n" +
-            data_bundle["fangraphs"]["splits"][:3000])
+            data_bundle["fangraphs"]["splits"][:1500])
 
     injuries = data_bundle.get("injuries", {})
     if injuries.get("nba"):
-        context_parts.append(f"\nESPN NBA INJURY REPORT:\n{injuries['nba'][:3000]}")
+        context_parts.append(f"\nESPN NBA INJURY REPORT:\n{injuries['nba'][:1500]}")
     if injuries.get("mlb"):
-        context_parts.append(f"\nESPN MLB INJURY REPORT:\n{injuries['mlb'][:3000]}")
+        context_parts.append(f"\nESPN MLB INJURY REPORT:\n{injuries['mlb'][:1500]}")
 
     if data_bundle.get("weather"):
         weather_summary = []
@@ -762,11 +762,11 @@ def generate_picks(data_bundle, notes="", target_date=""):
 
     if data_bundle.get("public_betting", {}).get("nba_lines"):
         context_parts.append(f"\nLIVE NBA LINES + PUBLIC SPLITS (ScoresAndOdds):\n" +
-            data_bundle["public_betting"]["nba_lines"][:2000])
+            data_bundle["public_betting"]["nba_lines"][:1500])
 
     if data_bundle.get("public_betting", {}).get("mlb_lines"):
         context_parts.append(f"\nLIVE MLB LINES (ScoresAndOdds):\n" +
-            data_bundle["public_betting"]["mlb_lines"][:2000])
+            data_bundle["public_betting"]["mlb_lines"][:1500])
 
     if notes:
         context_parts.append(f"\n\n🚨 BREAKING ANALYST NOTES — FACTOR THESE INTO ALL PICKS:\n{notes}\n"
@@ -879,10 +879,17 @@ Return ONLY valid JSON, no markdown, no preamble:
   ]
 }}
 
-Generate 5 parlays ranging from 2-leg LOW RISK to 7-leg ULTRA RISK.
-Calculate all parlay math precisely: multiply decimals, convert to American odds.
-Use actual DK lines from the data for all calculations.
-Flag any postponed games and exclude them completely.
+CRITICAL INSTRUCTIONS:
+- You MUST generate picks for every game on today's schedule regardless of data gaps
+- If DK lines are missing, estimate based on team records and recent form
+- If injury data is missing, note "injury status unknown" but still pick
+- If Statcast data is missing, use season stats available from StatMuse
+- NEVER return "DATA_INSUFFICIENT" or refuse to generate — always produce picks
+- Generate exactly 5 parlays from 2-leg LOW to 7-leg ULTRA risk
+- Calculate parlay math: multiply decimals, convert to American odds
+- If you lack specific data for a field, use "N/A" or a reasonable estimate
+- The output MUST be valid JSON with nba_games, mlb_games, props, and parlays arrays
+- Each array must have AT LEAST the games/props listed in the schedule above
 """
 
     response = requests.post(
@@ -988,7 +995,7 @@ def build_html(picks, today_str, notes=""):
         output = template.replace("<!-- INJECT:DATA -->", injection)
     elif "</body>" in template:
         print("  [HTML] Injecting before </body>")
-        output = template.replace("</head>", injection + "\n</head>")
+        output = template.replace("</body>", injection + "\n</body>")
     else:
         print("  [HTML] Appending to end")
         output = template + "\n" + injection
