@@ -959,9 +959,8 @@ Flag any postponed games and exclude them completely.
 # ─────────────────────────────────────────
 def build_html(picks, today_str, notes=""):
     """
-    Injects picks JSON into the HTML template.
-    Template must have <!-- INJECT:DATA --> comment.
-    Falls back to generating standalone page if no template.
+    Injects picks JSON into index.html template.
+    Works with or without INJECT:DATA tag — always finds </body>.
     """
     template_path = Path("template.html")
     if not template_path.exists():
@@ -969,25 +968,32 @@ def build_html(picks, today_str, notes=""):
 
     if template_path.exists():
         template = template_path.read_text(encoding="utf-8")
+        print(f"  [HTML] Template loaded: {len(template)} chars")
+        print(f"  [HTML] Has INJECT tag: {chr(60)}!-- INJECT:DATA --{chr(62) in template}")
+        print(f"  [HTML] Has </body>: {chr(60)}/body{chr(62) in template}")
     else:
-        # Minimal fallback — you should use your full template
-        template = """<!DOCTYPE html><html><head><title>THE LINE</title></head>
-<body><div id="app"></div><!-- INJECT:DATA --></body></html>"""
+        print("  [WARN] No index.html found — using minimal fallback")
+        template = "<html><body></body></html>"
 
-    # Inject the picks as a JS variable for the page to consume
-    injection = f"""
-<script>
-window.THE_LINE_DATA = {json.dumps(picks, indent=2)};
-window.THE_LINE_DATE = "{today_str}";
-window.THE_LINE_NOTES = {json.dumps(notes)};
-console.log('THE LINE data loaded:', Object.keys(window.THE_LINE_DATA));
-</script>"""
+    picks_json = json.dumps(picks, indent=2, ensure_ascii=False)
+    print(f"  [HTML] NBA games: {len(picks.get(chr(110)+chr(98)+chr(97)+'_games', []))}")
+    print(f"  [HTML] MLB games: {len(picks.get(chr(109)+chr(108)+chr(98)+'_games', []))}")
+    print(f"  [HTML] Props: {len(picks.get('props', []))}")
+    print(f"  [HTML] Parlays: {len(picks.get('parlays', []))}")
+
+    injection = "<script>\nwindow.THE_LINE_DATA = " + picks_json + ";\nwindow.THE_LINE_DATE = \"" + today_str + "\";\nconsole.log(\'THE LINE loaded, NBA games:\', (window.THE_LINE_DATA.nba_games||[]).length);\n</script>"
 
     if "<!-- INJECT:DATA -->" in template:
+        print("  [HTML] Injecting via INJECT:DATA tag")
         output = template.replace("<!-- INJECT:DATA -->", injection)
+    elif "</body>" in template:
+        print("  [HTML] Injecting before </body>")
+        output = template.replace("</body>", injection + "\n</body>")
     else:
-        output = template.replace("</head>", injection + "</head>")
+        print("  [HTML] Appending to end")
+        output = template + "\n" + injection
 
+    print(f"  [HTML] Final output: {len(output)} chars")
     return output
 
 # ─────────────────────────────────────────
