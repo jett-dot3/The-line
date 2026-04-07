@@ -178,7 +178,20 @@ header{position:sticky;top:0;z-index:100;background:rgba(10,10,15,.93);backdrop-
   </div>
 </div>
 
-<!-- INJECT:DATA -->
+
+<script>
+window.THE_LINE_DATA = {
+  "date": "April 07, 2026",
+  "nba_games": [],
+  "mlb_games": [],
+  "props": [],
+  "parlays": [],
+  "error": "JSON parse failed: Expecting value: line 482 column 15 (char 27220). Raw: {\n  \"date\": \"April 07, 2026\",\n  \"report_status\": \"INCOMPLETE - INSUFFICIENT DATA\",\n  \"data_quality_issues\": [\n    \"NBA lines data truncated - moneyline odds not fully provided\",\n    \"MLB lines data se"
+};
+window.THE_LINE_DATE = "April 07, 2026";
+window.THE_LINE_NOTES = "";
+console.log('THE LINE data loaded:', Object.keys(window.THE_LINE_DATA));
+</script>
 
 <script>
 // ─── TAB SWITCHING ───
