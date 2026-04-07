@@ -808,10 +808,10 @@ Return ONLY valid JSON, no markdown, no preamble:
       "dk_total": "O/U XXX.X",
       "win_probability": "XX%",
       "confidence": 4,
-      "article": "3-4 sentence sharp analysis citing specific stats from the data...",
-      "key_stats": ["Stat 1 with number", "Stat 2", "Stat 3", "Stat 4"],
-      "injuries": ["Player OUT (injury)", "Player QUESTIONABLE"],
-      "verdict": "BET: [exact bet] — [one sentence rationale]"
+      "article": "2 sentence analysis.",
+      "key_stats": ["Stat 1", "Stat 2"],
+      "injuries": ["Player OUT"],
+      "verdict": "BET: [exact bet] — [reason]"
     }}
   ],
   "mlb_games": [
@@ -819,27 +819,20 @@ Return ONLY valid JSON, no markdown, no preamble:
       "matchup": "AWAY @ HOME",
       "time": "6:05 PM ET",
       "venue": "Stadium Name",
-      "home_pitcher": "Name (ERA, WHIP)",
-      "away_pitcher": "Name (ERA, WHIP)",
+      "home_pitcher": "Name (ERA)",
+      "away_pitcher": "Name (ERA)",
       "pick": "TEAM -ML or OVER/UNDER",
       "pick_type": "ML or TOTAL",
-      "dk_line": "-XXX or +XXX",
+      "dk_line": "-XXX",
       "dk_total": "O/U X.X",
       "confidence": 3,
-      "environmental": {{
-        "temp_f": 72,
-        "wind_mph": 8,
-        "wind_direction": "blowing out to CF",
-        "altitude_ft": 5200,
-        "park_factor": "hitter-friendly",
-        "precip_chance": 10
-      }},
-      "statcast_edge": "Specific xBA/xSLG/barrel rate insight from the data",
-      "fangraphs_edge": "Specific FIP/wRC+/platoon split insight",
-      "article": "3-4 sentence sharp analysis citing Statcast, FanGraphs, weather...",
-      "key_stats": ["wRC+ or xBA stat", "ERA vs FIP gap", "Park factor", "Weather factor"],
+      "environmental": {{"temp_f": 72, "wind_mph": 8, "wind_direction": "out", "altitude_ft": 0, "park_factor": "neutral", "precip_chance": 10}},
+      "statcast_edge": "one sentence",
+      "fangraphs_edge": "one sentence",
+      "article": "2 sentence analysis.",
+      "key_stats": ["Stat 1", "Stat 2"],
       "injuries": ["Player OUT"],
-      "verdict": "BET: [exact bet] — [one sentence rationale]"
+      "verdict": "BET: [exact bet] — [reason]"
     }}
   ],
   "props": [
@@ -847,14 +840,14 @@ Return ONLY valid JSON, no markdown, no preamble:
       "sport": "NBA or MLB",
       "player": "Full Name",
       "team": "TEAM",
-      "prop_type": "Points / Rebounds / Assists / Total Bases / Strikeouts / HR",
-      "direction": "OVER or UNDER",
+      "prop_type": "Points",
+      "direction": "OVER",
       "line": "27.5",
       "dk_odds": "-115",
       "season_avg": "26.8",
-      "matchup_edge": "Specific opponent defensive weakness from NBA.com matchup data",
-      "statcast_edge": "Barrel rate or exit velo advantage (MLB only)",
-      "reasoning": "2-3 sentence analysis with specific data points",
+      "matchup_edge": "one sentence",
+      "statcast_edge": "one sentence",
+      "reasoning": "2 sentence analysis.",
       "confidence": 4
     }}
   ],
@@ -864,16 +857,16 @@ Return ONLY valid JSON, no markdown, no preamble:
       "risk_level": "LOW",
       "legs": [
         {{
-          "pick": "BOS -ML",
-          "dk_odds": "-650",
-          "decimal": 1.154,
+          "pick": "TEAM -ML",
+          "dk_odds": "-300",
+          "decimal": 1.33,
           "reasoning": "One sentence"
         }}
       ],
-      "total_decimal": 1.384,
-      "american_odds": "+284",
-      "payout_100": "$384",
-      "payout_50": "$192",
+      "total_decimal": 1.33,
+      "american_odds": "+33",
+      "payout_100": "$133",
+      "payout_50": "$67",
       "confidence": "HIGH"
     }}
   ]
@@ -901,7 +894,7 @@ CRITICAL INSTRUCTIONS:
         },
         json={
             "model": "claude-haiku-4-5-20251001",
-            "max_tokens": 8000,
+            "max_tokens": 16000,
             "messages": [{"role": "user", "content": prompt}]
         },
         timeout=120
