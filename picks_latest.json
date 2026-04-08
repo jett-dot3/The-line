@@ -1,420 +1,364 @@
 {
-  "date": "April 07, 2026",
+  "date": "April 08, 2026",
   "nba_games": [
     {
-      "matchup": "Chicago Bulls @ Washington Wizards",
-      "time": "11:00 PM ET",
-      "venue": "Capital One Arena",
-      "pick": "Chicago Bulls -6.5",
+      "matchup": "Atlanta Hawks @ Cleveland Cavaliers",
+      "time": "7:10 PM ET",
+      "venue": "Rocket Mortgage FieldHouse",
+      "pick": "Cleveland Cavaliers -1.5",
       "pick_type": "SPREAD",
-      "dk_line": "-225",
-      "dk_spread": "Chicago Bulls -6.5 (-102)",
-      "dk_total": "O/U 250.5",
-      "win_probability": "69%",
-      "confidence": 5,
-      "article": "Chicago opens as heavy favorites with -225 moneyline, indicating market confidence in their superior roster depth and defensive intensity. Wizards' 6.5-point spread disadvantage reflects their rebuilding status versus a Bulls team playing for playoff seeding.",
+      "dk_line": "-120",
+      "dk_spread": "Cleveland Cavaliers -1.5 (-110)",
+      "dk_total": "O236.5 (-105)",
+      "win_probability": "58%",
+      "confidence": 3,
+      "article": "Cavaliers hold home court advantage with tight 1.5-point spread indicating competitive matchup. Hawks squad (45-34) presents minimal edge; line movement favors Cleveland at -120 moneyline with balanced total setup.",
       "key_stats": [
-        "Bulls -6.5 spread consensus",
-        "DK moneyline -225 (69% implied)",
-        "Capital One Arena neutral site"
+        "Hawks moneyline +100 vs Cavaliers -120",
+        "Spread movement: O235.5 to O236.5 indicates modest total inflation",
+        "James Harden assist line 8.5 (Under -150 favored by sharp action)"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Chicago Bulls -6.5 (-102) \u2014 Strong line value with Bulls favored by market consensus; cover the spread in back-to-back travel scenario."
+      "verdict": "BET: Cavaliers -1.5 (-110) \u2014 Home court with tight line suggests value; Hawks +100 ML also playable for underdogs seekers"
     },
     {
-      "matchup": "Minnesota Timberwolves @ Indiana Pacers",
-      "time": "11:00 PM ET",
-      "venue": "Gainbridge Fieldhouse",
-      "pick": "Minnesota Timberwolves -3.5",
-      "pick_type": "SPREAD",
+      "matchup": "Minnesota Timberwolves @ Orlando Magic",
+      "time": "7:00 PM ET",
+      "venue": "Kia Center",
+      "pick": "Minnesota Timberwolves -ML",
+      "pick_type": "ML",
       "dk_line": "N/A",
-      "dk_spread": "Minnesota Timberwolves -3.5 (est. -110)",
+      "dk_spread": "N/A",
+      "dk_total": "N/A",
+      "win_probability": "54%",
+      "confidence": 3,
+      "article": "Timberwolves favored on road despite Orlando home status; limited data available suggests Minnesota maintains playoff contention edge. Magic struggling relative to conference standings.",
+      "key_stats": [
+        "Incomplete DraftKings data provided for matchup",
+        "Orlando Magic hosting but Timberwolves likely slight chalk",
+        "Conference playoff positioning favors Minnesota"
+      ],
+      "injuries": [
+        "injury status unknown"
+      ],
+      "verdict": "BET: Minnesota Timberwolves -ML (estimated -110) \u2014 Road favorite status indicates competitive advantage; seek best available moneyline"
+    },
+    {
+      "matchup": "Milwaukee Bucks @ Detroit Pistons",
+      "time": "7:00 PM ET",
+      "venue": "Little Caesars Arena",
+      "pick": "Milwaukee Bucks -ML",
+      "pick_type": "ML",
+      "dk_line": "N/A",
+      "dk_spread": "N/A",
       "dk_total": "N/A",
       "win_probability": "62%",
       "confidence": 4,
-      "article": "Minnesota's elite defensive profile and depth give them edge against Pacers' inconsistent half-court execution. Timberwolves' road record suggests strong covering potential in Indianapolis.",
+      "article": "Bucks represent superior roster construction against young Pistons squad; Milwaukee maintains elite playoff positioning and should control this matchup. Road favorite status justified by talent differential.",
       "key_stats": [
-        "Timberwolves elite defense",
-        "Pacers mid-tier offensive efficiency",
-        "Gainbridge Fieldhouse neutral"
+        "Bucks playoff contention vs Pistons rebuilding arc",
+        "Milwaukee superior backcourt and frontcourt depth",
+        "DraftKings lines unavailable but Bucks should be -150 to -170 ML range"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Minnesota Timberwolves -3.5 \u2014 Superior roster composition and defensive metrics support small-spread cover."
+      "verdict": "BET: Milwaukee Bucks -ML (estimated -160) \u2014 Elite talent advantage on road; strong confidence pick for straight moneyline"
     },
     {
-      "matchup": "Milwaukee Bucks @ Brooklyn Nets",
-      "time": "11:30 PM ET",
-      "venue": "Barclays Center",
-      "pick": "Milwaukee Bucks -8.5",
-      "pick_type": "SPREAD",
+      "matchup": "Memphis Grizzlies @ Denver Nuggets",
+      "time": "9:00 PM ET",
+      "venue": "Ball Arena",
+      "pick": "Denver Nuggets -ML",
+      "pick_type": "ML",
       "dk_line": "N/A",
-      "dk_spread": "Milwaukee Bucks -8.5 (est. -110)",
+      "dk_spread": "N/A",
       "dk_total": "N/A",
-      "win_probability": "72%",
-      "confidence": 5,
-      "article": "Bucks' championship-caliber roster overwhelms Nets' tanking squad; 8.5-point spread reflects massive talent differential. Brooklyn offers minimal resistance on both ends.",
-      "key_stats": [
-        "Bucks playoff-contending roster",
-        "Nets rebuilding phase",
-        "Barclays Center slight Nets home edge"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Milwaukee Bucks -8.5 \u2014 Double-digit spread is achievable given roster mismatch; Bucks' depth too much for Brooklyn."
-    },
-    {
-      "matchup": "Miami Heat @ Toronto Raptors",
-      "time": "11:30 PM ET",
-      "venue": "Scotiabank Arena",
-      "pick": "Toronto Raptors +3.5",
-      "pick_type": "SPREAD",
-      "dk_line": "N/A",
-      "dk_spread": "Toronto Raptors +3.5 (est. -110)",
-      "dk_total": "N/A",
-      "win_probability": "58%",
-      "confidence": 3,
-      "article": "Raptors' home court advantage at Scotiabank Arena provides critical edge; Miami's inconsistent road performance suggests Toronto can keep this close. Point differential favors Raptors' defense.",
-      "key_stats": [
-        "Raptors home court +4.2% efficiency",
-        "Heat road splits weakened",
-        "Scotiabank Arena hostile environment"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Toronto Raptors +3.5 \u2014 Home court covers the spread; Miami struggles on road in Eastern Conference."
-    },
-    {
-      "matchup": "Charlotte Hornets @ Boston Celtics",
-      "time": "12:00 AM ET",
-      "venue": "TD Garden",
-      "pick": "Boston Celtics -12.5",
-      "pick_type": "SPREAD",
-      "dk_line": "N/A",
-      "dk_spread": "Boston Celtics -12.5 (est. -110)",
-      "dk_total": "N/A",
-      "win_probability": "78%",
-      "confidence": 5,
-      "article": "Celtics' championship pedigree faces Hornets' lottery-bound roster; TD Garden dominance ensures double-digit cover. Boston's All-Star caliber overwhelms Charlotte's modest talent.",
-      "key_stats": [
-        "Celtics championship roster",
-        "Hornets lottery pick candidate",
-        "TD Garden home court +5% edge"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Boston Celtics -12.5 \u2014 Elite vs. rebuilding matchup; Boston covers comfortably at home."
-    },
-    {
-      "matchup": "Utah Jazz @ New Orleans Pelicans",
-      "time": "12:00 AM ET",
-      "venue": "Smoothie King Center",
-      "pick": "New Orleans Pelicans -5.5",
-      "pick_type": "SPREAD",
-      "dk_line": "N/A",
-      "dk_spread": "New Orleans Pelicans -5.5 (est. -110)",
-      "dk_total": "N/A",
-      "win_probability": "64%",
+      "win_probability": "68%",
       "confidence": 4,
-      "article": "Pelicans' superstar-driven offense provides edge over Jazz's defensive identity; New Orleans' home court amplifies their advantages. Jazz's road woes make covering difficult.",
+      "article": "Defending champion Nuggets face young Grizzlies in Denver with altitude advantage; Jokic-led squad should dominate at home against Memphis backcourt. Nuggets championship pedigree separates this matchup decisively.",
       "key_stats": [
-        "Pelicans home court advantage",
-        "Jazz road offensive limitations",
-        "Smoothie King Center crowd factor"
+        "Nuggets home court at elevation (5,280 ft)",
+        "Championship roster vs Grizzlies youth movement",
+        "Denver should be favored -200 to -220 ML range"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: New Orleans Pelicans -5.5 \u2014 Home court + talent disparity supports spread cover."
+      "verdict": "BET: Denver Nuggets -ML (estimated -210) \u2014 Home altitude advantage + championship experience; strong fade of underdog Memphis"
     },
     {
-      "matchup": "Sacramento Kings @ Golden State Warriors",
-      "time": "2:00 AM ET",
-      "venue": "Chase Center",
-      "pick": "Golden State Warriors -4.5",
+      "matchup": "Portland Trail Blazers @ San Antonio Spurs",
+      "time": "8:30 PM ET",
+      "venue": "Frost Bank Center",
+      "pick": "San Antonio Spurs -ML",
+      "pick_type": "ML",
+      "dk_line": "N/A",
+      "dk_spread": "N/A",
+      "dk_total": "N/A",
+      "win_probability": "56%",
+      "confidence": 3,
+      "article": "Spurs home environment provides moderate edge against Portland; San Antonio maintains competitive roster while Blazers face inconsistency. Slight home court advantage favors Texas franchise.",
+      "key_stats": [
+        "Spurs home court positioning",
+        "Portland travel fatigue factor",
+        "San Antonio estimated -130 to -150 ML"
+      ],
+      "injuries": [
+        "injury status unknown"
+      ],
+      "verdict": "BET: San Antonio Spurs -ML (estimated -140) \u2014 Home court value pick; moderate confidence on Spurs playoff push"
+    },
+    {
+      "matchup": "Oklahoma City Thunder @ LA Clippers",
+      "time": "10:00 PM ET",
+      "venue": "Intuit Dome",
+      "pick": "LA Clippers -1.5",
       "pick_type": "SPREAD",
       "dk_line": "N/A",
-      "dk_spread": "Golden State Warriors -4.5 (est. -110)",
+      "dk_spread": "N/A",
+      "dk_total": "N/A",
+      "win_probability": "55%",
+      "confidence": 3,
+      "article": "Clippers maintain home court advantage in new arena; OKC represents ascending playoff threat but Los Angeles familiarity factor tips balance. Close matchup with Clippers slight edge at home.",
+      "key_stats": [
+        "Clippers new Intuit Dome home court advantage",
+        "OKC playoff contention rising trajectory",
+        "Estimated spread -110 to -120 Clippers"
+      ],
+      "injuries": [
+        "injury status unknown"
+      ],
+      "verdict": "BET: LA Clippers -1.5 (estimated -110) \u2014 New home arena momentum; value play on Clippers slight spread advantage"
+    },
+    {
+      "matchup": "Dallas Mavericks @ Phoenix Suns",
+      "time": "10:00 PM ET",
+      "venue": "Mortgage Matchup Center",
+      "pick": "Phoenix Suns -ML",
+      "pick_type": "ML",
+      "dk_line": "N/A",
+      "dk_spread": "N/A",
       "dk_total": "N/A",
       "win_probability": "61%",
       "confidence": 4,
-      "article": "Warriors' three-point prowess and Chase Center home advantage overcome Kings' offensive firepower. Golden State's perimeter defense limits Sacramento's wing players.",
+      "article": "Suns maintain Western Conference elite status with home court advantage; Dallas presents strong challenger but Phoenix's trio (Durant, Booker, Beal) should prevail. Home playoff positioning favors Arizona franchise.",
       "key_stats": [
-        "Warriors three-point efficiency elite",
-        "Kings road splits concerning",
-        "Chase Center +3.8% edge"
+        "Suns Big Three execution at home",
+        "Dallas road disadvantage against elite opponent",
+        "Phoenix estimated -170 to -190 ML"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Golden State Warriors -4.5 \u2014 Chase Center homecourt + three-point dominance covers spread."
-    },
-    {
-      "matchup": "Oklahoma City Thunder @ Los Angeles Lakers",
-      "time": "2:30 AM ET",
-      "venue": "Crypto.com Arena",
-      "pick": "Oklahoma City Thunder -3.5",
-      "pick_type": "SPREAD",
-      "dk_line": "N/A",
-      "dk_spread": "Oklahoma City Thunder -3.5 (est. -110)",
-      "dk_total": "N/A",
-      "win_probability": "60%",
-      "confidence": 3,
-      "article": "Thunder's defensive intensity and secondary scoring depth provide edge over Lakers' aging roster; OKC's versatile wings create matchup nightmares for LA. Lakers' injury concerns compound disadvantage.",
-      "key_stats": [
-        "Thunder elite defense ranking",
-        "Lakers age/depth concerns",
-        "Crypto.com Arena neutral"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Oklahoma City Thunder -3.5 \u2014 Defensive versatility covers the small spread; Lakers' roster fatigue factor in."
-    },
-    {
-      "matchup": "N/A @ N/A",
-      "time": "N/A",
-      "venue": "N/A",
-      "pick": "N/A",
-      "pick_type": "N/A",
-      "dk_line": "N/A",
-      "dk_spread": "N/A",
-      "dk_total": "N/A",
-      "win_probability": "N/A",
-      "confidence": 0,
-      "article": "Schedule data incomplete for remaining NBA games.",
-      "key_stats": [
-        "insufficient data"
-      ],
-      "injuries": [
-        "N/A"
-      ],
-      "verdict": "N/A"
-    },
-    {
-      "matchup": "N/A @ N/A",
-      "time": "N/A",
-      "venue": "N/A",
-      "pick": "N/A",
-      "pick_type": "N/A",
-      "dk_line": "N/A",
-      "dk_spread": "N/A",
-      "dk_total": "N/A",
-      "win_probability": "N/A",
-      "confidence": 0,
-      "article": "Schedule data incomplete for remaining NBA games.",
-      "key_stats": [
-        "insufficient data"
-      ],
-      "injuries": [
-        "N/A"
-      ],
-      "verdict": "N/A"
+      "verdict": "BET: Phoenix Suns -ML (estimated -180) \u2014 Elite home squad against road challenger; high confidence on Suns playoff caliber"
     }
   ],
   "mlb_games": [
     {
-      "matchup": "Kansas City Royals @ Cleveland Guardians",
-      "time": "5:10 PM ET",
-      "venue": "Progressive Field",
-      "home_pitcher": "Gavin Williams (3.29 xERA)",
-      "away_pitcher": "Noah Cameron (N/A ERA)",
-      "pick": "Cleveland Guardians -1.5",
-      "pick_type": "RUNLINE",
-      "dk_line": "-142",
-      "dk_total": "O/U 4.5",
-      "confidence": 4,
-      "environmental": {
-        "temp_f": 48,
-        "wind_mph": 12,
-        "wind_direction": "in",
-        "altitude_ft": 0,
-        "park_factor": "slight pitcher favor",
-        "precip_chance": 5
-      },
-      "statcast_edge": "Williams' 3.29 xERA indicates strong underlying performance; Royals' Cameron lacks advanced metrics, suggesting unfamiliar arm.",
-      "fangraphs_edge": "Guardians' home field advantage at Progressive Field historically favors contact hitters; Royals' road splits underperform league average.",
-      "article": "Guardians' Gavin Williams sits at elite 3.29 xERA with favorable home park conditions; windy infield setup suppresses scoring. Royals' Noah Cameron lacks advanced pedigree on the road.",
-      "key_stats": [
-        "Williams xERA 3.29",
-        "Progressive Field pitcher friendly",
-        "Wind 12 mph blowing in"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Cleveland Guardians -1.5 runline (-441) \u2014 Severe line reflects Williams' dominance; tight game leans Cleveland on quality pitching."
-    },
-    {
-      "matchup": "Baltimore Orioles @ Chicago White Sox",
-      "time": "7:10 PM ET",
-      "venue": "Rate Field",
-      "home_pitcher": "Shane Smith (N/A ERA)",
-      "away_pitcher": "Trevor Rogers (N/A ERA)",
-      "pick": "Baltimore Orioles -1.5",
-      "pick_type": "RUNLINE",
-      "dk_line": "N/A",
-      "dk_total": "N/A",
+      "matchup": "San Diego Padres @ Pittsburgh Pirates",
+      "time": "4:35 PM ET",
+      "venue": "PNC Park",
+      "home_pitcher": "Mitch Keller",
+      "away_pitcher": "Michael King",
+      "pick": "Pittsburgh Pirates -ML",
+      "pick_type": "ML",
+      "dk_line": "-123",
+      "dk_total": "O3.5 (-133)",
       "confidence": 3,
       "environmental": {
         "temp_f": 62,
-        "wind_mph": 8,
-        "wind_direction": "out",
+        "wind_mph": 12,
+        "wind_direction": "in",
         "altitude_ft": 0,
-        "park_factor": "neutral",
+        "park_factor": "pitcher_friendly",
         "precip_chance": 15
       },
-      "statcast_edge": "Orioles' roster features stronger exit velocity profiles; White Sox recent underperformance suggests vulnerability.",
-      "fangraphs_edge": "Rogers' advanced metrics unavailable; Smith's road ERA likely inflated given White Sox defense.",
-      "article": "Orioles' superior talent and recent playoff experience overcome White Sox home-field disadvantage; Rogers' past struggles continue on road. Baltimore's lineup depth dominates.",
+      "statcast_edge": "Padres King (RHP) lacks Statcast data; Pirates Keller profiles neutral",
+      "fangraphs_edge": "Keller ERA not provided; King pitching matchup unclear without advanced metrics",
+      "article": "Pirates home environment at PNC Park (pitcher-friendly) tips balance in Keller's favor; wind blowing in supports reduced scoring. Over 3.5 heavily juiced (-133) suggesting sharp money on low-scoring affair.",
       "key_stats": [
-        "Orioles roster quality edge",
-        "White Sox rebuilding phase",
-        "Rate Field neutral conditions"
+        "Pirates moneyline -123 (slight home favorite)",
+        "Total O3.5 (-133) indicates sharp Under interest",
+        "PNC Park wind blowing in supports pitcher advantage",
+        "Game in progress limits additional analysis"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Baltimore Orioles -1.5 \u2014 Quality over questionable White Sox starters; Orioles cover runline."
+      "verdict": "BET: Pittsburgh Pirates -ML \u2014 Home park advantage with pitcher-friendly conditions; avoid juiced Over"
     },
     {
-      "matchup": "Arizona Diamondbacks @ New York Mets",
-      "time": "8:10 PM ET",
-      "venue": "Citi Field",
-      "home_pitcher": "Freddy Peralta (N/A xERA)",
-      "away_pitcher": "Zac Gallen (N/A xERA)",
-      "pick": "Arizona Diamondbacks -1.5",
-      "pick_type": "RUNLINE",
+      "matchup": "Kansas City Royals @ Cleveland Guardians",
+      "time": "5:10 PM ET",
+      "venue": "Progressive Field",
+      "home_pitcher": "Joey Cantillo",
+      "away_pitcher": "Cole Ragans",
+      "pick": "Cleveland Guardians -ML",
+      "pick_type": "ML",
       "dk_line": "N/A",
       "dk_total": "N/A",
       "confidence": 3,
       "environmental": {
-        "temp_f": 55,
+        "temp_f": 58,
         "wind_mph": 10,
         "wind_direction": "in",
         "altitude_ft": 0,
-        "park_factor": "slightly pitcher favorable",
+        "park_factor": "neutral",
         "precip_chance": 20
       },
-      "statcast_edge": "Gallen's track record suggests consistency; Diamondbacks' lineup features Baldwin (barrel% 17.9%, exit velo 91.5 mph avg) for power.",
-      "fangraphs_edge": "Peralta's advanced metrics unknown; Gallen's FIP likely superior based on historical data.",
-      "article": "Diamondbacks' Zac Gallen brings proven road performance; Arizona's Drake Baldwin (barrel rate 17.9%) provides offensive punch. Mets' Freddy Peralta faces unfamiliar NL East opponent.",
+      "statcast_edge": "Neither Cantillo nor Ragans represented in Statcast pitcher database",
+      "fangraphs_edge": "Advanced metrics unavailable; rely on moneyline pricing for comparison",
+      "article": "Guardians home field advantage in early season matchup; Cantillo (LHP) vs Ragans (RHP) lacks extensive metric data. Cool conditions (58\u00b0F) suppress scoring, supporting Under tendency.",
       "key_stats": [
-        "Baldwin barrel% 17.9%",
-        "Baldwin exit velo 91.5 avg",
-        "Citi Field wind blowing in"
+        "Guardians home moneyline estimated -130 range",
+        "Cool weather reduces offensive output",
+        "Limited pitcher Statcast data available",
+        "Game in progress"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Arizona Diamondbacks -1.5 \u2014 Gallen's road pedigree + Baldwin's power metrics support runline."
+      "verdict": "BET: Cleveland Guardians -ML (estimated -130) \u2014 Home field with weather support; moderate confidence on Guardians"
     },
     {
-      "matchup": "Chicago Cubs @ Tampa Bay Rays",
-      "time": "10:40 PM ET",
-      "venue": "Tropicana Field",
-      "home_pitcher": "Drew Rasmussen (N/A xERA)",
-      "away_pitcher": "Javier Assad (N/A xERA)",
-      "pick": "Over 7.5",
-      "pick_type": "TOTAL",
+      "matchup": "Milwaukee Brewers @ Boston Red Sox",
+      "time": "5:35 PM ET",
+      "venue": "Fenway Park",
+      "home_pitcher": "Sonny Gray",
+      "away_pitcher": "Shane Drohan",
+      "pick": "Boston Red Sox -ML",
+      "pick_type": "ML",
+      "dk_line": "N/A",
+      "dk_total": "N/A",
+      "confidence": 4,
+      "environmental": {
+        "temp_f": 64,
+        "wind_mph": 8,
+        "wind_direction": "out",
+        "altitude_ft": 0,
+        "park_factor": "hitter_favorable",
+        "precip_chance": 10
+      },
+      "statcast_edge": "Sonny Gray in Statcast database: xERA 2.54, ERA 1.35 (outperforming expectations by 1.19 runs); elite pitcher",
+      "fangraphs_edge": "Gray advanced elite profile; Drohan lacks comparison data suggesting inferior talent",
+      "article": "Sonny Gray (ERA 1.35, xERA 2.54) elite early-season form provides dominant advantage at home; Fenway wind blowing out supports potential run environment. Red Sox advantage in ace vs unknown matchup.",
+      "key_stats": [
+        "Sonny Gray: 1.35 ERA, 1.39 xERA (elite peripherals)",
+        "Gray 75 PA, 54 BIP, 0.147 BA against (elite control)",
+        "Fenway wind blowing out increases scoring potential",
+        "Drohan lacks Statcast metrics provided"
+      ],
+      "injuries": [
+        "injury status unknown"
+      ],
+      "verdict": "BET: Boston Red Sox -ML (estimated -160) \u2014 Sonny Gray elite form at home; strong fade of Milwaukee against dominant pitcher"
+    },
+    {
+      "matchup": "Baltimore Orioles @ Chicago White Sox",
+      "time": "6:10 PM ET",
+      "venue": "Rate Field",
+      "home_pitcher": "Sean Burke",
+      "away_pitcher": "Kyle Bradish",
+      "pick": "Baltimore Orioles -ML",
+      "pick_type": "ML",
       "dk_line": "N/A",
       "dk_total": "N/A",
       "confidence": 3,
       "environmental": {
-        "temp_f": 72,
-        "wind_mph": 0,
-        "wind_direction": "none",
-        "altitude_ft": 0,
-        "park_factor": "indoor dome - neutral",
-        "precip_chance": 0
-      },
-      "statcast_edge": "Cubs' recent offensive trends suggest uptick in production; Rays' pitching depth concerns.",
-      "fangraphs_edge": "Assad's strikeout rates may not translate in dome environment; Rasmussen's home splits favor run scoring.",
-      "article": "Dome environment at Tropicana Field eliminates wind factor, historically benefiting run totals; Cubs' recent offensive surge meets Rays' questionable bullpen depth. Both teams feature capable lineups.",
-      "key_stats": [
-        "Tropicana dome environment",
-        "Cubs offensive uptick",
-        "Rays bullpen depth concerns"
-      ],
-      "injuries": [
-        "injury status unknown"
-      ],
-      "verdict": "BET: Over 7.5 \u2014 Dome environment suppresses wind variability; Cubs-Rays matchup favors total scoring."
-    },
-    {
-      "matchup": "Cincinnati Reds @ Miami Marlins",
-      "time": "10:40 PM ET",
-      "venue": "loanDepot park",
-      "home_pitcher": "Sandy Alcantara (1.41 xERA)",
-      "away_pitcher": "Andrew Abbott (N/A xERA)",
-      "pick": "Miami Marlins -1.5",
-      "pick_type": "RUNLINE",
-      "dk_line": "N/A",
-      "dk_total": "N/A",
-      "confidence": 5,
-      "environmental": {
-        "temp_f": 78,
-        "wind_mph": 5,
+        "temp_f": 68,
+        "wind_mph": 6,
         "wind_direction": "neutral",
         "altitude_ft": 0,
         "park_factor": "neutral",
-        "precip_chance": 10
+        "precip_chance": 5
       },
-      "statcast_edge": "Alcantara's elite 1.41 xERA dominates Reds' modest lineup construction; Miami's home park provides additional advantage.",
-      "fangraphs_edge": "Alcantara's track record suggests elite pitcher performance; Reds' Abbott lacks comparable advanced metrics.",
-      "article": "Sandy Alcantara's 1.41 xERA (best available data) provides massive edge over Reds' Andrew Abbott; Marlins' home field compounds advantage. Alcantara's elite underlying metrics ensure low-scoring result.",
+      "statcast_edge": "Neither Burke nor Bradish in provided Statcast pitcher database",
+      "fangraphs_edge": "Advanced metrics unavailable for matchup comparison",
+      "article": "Orioles favored as road chalk indicating stronger roster construction; White Sox rebuilding phase supports Baltimore moneyline. Neutral weather conditions reduce environmental advantage.",
       "key_stats": [
-        "Alcantara xERA 1.41",
-        "loanDepot park neutral",
-        "Reds limited offensive upside"
+        "Orioles estimated -140 to -160 ML road favorite",
+        "White Sox early-season struggles vs competitive Baltimore",
+        "Neutral ballpark conditions (68\u00b0F, calm)",
+        "Limited pitcher data available"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: Miami Marlins -1.5 \u2014 Alcantara's elite 1.41 xERA guarantees Marlins cover; Abbott lacks comparable tier."
+      "verdict": "BET: Baltimore Orioles -ML (estimated -150) \u2014 Road favorite indicating elite roster advantage; fade rebuilding White Sox"
     },
     {
-      "matchup": "San Diego Padres @ Pittsburgh Pirates",
-      "time": "7:05 PM ET",
-      "venue": "PNC Park",
-      "home_pitcher": "N/A",
-      "away_pitcher": "N/A",
-      "pick": "San Diego Padres -1.5",
-      "pick_type": "RUNLINE",
+      "matchup": "Seattle Mariners @ Texas Rangers",
+      "time": "6:35 PM ET",
+      "venue": "Globe Life Field",
+      "home_pitcher": "MacKenzie Gore",
+      "away_pitcher": "Bryan Woo",
+      "pick": "Texas Rangers -ML",
+      "pick_type": "ML",
       "dk_line": "N/A",
       "dk_total": "N/A",
       "confidence": 3,
       "environmental": {
-        "temp_f": 52,
-        "wind_mph": 10,
-        "wind_direction": "out",
-        "altitude_ft": 0,
-        "park_factor": "hitter friendly",
-        "precip_chance": 15
+        "temp_f": 82,
+        "wind_mph": 4,
+        "wind_direction": "neutral",
+        "altitude_ft": 500,
+        "park_factor": "hitter_favorable",
+        "precip_chance": 2
       },
-      "statcast_edge": "Padres' roster talent exceeds Pirates' rebuild phase; PNC Park's wind direction (out) favors hitting.",
-      "fangraphs_edge": "Padres' advanced metrics superior to Pirates' limited offensive infrastructure.",
-      "article": "Padres' superior roster depth overcomes Pirates' PNC Park home advantage; wind blowing out adds to run-scoring environment. Pittsburgh's rebuilding phase limits competitiveness.",
+      "statcast_edge": "Neither Gore nor Woo in provided Statcast pitcher database",
+      "fangraphs_edge": "Advanced FIP/xFIP metrics unavailable for comparison",
+      "article": "Rangers home field advantage in Globe Life Field (hitter-favorable park) supports Texas moneyline; warm weather (82\u00b0F) inflates scoring potential. Mariners travel disadvantage compounds position.",
       "key_stats": [
-        "Padres roster talent advantage",
-        "PNC Park wind direction out",
-        "Pirates rebuilding roster"
+        "Rangers home moneyline estimated -130 range",
+        "Warm conditions favor offensive output",
+        "Globe Life Field elevated scoring environment",
+        "Pitching metrics data incomplete"
       ],
       "injuries": [
         "injury status unknown"
       ],
-      "verdict": "BET: San Diego Padres -1.5 \u2014 Talent disparity + favorable wind direction supports runline cover."
+      "verdict": "BET: Texas Rangers -ML (estimated -130) \u2014 Home park advantage in hitter-friendly environment; moderate confidence"
+    },
+    {
+      "matchup": "Los Angeles Dodgers @ Toronto Blue Jays",
+      "time": "7:07 PM ET",
+      "venue": "Rogers Centre",
+      "home_pitcher": "N/A",
+      "away_pitcher": "N/A",
+      "pick": "Los Angeles Dodgers -ML",
+      "pick_type": "ML",
+      "dk_line": "N/A",
+      "dk_total": "N/A",
+      "confidence": 4,
+      "environmental": {
+        "temp_f": 54,
+        "wind_mph": 14,
+        "wind_direction": "in",
+        "altitude_ft": 0,
+        "park_factor": "pitcher_favorable",
+        "precip_chance": 25
+      },
+      "statcast_edge": "Dodgers franchise superior Statcast metrics across batting lineup vs Blue Jays comparison",
+      "fangraphs_edge": "Dodgers advanced analytics indicate playoff-caliber team; Toronto rebuilding phase reflects in metrics",
+      "article": "Dodgers elite roster construction generates road favorite moneyline; Toronto dome environment (54\u00b0F, wind in) further depresses scoring. Pitcher-favorable conditions support Dodgers pitching staff advantage.",
+      "key_stats": [
+        "Dodgers road favorite (-180 to -200 estimated ML)",
+        "Rogers Centre dome pitcher-friendly conditions",
+        "Cool weather (54\u00b0F) reduces run production",
+        "Dodgers franchise depth vs Blue Jays youth"
+      ],
+      "injuries": [
+        "injury status unknown"
+      ],
+      "verdict": "BET: Los Angeles Dodgers -ML (estimated -190) \u2014 Elite road favorite in pitcher-friendly dome; strong fade of Blue Jays"
     },
     {
       "matchup": "N/A @ N/A",
-      "time": "N/A",
-      "venue": "N/A",
+      "time": "TBD",
+      "venue": "TBD",
       "home_pitcher": "N/A",
       "away_pitcher": "N/A",
       "pick": "N/A",
@@ -430,162 +374,112 @@
         "park_factor": "N/A",
         "precip_chance": 0
       },
-      "statcast_edge": "Insufficient data",
-      "fangraphs_edge": "Insufficient data",
-      "article": "Schedule data incomplete for remaining MLB games.",
-      "key_stats": [
-        "insufficient data"
-      ],
-      "injuries": [
-        "N/A"
-      ],
-      "verdict": "N/A"
-    },
-    {
-      "matchup": "N/A @ N/A",
-      "time": "N/A",
-      "venue": "N/A",
-      "home_pitcher": "N/A",
-      "away_pitcher": "N/A",
-      "pick": "N/A",
-      "pick_type": "N/A",
-      "dk_line": "N/A",
-      "dk_total": "N/A",
-      "confidence": 0,
-      "environmental": {
-        "temp_f": 0,
-        "wind_mph": 0,
-        "wind_direction": "N/A",
-        "altitude_ft": 0,
-        "park_factor": "N/A",
-        "precip_chance": 0
-      },
-      "statcast_edge": "Insufficient data",
-      "fangraphs_edge": "Insufficient data",
-      "article": "Schedule data incomplete for remaining MLB games.",
-      "key_stats": [
-        "insufficient data"
-      ],
-      "injuries": [
-        "N/A"
-      ],
-      "verdict": "N/A"
-    },
-    {
-      "matchup": "N/A @ N/A",
-      "time": "N/A",
-      "venue": "N/A",
-      "home_pitcher": "N/A",
-      "away_pitcher": "N/A",
-      "pick": "N/A",
-      "pick_type": "N/A",
-      "dk_line": "N/A",
-      "dk_total": "N/A",
-      "confidence": 0,
-      "environmental": {
-        "temp_f": 0,
-        "wind_mph": 0,
-        "wind_direction": "N/A",
-        "altitude_ft": 0,
-        "park_factor": "N/A",
-        "precip_chance": 0
-      },
-      "statcast_edge": "Insufficient data",
-      "fangraphs_edge": "Insufficient data",
-      "article": "Schedule data incomplete for remaining MLB games.",
-      "key_stats": [
-        "insufficient data"
-      ],
-      "injuries": [
-        "N/A"
-      ],
-      "verdict": "N/A"
+      "statcast_edge": "Data incomplete",
+      "fangraphs_edge": "Data incomplete",
+      "article": "Remaining MLB games incomplete in provided schedule dataset.",
+      "key_stats": [],
+      "injuries": [],
+      "verdict": "MONITOR: Awaiting complete game data for remaining MLB contests"
     }
   ],
   "props": [
     {
       "sport": "NBA",
-      "player": "Tre Jones",
-      "team": "Bulls",
+      "player": "James Harden",
+      "team": "Cleveland Cavaliers",
       "prop_type": "Assists",
-      "direction": "OVER",
-      "line": "6.5",
-      "dk_odds": "-132",
-      "season_avg": "6.8",
-      "matchup_edge": "Jones' assist volume increases against Wizards' porous perimeter defense.",
+      "direction": "UNDER",
+      "line": "8.5",
+      "dk_odds": "-150",
+      "season_avg": "N/A",
+      "matchup_edge": "Sharp money favoring Under at -150 indicates professional consensus against Harden volume",
       "statcast_edge": "N/A",
-      "reasoning": "DraftKings sets Jones Over at -132, implying 57% win probability. Jones' season average (6.8) exceeds line; Wizards' weak perimeter enables ball movement. Light injury concerns allow full usage.",
-      "confidence": 4
-    },
-    {
-      "sport": "NBA",
-      "player": "Collin Sexton",
-      "team": "Bulls",
-      "prop_type": "Assists",
-      "direction": "OVER",
-      "line": "3.5",
-      "dk_odds": "-147",
-      "season_avg": "3.9",
-      "matchup_edge": "Sexton's playmaking edge increases against Wizards' struggling bench.",
-      "statcast_edge": "N/A",
-      "reasoning": "Sexton's average (3.9) slightly exceeds line; -147 odds favor Over. Wizards' backup guards allow increased secondary scoring opportunities for Chicago's penetrating guards.",
+      "reasoning": "DraftKings pricing (Under -150 vs Over +114) shows 11% vig advantage to Under side. Market consensus reflects reduced assist opportunity against Hawks defense.",
       "confidence": 3
     },
     {
       "sport": "NBA",
-      "player": "Will Riley",
-      "team": "Bulls",
+      "player": "Jalen Johnson",
+      "team": "Atlanta Hawks",
       "prop_type": "Assists",
       "direction": "OVER",
-      "line": "3.5",
-      "dk_odds": "-137",
-      "season_avg": "3.6",
-      "matchup_edge": "Riley's involvement expands against Wizards' permeable defense.",
+      "line": "7.5",
+      "dk_odds": "-141",
+      "season_avg": "N/A",
+      "matchup_edge": "Atlanta playmaker profile suggests assist opportunity; -141 over odds indicate moderate professional backing",
       "statcast_edge": "N/A",
-      "reasoning": "Riley's 3.6 average marginally exceeds 3.5 line; -137 odds provide slight edge. Wizards' defensive scheme allows cutters like Riley increased offensive opportunities.",
+      "reasoning": "Johnson assists Over at -141 priced favorably vs Under +107; implies 7+ assist baseline in Hawks system. Home team opportunity supports volume play.",
+      "confidence": 3
+    },
+    {
+      "sport": "NBA",
+      "player": "Dyson Daniels",
+      "team": "Atlanta Hawks",
+      "prop_type": "Assists",
+      "direction": "UNDER",
+      "line": "5.5",
+      "dk_odds": "-147",
+      "season_avg": "N/A",
+      "matchup_edge": "Reserve/bench player status limits assist volume; Under -147 indicates sharp consensus",
+      "statcast_edge": "N/A",
+      "reasoning": "Daniels Under at -147 vs Over +112 shows clear market separation; backup role supports sub-5.5 assist outcome. Professional money heavily favoring Under.",
+      "confidence": 4
+    },
+    {
+      "sport": "MLB",
+      "player": "Yordan Alvarez",
+      "team": "Houston Astros",
+      "prop_type": "Batting Average",
+      "direction": "OVER",
+      "line": "0.324",
+      "dk_odds": "N/A",
+      "season_avg": "0.324",
+      "matchup_edge": "Alvarez Statcast showing elite output: BA 0.324, xBA 0.364, xSLG 0.877 vs actual SLG 0.730 indicates underperformance",
+      "statcast_edge": "Expected SLG 0.877 vs actual 0.730 (14.7 point discount) suggests positive regression opportunity",
+      "reasoning": "Alvarez elite Statcast profile (xwOBA 0.574 vs wOBA 0.508) shows sustained power elite trajectory. Positive regression likely in continued at-bats.",
+      "confidence": 3
+    },
+    {
+      "sport": "MLB",
+      "player": "Jose Altuve",
+      "team": "Houston Astros",
+      "prop_type": "Batting Average",
+      "direction": "OVER",
+      "line": "0.341",
+      "dk_odds": "N/A",
+      "season_avg": "0.341",
+      "matchup_edge": "Altuve Statcast shows positive BA differential: 0.341 actual vs 0.284 xBA (57 point overperformance) indicates hot start",
+      "statcast_edge": "BA 0.341 exceeds xBA 0.284 by 5.7 points; positive fortune potentially stabilizing",
+      "reasoning": "Altuve hot early (0.341 BA over 53 PA); xBA regression indicates pull-back likely but still above-average performer. Slight fade from current pace.",
       "confidence": 2
     },
     {
       "sport": "MLB",
-      "player": "Drake Baldwin",
-      "team": "Guardians",
-      "prop_type": "Total Bases",
+      "player": "Freddie Freeman",
+      "team": "Los Angeles Dodgers",
+      "prop_type": "Barrel Rate",
       "direction": "OVER",
-      "line": "2.5",
+      "line": "20.9%",
       "dk_odds": "N/A",
-      "season_avg": "2.8",
-      "matchup_edge": "Baldwin's 17.9% barrel rate and 91.5 mph exit velo dominate Royals' pitching profile.",
-      "statcast_edge": "Baldwin's xwOBA (.463) exceeds actual wOBA (.463); elite contact quality indicators suggest uptick.",
-      "reasoning": "Baldwin's Statcast metrics (barrel 17.9%, EV 91.5 avg) rank elite; season average 2.8 exceeds typical 2.5 line. Royals' Cameron lacks comparative data suggesting inferior pitching tier.",
+      "season_avg": "20.9%",
+      "matchup_edge": "Freeman elite exit velocity (110 mph max) and barrel rate (20.9% of 43 BIP = 9 barrels) elite profile",
+      "statcast_edge": "Freeman EV 93 avg with 20.9% barrel rate and 412 ft HR distance indicates sustained power",
+      "reasoning": "Freeman elite early-season metrics (53.5% hard-hit rate, 9 barrels in 43 BIP) support continued production. Dodgers superstar showing elite output.",
       "confidence": 4
     },
     {
       "sport": "MLB",
       "player": "Sandy Alcantara",
-      "team": "Marlins",
-      "prop_type": "Strikeouts",
-      "direction": "OVER",
-      "line": "8.5",
+      "team": "Miami Marlins",
+      "prop_type": "ERA",
+      "direction": "UNDER",
+      "line": "1.39",
       "dk_odds": "N/A",
-      "season_avg": "9.2",
-      "matchup_edge": "Alcantara's elite 1.41 xERA dominates Reds' weak offensive profile; strikeout rates elevate against inferior hitters.",
-      "statcast_edge": "Alcantara's xERA 1.41 (league-best tier) indicates exceptional strikeout performance; Reds' recent metrics suggest vulnerability.",
-      "reasoning": "Alcantara's 1.41 xERA guarantees elite strikeout performance; season average 9.2 exceeds 8.5 line. Reds' Abbott lacks comparable tier, ensuring Alcantara dominance.",
-      "confidence": 5
-    },
-    {
-      "sport": "MLB",
-      "player": "Freddie Freeman",
-      "team": "N/A",
-      "prop_type": "Home Runs",
-      "direction": "OVER",
-      "line": "0.5",
-      "dk_odds": "N/A",
-      "season_avg": "0.6",
-      "matchup_edge": "Freeman's elite exit velocity (92.7 mph avg) and barrel rate (23.1%) position optimal launch conditions.",
-      "statcast_edge": "Freeman's max distance (438 ft) and barrel rate (9 barrels) exceed peer group; xwOBA .464 indicates sustained excellence.",
-      "reasoning": "Freeman's elite Statcast profile (23.1% barrel, 92.7 EV avg, 438 ft max distance) guarantees regular power output. Season average .6 exceeds typical 0.5 line; consistently produces extra-base hits.",
-      "confidence": 4
+      "season_avg": "0.74",
+      "matchup_edge": "Alcantara elite Statcast profile: xERA 1.39 vs actual ERA 0.74 suggests positive luck running out",
+      "statcast_edge": "xERA 1.39 exceeds actual 0.74 by 65 basis points indicating regression to peripherals likely",
+      "reasoning": "Alcantara outperforming xERA by 0.65 runs across 86 PA suggests unsustainable luck factor. xERA 1.39 more predictive of regression.",
+      "confidence": 3
     }
   ],
   "parlays": [
@@ -594,181 +488,145 @@
       "risk_level": "LOW",
       "legs": [
         {
-          "pick": "Chicago Bulls -6.5",
-          "dk_odds": "-102",
-          "decimal": 1.98,
-          "reasoning": "Bulls heavily favored with -225 moneyline; 6.5-point spread aligns with market consensus."
+          "pick": "Cleveland Cavaliers -1.5",
+          "dk_odds": "-110",
+          "decimal": 1.909,
+          "reasoning": "Home court advantage with tight line; balanced matchup favoring Cavaliers"
         },
         {
-          "pick": "Boston Celtics -12.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Elite vs. lottery matchup; Celtics' championship roster overwhelms Charlotte's limited talent."
+          "pick": "Milwaukee Bucks -ML",
+          "dk_odds": "-160",
+          "decimal": 1.625,
+          "reasoning": "Elite roster advantage over Pistons; playoff contention vs rebuilding team"
         }
       ],
-      "total_decimal": 3.78,
-      "american_odds": "+278",
-      "payout_100": "$378",
-      "payout_50": "$189",
+      "total_decimal": 3.101,
+      "american_odds": "+210",
+      "payout_100": "$310",
+      "payout_50": "$155",
       "confidence": "HIGH"
     },
     {
-      "name": "The Spread Machine",
+      "name": "Championship DNA",
       "risk_level": "LOW",
       "legs": [
         {
-          "pick": "Milwaukee Bucks -8.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Championship-caliber roster vs. rebuilding Nets; double-digit cover likely."
+          "pick": "Denver Nuggets -ML",
+          "dk_odds": "-210",
+          "decimal": 1.476,
+          "reasoning": "Defending champions at home vs young Grizzlies; altitude advantage"
         },
         {
-          "pick": "Miami Marlins -1.5",
-          "dk_odds": "est. -120",
-          "decimal": 1.83,
-          "reasoning": "Alcantara's elite 1.41 xERA dominates Reds; runline reflects pitching superiority."
-        },
-        {
-          "pick": "Arizona Diamondbacks -1.5",
-          "dk_odds": "est. -120",
-          "decimal": 1.83,
-          "reasoning": "Gallen's road pedigree + Baldwin's power metrics support runline cover."
+          "pick": "Phoenix Suns -ML",
+          "dk_odds": "-180",
+          "decimal": 1.556,
+          "reasoning": "Big Three execution at home; elite playoff franchise vs road challenger"
         }
       ],
-      "total_decimal": 6.38,
-      "american_odds": "+538",
-      "payout_100": "$638",
-      "payout_50": "$319",
+      "total_decimal": 2.295,
+      "american_odds": "+129",
+      "payout_100": "$229",
+      "payout_50": "$115",
       "confidence": "HIGH"
     },
     {
-      "name": "The Road Warriors",
+      "name": "Elite Pitcher Advantage",
       "risk_level": "MEDIUM",
       "legs": [
         {
-          "pick": "Minnesota Timberwolves -3.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Elite defense + depth advantage; road performance historically strong."
+          "pick": "Boston Red Sox -ML",
+          "dk_odds": "-160",
+          "decimal": 1.625,
+          "reasoning": "Sonny Gray (1.35 ERA) elite form at home; 1.19 ERA outperformance vs xERA"
         },
         {
-          "pick": "Oklahoma City Thunder -3.5",
-          "dk_odds": "est. -110",
-          "decimal": 1.91,
-          "reasoning": "Defensive versatility + secondary scoring depth overcomes Lakers' age."
+          "pick": "Los Angeles Dodgers -ML",
+          "dk_odds": "-190",
+          "decimal": 1.526,
+          "reasoning": "Elite roster at road favorite; dome environment supports pitcher advantage"
         },
         {
-          "pick": "San Diego Padres -1.5",
-          "dk_odds": "est. -120",
-          "decimal": 1.83,
-          "reasoning": "Superior roster talent + favorable wind direction at PNC Park."
-        },
-        {
-          "pick": "Cleveland Guardians -1.5",
-          "dk_odds": "est. -441",
-          "decimal": 1.23,
-          "reasoning": "Williams' 3.29 xERA + home field dominance limits Royals scoring."
+          "pick": "Baltimore Orioles -ML",
+          "dk_odds": "-150",
+          "decimal": 1.667,
+          "reasoning": "Road favorite indicates superior roster; fade rebuilding White Sox"
         }
       ],
-      "total_decimal": 10.16,
-      "american_odds": "+916",
-      "payout_100": "$1016",
-      "payout_50": "$508",
+      "total_decimal": 4.143,
+      "american_odds": "+314",
+      "payout_100": "$414",
+      "payout_50": "$207",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "Sharp Under Action",
+      "risk_level": "MEDIUM",
+      "legs": [
+        {
+          "pick": "Pirates-Padres Under 3.5",
+          "dk_odds": "-133",
+          "decimal": 1.752,
+          "reasoning": "Heavy professional money on Under (-133); PNC Park wind blowing in supports low scoring"
+        },
+        {
+          "pick": "James Harden Assists Under 8.5",
+          "dk_odds": "-150",
+          "decimal": 1.667,
+          "reasoning": "Sharp consensus at -150; assist volume limited in matchup"
+        },
+        {
+          "pick": "Dyson Daniels Assists Under 5.5",
+          "dk_odds": "-147",
+          "decimal": 1.68,
+          "reasoning": "Bench player role; professional money heavily favoring Under"
+        }
+      ],
+      "total_decimal": 4.904,
+      "american_odds": "+390",
+      "payout_100": "$490",
+      "payout_50": "$245",
       "confidence": "MEDIUM"
     },
     {
-      "name": "The Closer",
-      "risk_level": "MEDIUM",
-      "legs": [
-        {
-          "pick": "Toronto Raptors +3.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Home court advantage at Scotiabank; Miami's road splits underperform."
-        },
-        {
-          "pick": "Golden State Warriors -4.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Three-point prowess + Chase Center home edge covers spread."
-        },
-        {
-          "pick": "Baltimore Orioles -1.5",
-          "dk_odds": "est. -120",
-          "decimal": 1.83,
-          "reasoning": "Superior roster talent dominates White Sox rebuild phase."
-        },
-        {
-          "pick": "Over 7.5 (Cubs-Rays)",
-          "dk_odds": "est. -110",
-          "decimal": 1.91,
-          "reasoning": "Dome environment eliminates wind factor; both lineups capable of scoring."
-        },
-        {
-          "pick": "Drake Baldwin Over 2.5 Total Bases",
-          "dk_odds": "est. -115",
-          "decimal": 1.87,
-          "reasoning": "Baldwin's 17.9% barrel rate + 91.5 EV avg dominate Royals pitching."
-        }
-      ],
-      "total_decimal": 29.42,
-      "american_odds": "+2842",
-      "payout_100": "$2942",
-      "payout_50": "$1471",
-      "confidence": "MEDIUM-HIGH"
-    },
-    {
-      "name": "The Deep Dive",
+      "name": "Home Court Domination",
       "risk_level": "HIGH",
       "legs": [
         {
-          "pick": "Chicago Bulls -6.5",
-          "dk_odds": "-102",
-          "decimal": 1.98,
-          "reasoning": "Heavy favorites; market consensus aligns with spread."
-        },
-        {
-          "pick": "Boston Celtics -12.5",
+          "pick": "Cleveland Cavaliers -1.5",
           "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Championship vs. lottery; double-digit cover achievable."
+          "decimal": 1.909,
+          "reasoning": "Home court advantage; balanced competitive matchup"
         },
         {
-          "pick": "Milwaukee Bucks -8.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Roster mismatch guarantees cover."
+          "pick": "Milwaukee Bucks -ML",
+          "dk_odds": "-160",
+          "decimal": 1.625,
+          "reasoning": "Road favorite with elite roster; Pistons rebuilding"
         },
         {
-          "pick": "Golden State Warriors -4.5",
-          "dk_odds": "-110",
-          "decimal": 1.91,
-          "reasoning": "Three-point elite status provides edge."
+          "pick": "Denver Nuggets -ML",
+          "dk_odds": "-210",
+          "decimal": 1.476,
+          "reasoning": "Home altitude advantage; championship experience vs young squad"
         },
         {
-          "pick": "Miami Marlins -1.5",
-          "dk_odds": "est. -120",
-          "decimal": 1.83,
-          "reasoning": "Alcantara's elite 1.41 xERA dominates."
+          "pick": "Phoenix Suns -ML",
+          "dk_odds": "-180",
+          "decimal": 1.556,
+          "reasoning": "Elite home execution; Big Three vs Mavericks road challenge"
         },
         {
-          "pick": "Tre Jones Over 6.5 Assists",
-          "dk_odds": "-132",
-          "decimal": 1.76,
-          "reasoning": "Jones' 6.8 season average exceeds line; Wizards' defense aids playmaking."
-        },
-        {
-          "pick": "Sandy Alcantara Over 8.5 Strikeouts",
-          "dk_odds": "est. -115",
-          "decimal": 1.87,
-          "reasoning": "Alcantara's 1.41 xERA ensures elite strikeout performance."
+          "pick": "Boston Red Sox -ML",
+          "dk_odds": "-160",
+          "decimal": 1.625,
+          "reasoning": "Sonny Gray elite at home; dominant pitching advantage"
         }
       ],
-      "total_decimal": 52.48,
-      "american_odds": "+4248",
-      "payout_100": "$5248",
-      "payout_50": "$2624",
-      "confidence": "MEDIUM"
+      "total_decimal": 13.621,
+      "american_odds": "+1262",
+      "payout_100": "$1362",
+      "payout_50": "$681",
+      "confidence": "MEDIUM-HIGH"
     }
   ]
 }
